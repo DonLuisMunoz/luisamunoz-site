@@ -5,6 +5,11 @@
   "name": "my-website",
   "compatibility_date": "2026-08-04",
   "assets": {
-    "directory": "./site"
+    "directory": "./site",
+    // Serve site/404.html for any path that doesn't match a file, instead of
+    // Cloudflare's bare default. "single-page-application" would be wrong here:
+    // this is a multi-page site, and a bad URL should say so with a 404 rather
+    // than silently rendering the home page at the wrong address.
+    "not_found_handling": "404-page"
   }
 }

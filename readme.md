@@ -33,7 +33,13 @@ portfolio-system/
 │   └── assets/                # logos, favicon, og image
 │       └── posts/             # post images, one folder per slug
 │
-├── newpost.py                 # scaffold + check posts (uv run newpost.py new "Title")
+├── newpost.py                 # scaffold + check posts, and rebuild sitemap.xml
+│
+├── tests/
+│   ├── renderMarkdown.test.js # unit tests for the markdown parser (node --test)
+│   └── a11y.check.mjs         # axe-core audit of every page state
+│
+├── .github/workflows/ci.yml   # syntax + tests + manifest + accessibility, on every push
 │
 ├── api/                       # BACKEND → Docker on dockerHost, via the EXISTING tunnel
 │   ├── main.py                # FastAPI: projects CRUD + contact + messages + health
@@ -51,6 +57,8 @@ portfolio-system/
 │   └── FRONTEND-LESSON.md     # learn the frontend (same method, five layers)
 │
 ├── neobrutalism-spec.md       # authoritative component + interaction spec
+├── CLAUDE.md                  # working notes for Claude Code (conventions, traps)
+├── LICENSE                    # MIT for the code; content is all rights reserved
 └── readme.md
 ```
 
@@ -64,6 +72,24 @@ portfolio-system/
 - **Go live:** follow `docs/DEPLOY.md` (frontend first, backend optional).
 - **Understand the backend:** `docs/BACKEND-LESSON.md`.
 - **Understand the frontend:** `docs/FRONTEND-LESSON.md`.
+
+## Checks
+
+```bash
+node --test                  # unit tests for the markdown renderer — no install needed
+python3 newpost.py check     # validate the blog manifest, refresh read times, rebuild the sitemap
+node --check site/js/*.js    # nothing transpiles this code, so this is the only syntax gate
+```
+
+Accessibility needs tooling that is deliberately not a repo dependency:
+
+```bash
+npm install --no-save playwright axe-core && npx playwright install chromium
+node tests/a11y.check.mjs    # axe-core across home, blog, post and admin
+```
+
+CI runs all of it on every push (`.github/workflows/ci.yml`). The site is at zero
+axe violations; the check fails the build if that regresses.
 
 ## Design rules (Neo-Brutalist)
 

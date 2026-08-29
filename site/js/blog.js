@@ -221,6 +221,19 @@
     document.title = `${post.title || post.slug} · Luis A. Munoz`;
     const desc = document.querySelector('meta[name="description"]');
     if (desc && post.summary) desc.setAttribute("content", post.summary);
+    // Both views are served by the same HTML file, so the canonical that
+    // shipped with the page points at the list. Repoint it at this post, or
+    // every post would tell crawlers it is really /blog/.
+    const canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical) {
+      canonical.setAttribute(
+        "href", `https://luisamunoz.com/blog/?p=${encodeURIComponent(post.slug)}`);
+    }
+    const ogUrl = document.querySelector('meta[property="og:url"]');
+    if (ogUrl) {
+      ogUrl.setAttribute(
+        "content", `https://luisamunoz.com/blog/?p=${encodeURIComponent(post.slug)}`);
+    }
   };
 
   const notFound = (mount) => {
