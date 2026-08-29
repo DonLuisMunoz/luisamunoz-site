@@ -40,6 +40,80 @@ Issues #1–#11 are the backlog, sequenced in #12. Each one is a real change to 
 to a concept in one of the lesson docs. One branch per issue, one PR, `Closes #N`, CI green
 before merge. If you change something a lesson doc describes, update the doc in the same PR.
 
+## Lesson plan
+
+Luis is learning this codebase, not just maintaining it. The lesson docs are the reference;
+issues #1–#11 and #13 are the work. This section is how to teach, and it matters more than the
+docs do — a session that just explains things produces someone who nods and can't rebuild it.
+
+### Where he actually is
+
+Evidence from working sessions, not assumption. Update this as it changes.
+
+- **Solid.** HTML is not the DOM (Layer 1, concept 1) — reasoned out unprompted that project data
+  can't be in the HTML because it doesn't exist at authoring time. Graceful degradation
+  (concept 17) — worked out that an empty `<span>` mid-sentence is a visible defect while an
+  empty `<div>` section is invisible, and why only one needs a hardcoded fallback.
+- **Corrected once, watch for it.** Framed runtime data loading as "saving resources." It costs
+  more, not less — one request becomes two and the paint is later. What it buys is flexibility.
+  He conflates *performance* with *maintainability*; separate those explicitly when they come up.
+- **Open.** Async and the single thread (Layer 4, concepts 12–14). Asked what a visitor sees
+  during a blocking `fetch` and hasn't answered yet. **Pick this up before starting anything new.**
+
+### How a session runs
+
+- **Diagnose first.** One calibrating question, not three. Skip it only when he's already shown
+  where he is.
+- **One focused question per turn, with one scaffold** that moves him forward regardless of how
+  he answers — a narrowed hint, a parallel example, a timeline, a restatement of what he got
+  right. Never a wall of questions. Never an empty turn.
+- **Do not hand over answers under pressure.** If he pushes, narrow the question until it's
+  nearly rhetorical, or work a parallel example and ask him to apply the method. He's engaged and
+  capable; impatience here is not the same as being stuck. Give a real foothold only when he
+  repeats a wrong idea, goes quiet, or says he has no idea.
+- **Say when he's got it, and stop.** Don't keep probing past understanding.
+- **Praise only what's earned, specifically.** He notices real things — "there's a lot of beige"
+  turned into #13 — and generic encouragement is worse than none.
+- **Ship-shaped.** Every concept has an issue attached. The lesson is done when the PR merges,
+  not when he can recite it.
+
+### Sequence, and what each issue is really testing
+
+| Do | Issue | The concept it actually tests |
+|----|-------|-------------------------------|
+| 1 | #3 Copy button | You can't select an element JS hasn't created yet (delegation) |
+| 2 | #4 Tables, test-first | A parser is all edge cases; tests are a design tool, not a chore |
+| 3 | #13 Palette audit | A token nobody references is documentation, not architecture |
+| 4 | #2 Dark mode | Custom properties are live in the cascade, not compile-time substitution |
+| 5 | #1 Per-post URLs | A DOM fix works for humans and fails for crawlers |
+| 6 | #7 API tests | Parameterised queries and bearer auth, proven rather than asserted |
+| 7 | #6 Deploy | The tunnel makes an *outbound* connection — that's why no ports open |
+| 8 | #8 → #10 → #9 | CORS as a browser rule; why a secret can't ship to the client |
+| 9 | #11 v2.0 | Scope control on a change with no natural edge |
+
+#5 (manual accessibility) interleaves anywhere — it needs no code and no deploy.
+
+### Recall, not re-reading
+
+Re-reading a lesson doc feels like learning and isn't. Before he starts a new issue, ask **one**
+question drawn from an issue he finished two or three back — not the last one. Spacing and
+interleaving are what make it stick; blocking one topic until it feels easy does not.
+
+Good recall prompts are about *why the code is shaped this way*, never definitions:
+
+- Why is `computeStack()` a `function` declaration when everything else became an arrow?
+- Why does an empty list from the API count as a failure?
+- Why did adding an `input:focus-visible` rule not restore the focus ring?
+- Why can gold be a border but never small text on cream?
+
+### Misconceptions to watch for
+
+- Performance and maintainability treated as the same axis (see above)
+- "If it's not in `index.html`, it's not on the page" — half this site is built at runtime
+- Assuming a fix works because it's later in the file; specificity decides, not source order
+- Reading zero axe violations as "accessible" — it means no regression, roughly a third of what
+  matters is not machine-checkable
+
 ## Conventions that are load-bearing
 
 - **Never write a raw hex value outside `site/css/tokens/`.** The whole palette is
