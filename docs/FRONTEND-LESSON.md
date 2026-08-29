@@ -73,22 +73,40 @@ calls), and parsing (`blog.js`). The concepts below are grouped that way.
 
 ## Layer 4 — The network
 
-12. **Promises and the `.then()` chain.** `fetch` doesn't return data — it returns a **Promise**,
-    an object representing a value that hasn't arrived yet. `.then()` queues what to do when it
-    does. This is why you can't `var x = fetch(...)` and use `x` on the next line.
+12. **A Promise is a receipt, not a value.** `fetch` doesn't return data — it returns a
+    **Promise**: an object that stands for a value that hasn't arrived yet. Think of a coat
+    check. You hand over your coat and get a ticket *immediately*; the ticket is not the coat.
+    This is why `const x = fetch(url)` leaves you holding a Promise, not JSON.
 
-13. **The fallback ladder.** `loadProjects()` is worth tracing line by line: try the API → if it
+13. **`await` unwraps the receipt; `async` is the permission slip.** `await fetch(url)` means
+    "pause this function here, let the rest of the page keep running, and resume with the real
+    value once it lands." You may only use `await` inside a function marked `async` — that's the
+    whole relationship. An `async` function *always* returns a Promise, no matter what you
+    return from it.
+
+14. **Nothing here is multi-threaded.** JavaScript runs on ONE thread. `await` doesn't run code
+    in parallel — it *yields*, letting the browser do other work (respond to clicks, paint,
+    fire the typing effect) until the network answers. That's why the typing animation keeps
+    running smoothly while `loadProjects()` is waiting. The alternative is what a blocking call
+    would do: freeze the entire page, animation and all, until the server replies.
+
+15. **`try`/`catch` replaces `.catch()`.** Because `await` makes async code *look* sequential,
+    ordinary `try`/`catch` works on it — a rejected Promise throws right where you awaited it.
+    Trace `loadProjects()`: the inner `try` catches an API failure and falls back to the file;
+    the outer one catches the case where even the file fails and leaves the section empty.
+
+16. **The fallback ladder.** `loadProjects()` is worth tracing line by line: try the API → if it
     errors *or returns an empty list* → fall back to the committed `projects.json`. That
     empty-list case is a real bug that was really hit (see the comment on line ~95), and it's the
     kind of thing tests exist for.
 
-14. **Graceful degradation.** `if ("IntersectionObserver" in window)` checks whether the browser
+17. **Graceful degradation.** `if ("IntersectionObserver" in window)` checks whether the browser
     supports the feature and, if not, just marks everything visible. The page gets worse, not
     broken. Same instinct as the JSON fallback.
 
 ## Layer 5 — Parsing and rendering
 
-15. **`innerHTML` executes markup, and that's the risk.** `listEl.innerHTML = projects.map(...)`
+18. **`innerHTML` executes markup, and that's the risk.** `listEl.innerHTML = projects.map(...)`
     doesn't insert *text* — it parses a string as HTML and builds real nodes. If any of that
     string came from a user, they can inject their own markup. That attack is **XSS**
     (cross-site scripting). Your code already defends against it: `esc()` converts `<` and `&`
@@ -107,16 +125,35 @@ calls), and parsing (`blog.js`). The concepts below are grouped that way.
   writes. Escape it anyway; that's what `esc()` is for.
 - *"JavaScript can run anywhere in the file."* Only if the elements it touches already exist.
   Position and `defer` decide that.
-- *"`var` and `let` are the same."* They aren't — `var` is function-scoped and hoisted, `let` is
-  block-scoped. This file uses `var` throughout, which is worth questioning (see below).
+- *"`var` and `let` are the same."* They aren't — `var` is function-scoped and hoisted to the
+  top of its function as `undefined`; `let` and `const` are block-scoped and unreachable before
+  their line runs. That difference is why the conversion below had to leave one function alone.
+- *"`await` makes it wait, so the page freezes."* Backwards. `await` is how the page *avoids*
+  freezing: the function pauses, the browser gets on with everything else.
 
-## An open question to interrogate, not accept
+## The ES5 question, now settled
 
-`main.js` is written in ES5: `var`, `function(){}`, `.then()` chains, `[].slice.call(nodeList)`.
-There is no build step here, so nothing transpiles it — but every browser that can load this site
-has supported `const`, arrow functions, `async/await`, and `Array.from` for years. So: is the old
-syntax buying anything, or is it a habit inherited from a era that ended? Form a view with
-reasons. That's a better exercise than being told.
+This code used to be written in ES5: `var`, `function(){}`, `.then()` chains,
+`[].slice.call(nodeList)`. Since there's no build step, nothing transpiles it — but every browser
+that can load this site has supported `const`, arrow functions, `async/await` and `Array.from`
+for years, so the old spelling bought nothing. It's now ES2020, verified to render identically.
+
+Two things that conversion taught, both worth keeping:
+
+- **`const` doesn't hoist, and that's a feature.** `loadProjects()` calls `computeStack()` before
+  `computeStack` appears in the file. That works only because it's a `function` **declaration**,
+  which is hoisted. Rewriting it as `const computeStack = () => {}` would throw a
+  `ReferenceError` — the variable exists but is in the *temporal dead zone* until its line runs.
+  The comment above `computeStack` says exactly this, so nobody "modernizes" it by accident.
+- **Modernizing is not refactoring.** Every change was syntax; no behavior moved. The proof was
+  a browser driven headlessly before and after, diffing the rendered DOM — card count, bar
+  widths, the computed streak, the reveal count. Same output both times. Without that, "it looks
+  right" is a guess.
+
+The next step this repo has *not* taken: `<script type="module">`. Real ES modules would give
+`import`/`export`, automatic strict mode, and scope without the `(function(){ ... })()` wrapper
+every file still uses. It changes load order and won't run over `file://`, so it's a real
+decision rather than a free upgrade.
 
 ## Next: run the quiz
 
