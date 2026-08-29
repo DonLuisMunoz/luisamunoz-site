@@ -12,6 +12,9 @@
     <!-- social share (Open Graph + Twitter) -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="luisamunoz.com" />
+    <!-- Overwritten by blog.js on a single post, so /blog/?p=<slug>
+         points at itself rather than at the list page. -->
+    <link rel="canonical" href="https://luisamunoz.com/blog/" />
     <meta property="og:url" content="https://luisamunoz.com/blog/" />
     <meta property="og:title" content="Writing · Luis A. Munoz" />
     <meta
@@ -65,6 +68,7 @@
     </script>
   </head>
   <body>
+    <a class="skip-link" href="#main">Skip to content</a>
     <!-- ============ NAV ============ -->
     <nav class="nav">
       <a href="../" class="nav__brand">
@@ -79,6 +83,8 @@
         <a href="../#contact" class="nav__cta">say hi</a>
       </div>
     </nav>
+
+    <main id="main">
 
     <!-- ============ BLOG ============ -->
     <section class="section section--paper">
@@ -103,6 +109,8 @@
     </section>
 
     <!-- ============ FOOTER ============ -->
+    </main>
+
     <footer class="footer">
       <div class="footer__brand">
         <span class="footer__mark">&gt;_</span>

@@ -29,6 +29,8 @@ ROOT = Path(__file__).resolve().parent
 POSTS = ROOT / "site" / "content" / "posts"
 MANIFEST = POSTS / "index.json"
 IMAGES = ROOT / "site" / "assets" / "posts"
+SITEMAP = ROOT / "site" / "sitemap.xml"
+BASE_URL = "https://luisamunoz.com"
 WORDS_PER_MINUTE = 220
 
 STARTER = """Open with the thing the reader already feels. Not what you built, what they'd
@@ -124,6 +126,47 @@ def cmd_new(args: argparse.Namespace) -> None:
         print("\n  marked as a draft, so it stays off the site until you remove that flag.")
 
 
+def write_sitemap(posts: list) -> bool:
+    """Regenerate site/sitemap.xml from the manifest.
+
+    Generated rather than hand-maintained for the same reason index.json is the
+    manifest: a file you have to remember to update is a file that goes stale,
+    and a stale sitemap points crawlers at posts that don't exist.
+
+    Post URLs use the ?p=<slug> form because that's what the site actually
+    serves. If pretty URLs ever land (see docs/BACKLOG.md), change it here.
+    """
+    lines = ['<?xml version="1.0" encoding="UTF-8"?>',
+             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+
+    newest = max((str(p.get("date", "")) for p in posts), default="")
+
+    def url(loc: str, lastmod: str = "", priority: str = "") -> None:
+        lines.append("  <url>")
+        lines.append(f"    <loc>{loc}</loc>")
+        if lastmod:
+            lines.append(f"    <lastmod>{lastmod}</lastmod>")
+        if priority:
+            lines.append(f"    <priority>{priority}</priority>")
+        lines.append("  </url>")
+
+    url(f"{BASE_URL}/", newest, "1.0")
+    url(f"{BASE_URL}/blog/", newest, "0.8")
+    for post in posts:
+        slug = post.get("slug")
+        if slug:
+            url(f"{BASE_URL}/blog/?p={slug}", str(post.get("date", "")), "0.6")
+
+    lines.append("</urlset>")
+    out = "\n".join(lines) + "\n"
+
+    previous = SITEMAP.read_text(encoding="utf-8") if SITEMAP.exists() else ""
+    if out == previous:
+        return False
+    SITEMAP.write_text(out, encoding="utf-8")
+    return True
+
+
 def cmd_check(args: argparse.Namespace) -> None:
     data = load_manifest()
     problems = []
@@ -182,6 +225,14 @@ def cmd_check(args: argparse.Namespace) -> None:
         save_manifest(data)
         print(f"  updated  {MANIFEST.relative_to(ROOT)}")
 
+    # Only the posts the site actually shows: no drafts, newest first.
+    live = sorted(
+        (p for p in data["posts"] if p.get("slug") and not p.get("draft")),
+        key=lambda p: str(p.get("date", "")), reverse=True,
+    )
+    if write_sitemap(live):
+        print(f"  updated  {SITEMAP.relative_to(ROOT)}")
+
     print()
     if problems:
         print(f"  {len(problems)} thing(s) to fix:")
@@ -205,7 +256,7 @@ def main() -> None:
     new.add_argument("--draft", action="store_true", help="keep it off the site for now")
     new.set_defaults(func=cmd_new)
 
-    chk = sub.add_parser("check", help="validate the manifest and refresh read times")
+    chk = sub.add_parser("check", help="validate the manifest, refresh read times, rebuild sitemap.xml")
     chk.set_defaults(func=cmd_check)
 
     args = ap.parse_args()

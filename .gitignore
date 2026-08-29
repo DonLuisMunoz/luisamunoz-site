@@ -32,3 +32,6 @@ _archive/
 
 # Claude skill manifest — tooling config, not portfolio content
 SKILL.md
+
+# CI installs these with --no-save; the shipped site has no dependencies.
+node_modules/

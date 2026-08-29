@@ -1,0 +1,17 @@
+# luisamunoz.com
+# The whole site is meant to be found. Two exceptions below.
+
+User-agent: *
+Allow: /
+
+# The admin panel. It already carries <meta name="robots" content="noindex">,
+# but that only helps once a crawler has fetched it. This keeps them out.
+# NOTE: this is discovery hygiene, not access control — the panel is protected
+# by the API's bearer token, not by this file.
+Disallow: /admin.html
+
+# Raw markdown sources. The rendered posts at /blog/?p=<slug> are what should
+# be indexed; the .md files would be duplicate content.
+Disallow: /content/posts/
+
+Sitemap: https://luisamunoz.com/sitemap.xml

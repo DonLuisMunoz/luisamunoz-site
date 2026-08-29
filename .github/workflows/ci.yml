@@ -1,0 +1,80 @@
+# CI for luisamunoz.com.
+#
+# The site deploys straight to Cloudflare on every push to the default branch,
+# with no build step in between. Nothing transpiles the JS and nothing type
+# checks it, so a stray syntax error would reach visitors as a blank section
+# and a 200 response. These jobs are the gate that used to be missing.
+#
+# Two jobs on purpose: `checks` needs no dependencies at all and finishes in
+# seconds; `accessibility` pays for a browser download, so it runs alongside
+# rather than blocking the fast feedback.
+
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  checks:
+    name: syntax, tests, content
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+
+      # No transpiler means nothing else would catch a syntax error before
+      # a visitor's browser does.
+      - name: Syntax-check every shipped script
+        run: |
+          for f in site/js/*.js; do
+            echo "  checking $f"
+            node --check "$f"
+          done
+
+      # node's built-in runner. No framework, no install -- the same reason
+      # the site itself has no dependencies.
+      - name: Unit tests (markdown renderer)
+        run: node --test
+
+      # newpost.py check validates the blog manifest against the files on
+      # disk: missing .md files, duplicate slugs, bad dates, broken image
+      # paths, posts with no manifest entry. It was already written; it just
+      # never ran automatically.
+      - name: Validate blog manifest
+        run: python3 newpost.py check
+
+      # `check` rewrites read-time estimates in index.json when they drift.
+      # If that changed anything, the committed manifest is stale.
+      - name: Fail if the manifest was out of date
+        run: |
+          if ! git diff --quiet; then
+            echo "::error::newpost.py check modified tracked files. Run 'python3 newpost.py check' locally and commit the result."
+            git diff --stat
+            exit 1
+          fi
+
+  accessibility:
+    name: accessibility (axe-core)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+
+      # --no-save keeps these out of the repo: the shipped site still has
+      # zero dependencies, and there is no package.json to drift.
+      - name: Install audit tooling
+        run: |
+          npm install --no-save playwright axe-core
+          npx playwright install --with-deps chromium
+
+      - name: Audit every page state
+        run: node tests/a11y.check.mjs
