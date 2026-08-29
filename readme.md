@@ -47,7 +47,8 @@ portfolio-system/
 │   ├── DEPLOY.md              # the Worker (done) + the backend (CLI or Portainer)
 │   ├── ADD-A-PROJECT.md       # how to add/update a project (admin or JSON)
 │   ├── ADD-A-POST.md          # how to write a blog post (markdown + manifest)
-│   └── BACKEND-LESSON.md      # learn the backend (reinforcement-coach Phase 1)
+│   ├── BACKEND-LESSON.md      # learn the backend (reinforcement-coach Phase 1)
+│   └── FRONTEND-LESSON.md     # learn the frontend (same method, five layers)
 │
 ├── neobrutalism-spec.md       # authoritative component + interaction spec
 └── readme.md
@@ -62,6 +63,7 @@ portfolio-system/
 - **Write a post:** `uv run newpost.py new "Title"`, then see `docs/ADD-A-POST.md`.
 - **Go live:** follow `docs/DEPLOY.md` (frontend first, backend optional).
 - **Understand the backend:** `docs/BACKEND-LESSON.md`.
+- **Understand the frontend:** `docs/FRONTEND-LESSON.md`.
 
 ## Design rules (Neo-Brutalist)
 
