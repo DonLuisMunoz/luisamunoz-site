@@ -6,7 +6,9 @@ in chat — I'll grade you one question at a time.
 
 The frontend isn't one subject. It's five layers, and this repo has a clean example of each:
 the document (`index.html`), the cascade (`css/`), the DOM (`main.js`), the network (the `fetch`
-calls), and parsing (`blog.js`). The concepts below are grouped that way.
+calls), and parsing (`blog.js`). The concepts below are grouped that way, plus one cross-cutting
+set on accessibility — every item in it was a real, measured failure on this site before it was
+a lesson.
 
 ## Layer 1 — The document
 
@@ -104,9 +106,50 @@ calls), and parsing (`blog.js`). The concepts below are grouped that way.
     supports the feature and, if not, just marks everything visible. The page gets worse, not
     broken. Same instinct as the JSON fallback.
 
+## Layer 4.5 — Accessibility (cuts across all of them)
+
+Accessibility isn't a layer of its own so much as a constraint on every other one. These four
+were all real failures on this site, found by running **axe-core** against the live pages, and
+fixing them is the clearest demonstration of why the rest of the architecture is built the way
+it is.
+
+19. **Contrast is a measurable ratio, not a taste call.** WCAG AA wants **4.5:1** between text
+    and its background (3:1 for large text). `--text-faint` was `#9A7B5A` on cream: **3.12:1**.
+    Not "a bit light" — measurably failing, in the footer, the captions and every strip label.
+    The fix was three values in `tokens/colors.css`, because nothing hardcodes hex. That is the
+    token layer paying for itself: one edit, thirty-odd elements corrected.
+
+20. **A colour has to pass in both directions.** `--teal` was used as text *on* cream and as a
+    fill *behind* cream text. Both directions failed, and both were fixed by the same darker
+    value — which is why the token comment records the ratios for each role. Gold is the
+    instructive exception: at 1.9:1 on cream, no adjustment saves it as text, so it is
+    documented as a fill-and-border colour only. Not every colour can do every job.
+
+21. **Landmarks are how a screen reader skims.** A sighted visitor's eye jumps to the content;
+    a screen-reader user presses a key to jump to `<main>`. There wasn't one — eleven sections
+    sat outside any landmark. `<main id="main">` plus a `.skip-link` as the first tab stop gives
+    both groups the same shortcut. Semantics again (concept 2), with a concrete payoff.
+
+22. **`outline: none` without a replacement locks out keyboard users — and specificity decides
+    whether your fix even applies.** The old rule was
+    `.field input:focus { outline: none; ... }`. Adding an `input:focus-visible` ring *later in
+    the file did not fix it*: `.field input:focus` scores 0-2-1 and `input:focus-visible` scores
+    0-1-1, so the higher-specificity `none` kept winning no matter how far down the new rule
+    went. The repair had to happen at the source rule. That is concept 5 (the cascade) biting
+    for real — and the reason `!important` is so tempting and so wrong here.
+    Note `:focus-visible` rather than `:focus`: the browser shows the ring for keyboard
+    navigation but not for mouse clicks.
+
+23. **A CSS media query cannot stop a `setTimeout`.** `@media (prefers-reduced-motion: reduce)`
+    silences CSS transitions and animations, but the typing effect and the streak count-up are
+    *JavaScript* loops. They had to read the same preference themselves with
+    `window.matchMedia("(prefers-reduced-motion: reduce)").matches` and paint their finished
+    state instead. A useful reminder that CSS and JS are separate systems that both have to
+    agree — and that "reduced motion" means show the end state, not hide the content.
+
 ## Layer 5 — Parsing and rendering
 
-18. **`innerHTML` executes markup, and that's the risk.** `listEl.innerHTML = projects.map(...)`
+24. **`innerHTML` executes markup, and that's the risk.** `listEl.innerHTML = projects.map(...)`
     doesn't insert *text* — it parses a string as HTML and builds real nodes. If any of that
     string came from a user, they can inject their own markup. That attack is **XSS**
     (cross-site scripting). Your code already defends against it: `esc()` converts `<` and `&`

@@ -12,12 +12,18 @@
   "use strict";
   const CFG = window.PORTFOLIO_CONFIG || { API_BASE: "", PROJECTS_FALLBACK: "./data/projects.json" };
 
+  // CSS can silence transitions, but it can't stop a setTimeout loop. The two
+  // animations below are driven from JS, so they have to check the preference
+  // themselves and paint their finished state instead.
+  const REDUCED_MOTION = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
   /* ---------- 1. typing effect ---------- */
   const typeEl = document.querySelector("[data-type]");
   if (typeEl) {
     const phrases = ['python practice.py', 'git commit -m "day 4"', 'open new_project/', 'learn --everyday'];
     let pi = 0, ci = 0, deleting = false;
     const tick = () => {
+      if (REDUCED_MOTION) { typeEl.textContent = phrases[0]; return; }
       const word = phrases[pi];
       if (!deleting) {
         typeEl.textContent = word.slice(0, ci++);
@@ -37,13 +43,17 @@
     // Days since Luis started (2026-07-01), computed live so it's always current.
     const START = new Date(2026, 6, 1); // month is 0-indexed: 6 = July
     const target = Math.max(0, Math.floor((Date.now() - START.getTime()) / 86400000));
-    let n = 0;
-    const up = () => {
-      n += 1;
-      streakEl.textContent = n;
-      if (n < target) setTimeout(up, 32);
-    };
-    setTimeout(up, 500);
+    if (REDUCED_MOTION) {
+      streakEl.textContent = target;   // the number is the point, not the count-up
+    } else {
+      let n = 0;
+      const up = () => {
+        n += 1;
+        streakEl.textContent = n;
+        if (n < target) setTimeout(up, 32);
+      };
+      setTimeout(up, 500);
+    }
   }
 
   /* ---------- 3. reveal on scroll (IntersectionObserver) ---------- */

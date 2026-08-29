@@ -1,8 +1,22 @@
 :root {
-  /* ---- Palette B — bold, flat, saturated (Parra / Hulda energy) ---- */
-  --terracotta: #C8542B;    /* lead accent */
-  --gold: #E0A92E;          /* the sun, highlights */
-  --teal: #2E7D6F;          /* "it works" / calm */
+  /* ---- Palette B — bold, flat, saturated (Parra / Hulda energy) ----
+
+     Terracotta and teal were darkened (from #C8542B and #2E7D6F) to clear
+     WCAG AA 4.5:1. Same hue, same saturation, ~8% less lightness — the palette
+     reads identically, it just no longer fails as small text. Both now pass in
+     BOTH directions: as text on cream/paper, and as a fill behind cream text.
+     Verified with axe-core; the ratios are in the table below.
+
+       token         on --paper   on --cream   cream text on it
+       terracotta    5.21         4.58         4.58
+       teal          5.83         5.13         5.13
+
+     Gold is deliberately NOT corrected: at 1.9:1 on cream nothing would save it
+     as text, so it stays a fill/border/large-display colour only. Never set gold
+     as small text on a light surface. */
+  --terracotta: #AC4622;    /* lead accent */
+  --gold: #E0A92E;          /* the sun, highlights — fills and borders, never small text */
+  --teal: #27695C;          /* "it works" / calm */
   --pink: #E66D8A;          /* playful pop */
   --plum: #2B1B2E;          /* ink / dark background */
   --cream: #F2E4C9;         /* light background */
@@ -12,7 +26,9 @@
   /* ---- Text ---- */
   --text-ink: #2B1B2E;      /* near-black plum */
   --text-soft: #5A4438;     /* body brown */
-  --text-faint: #9A7B5A;    /* captions, hex labels */
+  /* was #9A7B5A, which sat at 3.12:1 on cream — the single most common
+     contrast failure on the site (captions, footer meta, strip labels). */
+  --text-faint: #7E5F41;    /* captions, hex labels — 4.64 on cream, 5.28 on paper */
   --text-on-dark: #F2E4C9;  /* cream text on plum */
   --text-on-dark-muted: #C9A9BC;
 
