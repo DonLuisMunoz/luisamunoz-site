@@ -198,6 +198,23 @@ The next step this repo has *not* taken: `<script type="module">`. Real ES modul
 every file still uses. It changes load order and won't run over `file://`, so it's a real
 decision rather than a free upgrade.
 
+## Where the work lives
+
+Every concept above has a real issue attached to it. The doc is the reference; the issues are
+the job. See **#12** for the suggested order and what blocks what.
+
+| Layer | Concepts | Issue |
+|-------|----------|-------|
+| 1 — The document | 1, 3 | #1 Give each post its own URL and share card |
+| 2 — The cascade | 5, 6 | #2 Dark mode, driven from the token layer |
+| 3 — The DOM | 9, 10 | #3 Copy button on code blocks |
+| 4 — The network | 13, 15, 17 | #8 Contact form live · #9 Real GitHub streak |
+| 4.5 — Accessibility | 19–23 | #5 Manual accessibility pass |
+| 5 — Parsing | 24 | #4 Tables in the markdown renderer |
+
+Each is sized so you can't finish it without understanding the concept. One branch, one PR,
+`Closes #N`, CI green before merge.
+
 ## Next: run the quiz
 
 Tell me **"start the frontend quiz"** and I'll go to active recall, one question at a time, with

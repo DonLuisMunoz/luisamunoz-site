@@ -56,6 +56,21 @@ The goal isn't to feel like you get it. It's to verify you actually do.
   server-side only.
 - *"PUT and POST are the same."* POST creates a new thing; PUT updates an existing one by id.
 
+## Where the work lives
+
+Every concept above has a real issue attached to it. See **#12** for order and blockers.
+
+| Concepts | Issue |
+|----------|-------|
+| 9, 10, 11, 12 — CORS, secrets, containers, the tunnel | #6 Deploy the API to dockerHost |
+| 5, 6, 8 — validation, bearer auth, parameterised queries | #7 API test suite in CI |
+| 1, 9 — client/server split, CORS | #8 Contact form posts to the API |
+| 2, 3, 4, 11 — verbs, routes, params, volumes | #10 Versioned resume |
+| 9, 10 — why a secret can't ship to the browser | #9 Real GitHub commit streak |
+
+#6 blocks #8, #9 and #10, and needs you at the homelab terminal. #7 does not — write the tests
+before you deploy, not after.
+
 ## Next: run the quiz
 
 Tell me **"start the backend quiz"** and I'll go Phase 2 → active recall, one question at a time,

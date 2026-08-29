@@ -34,6 +34,12 @@ CHROMIUM_PATH=/path/to/chrome node tests/a11y.check.mjs   # if a browser already
 
 CI (`.github/workflows/ci.yml`) runs all of the above on every push.
 
+## How work is tracked
+
+Issues #1–#11 are the backlog, sequenced in #12. Each one is a real change to the repo attached
+to a concept in one of the lesson docs. One branch per issue, one PR, `Closes #N`, CI green
+before merge. If you change something a lesson doc describes, update the doc in the same PR.
+
 ## Conventions that are load-bearing
 
 - **Never write a raw hex value outside `site/css/tokens/`.** The whole palette is
