@@ -1,0 +1,34 @@
+/* pages/terminal.css
+   The animated terminal card on the home page.
+   Split out of the old monolithic components.css. Values unchanged. */
+
+/* ---------- terminal card ---------- */
+.term { position: relative; }
+.term__tag {
+  position: absolute; z-index: 2;
+  font-family: var(--font-mono); font-size: 13px; font-weight: 600;
+  padding: 7px 14px; border: 3px solid var(--plum); box-shadow: 3px 3px 0 var(--plum);
+}
+.term__tag--a { top: -26px; right: 14px; color: var(--plum); background: var(--pink); transform: rotate(-2deg); }
+.term__tag--b { bottom: -22px; left: -16px; color: var(--cream); background: var(--teal); transform: rotate(2deg); }
+.term__window { background: var(--plum); border: 3px solid var(--plum); box-shadow: 8px 8px 0 var(--plum); overflow: hidden; }
+.term__bar {
+  display: flex; align-items: center; gap: 8px;
+  padding: 13px 18px; background: #3A2A3E; border-bottom: 3px solid var(--plum);
+}
+.term__dot { width: 13px; height: 13px; border: 2px solid var(--cream); }
+.term__dot--r { background: var(--accent); }
+.term__dot--y { background: var(--gold); }
+.term__dot--g { background: var(--teal); }
+.term__path { font-family: var(--font-mono); font-size: 13px; color: var(--text-on-dark-muted); margin-left: 8px; }
+.term__body { padding: 26px 24px; font-family: var(--font-mono); font-size: 15.5px; line-height: 1.85; }
+.term__muted { color: var(--text-on-dark-muted); }
+.term__prompt { color: var(--teal); }
+.term__out  { color: var(--cream); }
+.term__goal { color: var(--gold); }
+.term__gap  { margin-top: 10px; }
+.term__caret {
+  display: inline-block; width: 9px; height: 18px; background: var(--gold);
+  vertical-align: -3px; margin-left: 2px; animation: blink 1s step-end infinite;
+}
+@keyframes blink { 0%,49% { opacity: 1; } 50%,100% { opacity: 0; } }

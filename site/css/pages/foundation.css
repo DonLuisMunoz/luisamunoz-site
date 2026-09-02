@@ -1,0 +1,13 @@
+/* pages/foundation.css
+   IT foundation chips and the homelab callout on the home page.
+   Split out of the old monolithic components.css. Values unchanged. */
+
+/* IT foundation — owned skills (chips) + the homelab callout */
+.tags--foundation { gap: 12px; margin-top: 4px; }
+.tags--foundation .tag { font-size: 14px; padding: 8px 16px; }
+.foundation-note {
+  margin-top: 32px; max-width: 660px;
+  background: var(--gold); border: 3px solid var(--plum);
+  box-shadow: 6px 6px 0 var(--plum); padding: 20px 24px;
+  font: 600 19px/1.5 var(--font-display); color: var(--plum);
+}

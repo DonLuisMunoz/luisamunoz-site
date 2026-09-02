@@ -37,9 +37,13 @@ a lesson.
 ## Layer 2 — The cascade
 
 5. **The cascade and specificity.** When two rules target the same element, the winner is decided
-   by specificity (how specific the selector is), then source order. This is why `components.css`
-   works without a single `!important` — the selectors are all roughly equal weight, so ordering
-   does the work. `!important` is what you reach for when you've lost track of this, not a tool.
+   by specificity (how specific the selector is), then source order. The whole CSS layer works
+   without a single `!important` — the selectors are all roughly equal weight, so ordering does
+   the work. `!important` is what you reach for when you've lost track of this, not a tool.
+   Read the comment at the top of `css/styles.css`: the import order is not tidiness, it is the
+   mechanism. `responsive.css` only wins because it comes after what it overrides, and
+   `components/a11y.css` is last so the focus ring beats `.field input:focus`, which ties with
+   it at 0-2-1.
 
 6. **Custom properties are live values, not find-and-replace.** `--brand: #E0A92E` in
    `css/tokens/colors.css` is a *real value in the cascade* that the browser resolves at runtime

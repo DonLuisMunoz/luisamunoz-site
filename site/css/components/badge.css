@@ -1,0 +1,12 @@
+/* components/badge.css
+   Status pill. Lived inside the hero block; it is not hero-specific.
+   Split out of the old monolithic components.css. Values unchanged. */
+
+.badge {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--font-mono); font-size: 13px; font-weight: 600;
+  color: var(--plum); letter-spacing: 0.14em; text-transform: uppercase;
+  border: 3px solid var(--plum); background: var(--gold);
+  box-shadow: 3px 3px 0 var(--plum); padding: 8px 16px;
+}
+.badge__dot { width: 9px; height: 9px; background: var(--teal); border: 2px solid var(--plum); }

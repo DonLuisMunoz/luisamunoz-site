@@ -1,0 +1,7 @@
+/* components/utilities.css
+   Cross-cutting helpers. Scroll reveal is driven by main.js.
+   Split out of the old monolithic components.css. Values unchanged. */
+
+/* ---------- scroll reveal ---------- */
+[data-reveal] { opacity: 0; transform: translateY(20px); transition: opacity .4s ease, transform .4s ease; }
+[data-reveal].is-visible { opacity: 1; transform: none; }

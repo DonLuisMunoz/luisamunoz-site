@@ -1,0 +1,23 @@
+/* responsive.css
+   Every breakpoint, gathered. Imported after all components and pages
+   because these rules tie on specificity with the ones they override --
+   source order is what makes them win.
+   Split out of the old monolithic components.css. Values unchanged. */
+
+/* ---------- responsive ---------- */
+@media (max-width: 860px) {
+  .hero__grid { grid-template-columns: 1fr; gap: 40px; }
+  .hero__title { font-size: 52px; }
+  .strip { grid-template-columns: 1fr 1fr; }
+  .strip__cell:nth-child(2) { border-right: none; }
+  .projects, .skills, .writing-head + .projects { grid-template-columns: 1fr; }
+  .section-title { font-size: 36px; }
+  .contact__title { font-size: 40px; }
+  .nav__links .nav__link { display: none; }
+}
+
+@media (max-width: 860px) {
+  .prose__title { font-size: 34px; }
+  .prose__body p, .prose__body li, .prose__body blockquote { font-size: 17px; }
+  .prose__body h2 { font-size: 25px; }
+}
