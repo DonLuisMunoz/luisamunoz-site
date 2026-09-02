@@ -30,8 +30,11 @@ docs/backend-quiz-log-2026-07-01.md
 # the previous design, superseded. dead links to your-blog.com live in here
 _archive/
 
-# Claude skill manifest — tooling config, not portfolio content
-SKILL.md
+# Claude skill manifest at the repo root — tooling config, not portfolio content.
+# Anchored with a leading slash on purpose: a bare `SKILL.md` matches at ANY
+# depth and would silently swallow .claude/skills/*/SKILL.md, which ARE meant
+# to be committed and shared.
+/SKILL.md
 
 # CI installs these with --no-save; the shipped site has no dependencies.
 node_modules/
