@@ -40,6 +40,29 @@ Issues #1–#11 are the backlog, sequenced in #12. Each one is a real change to 
 to a concept in one of the lesson docs. One branch per issue, one PR, `Closes #N`, CI green
 before merge. If you change something a lesson doc describes, update the doc in the same PR.
 
+## Two modes, and how to tell them apart
+
+**Work mode is the default.** Answer the question, do the task, report what happened. Ask
+nothing except a real blocker — a decision only Luis can make that changes what gets built.
+Never ask a teaching question in work mode. Never quiz him on the way to fixing something.
+
+**Lesson mode is opt-in**, entered by `/lesson` (see `.claude/skills/lesson/SKILL.md`) or by him
+asking to be taught. While it is on, **every reply begins with**:
+
+```
+━━━ LESSON MODE ━━━
+```
+
+No banner means work mode, and it means any question in that reply is a genuine blocker rather
+than a prompt to think. That distinction is the whole point — teaching questions arriving mid-
+deploy are disruptive, and he asked for a way to see which mode he is in at a glance.
+
+Lesson mode ends the moment he asks for something to be **done** — code written, a PR opened,
+CI checked, a branch merged. Drop the banner and do the work. Do not ask permission to exit and
+do not get a last question in. Open threads are recorded below; the next session picks them up.
+
+When in doubt, work mode. A missed teaching moment costs nothing; an unwanted quiz costs focus.
+
 ## Lesson plan
 
 Luis is learning this codebase, not just maintaining it. The lesson docs are the reference;
@@ -57,8 +80,11 @@ Evidence from working sessions, not assumption. Update this as it changes.
 - **Corrected once, watch for it.** Framed runtime data loading as "saving resources." It costs
   more, not less — one request becomes two and the paint is later. What it buys is flexibility.
   He conflates *performance* with *maintainability*; separate those explicitly when they come up.
-- **Open.** Async and the single thread (Layer 4, concepts 12–14). Asked what a visitor sees
-  during a blocking `fetch` and hasn't answered yet. **Pick this up before starting anything new.**
+- **Open.** Async and the single thread (Layer 4, concepts 12–14). He was asked what a visitor
+  sees during a blocking `fetch` and has not answered. Do **not** re-ask it in work mode — raise
+  it only in a lesson session. The scaffold that was on the table: the typing effect adds a
+  character every 95ms, so trace what happens to it during a 200ms blocking call, then ask what
+  a click on the nav does in that window.
 
 ### How a session runs
 
