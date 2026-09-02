@@ -10,6 +10,10 @@ Allow: /
 # by the API's bearer token, not by this file.
 Disallow: /admin.html
 
+# The design system reference. Internal documentation, not portfolio content,
+# and it would compete with the real pages for the site's own terms.
+Disallow: /design/
+
 # Raw markdown sources. The rendered posts at /blog/?p=<slug> are what should
 # be indexed; the .md files would be duplicate content.
 Disallow: /content/posts/

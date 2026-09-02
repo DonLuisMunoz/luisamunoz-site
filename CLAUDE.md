@@ -152,8 +152,11 @@ Good recall prompts are about *why the code is shaped this way*, never definitio
   a post can never inject markup. Do not reorder that. `.textContent` when you only
   need words on screen.
 - **Design rules**: 0px radius, 2–3px solid plum borders, hard offset shadows with
-  no blur, hover lifts, active presses, no fades. Full spec in
-  `neobrutalism-spec.md`.
+  no blur, hover lifts, active presses, no fades. The source of truth is
+  **`site/design/index.html`** (served at `/design/`), which renders every component
+  from the real stylesheet. `neobrutalism-spec.md` is borrowed generic material for a
+  React/Tailwind system — useful as a component inventory, not as this site's values;
+  see the note at the top of that file.
 - **Accessibility is a gate, not a nice-to-have.** The site is at zero axe
   violations. Keep `:focus-visible` rings, the `<main>` landmark, the skip link,
   and the `prefers-reduced-motion` branches intact. Gold (`--gold`) is a
