@@ -54,6 +54,10 @@ const PAGES = [
   ["blog list", "/blog/index.html"],
   ["blog post", "/blog/index.html?p=a-join-that-returned-zero-rows"],
   ["admin", "/admin.html"],
+  // The gallery renders every component in every state, including states no
+  // real page currently shows. Auditing it is broader coverage than the
+  // site's own pages can give.
+  ["design system", "/design/index.html"],
 ];
 
 // CHROMIUM_PATH lets a pre-provisioned environment point at a browser it

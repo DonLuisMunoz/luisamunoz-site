@@ -1,5 +1,24 @@
 # Design System — Agent Instructions
 
+> **Status: borrowed reference material, not a description of this site.**
+>
+> This file is a generic neobrutalism spec written for a React + Tailwind stack. It does not
+> document luisamunoz.com, and the differences are not small:
+>
+> - Its palette is Tailwind's defaults plus pure black. It shares **zero** hex values with
+>   `site/css/tokens/colors.css`.
+> - It links to `colors.md`, `typography.md`, `buttons.md` and others. None of those files exist.
+> - It references JSX and Tailwind. This repo has neither, and no build step.
+> - It says "dark mode is automatic". There is no `prefers-color-scheme` rule anywhere in the site.
+> - It says shadows are black. This site's are plum.
+>
+> **The source of truth for the real design system is `/design/`** (`site/design/index.html`),
+> which renders every component from the site's own stylesheet and cannot go stale.
+>
+> Keep this file for what it is good for: a component *inventory* worth aspiring to, and a
+> vocabulary for the style. Do not treat its values as this site's values.
+
+
 This skill describes the visual design language for all UI output. Every component, layout, and page should follow the design specs in the module files below. These describe *what the design looks like* — you choose how to implement the styles.
 
 **Style:** Neobrutalism — loud, unapologetic UI built on hard offset shadows, thick 2–3px black borders, zero-radius corners, and punchy saturated color.
