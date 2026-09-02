@@ -1,0 +1,67 @@
+/* components/a11y.css
+   Skip link, focus rings, reduced motion. Imported LAST on purpose:
+   .contact input:focus-visible and .field input:focus both score 0-2-1,
+   so source order decides which wins. The focus ring must.
+   Split out of the old monolithic components.css. Values unchanged. */
+
+/* ============================================================
+   accessibility
+   ============================================================ */
+
+/* Skip link — the first tab stop on every page. Off-screen until focused,
+   then it lands in the top-left as a normal brutalist button. Keyboard and
+   screen-reader users get past the nav without tabbing every link. */
+.skip-link {
+  position: absolute; left: -9999px; top: 0; z-index: 100;
+  font: 600 13px/1 var(--font-mono); text-transform: lowercase; letter-spacing: 0.04em;
+  color: var(--plum); background: var(--gold); text-decoration: none;
+  border: 3px solid var(--plum); box-shadow: 4px 4px 0 var(--plum); padding: 11px 18px;
+}
+.skip-link:focus { left: 12px; top: 12px; }
+
+/* Visible focus for keyboard users.
+   :focus-visible, not :focus — the browser shows this for keyboard navigation
+   but not for mouse clicks, so pointer users never see a ring they didn't ask
+   for. Gold on a plum offset keeps it inside the design language, and
+   outline-offset means the ring never sits on top of the 3px border.
+   Nothing here uses `outline: none` without putting a real indicator back. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 3px;
+}
+
+/* The dark contact panel needs the inverse: gold on plum is too low-contrast
+   against the gold field borders, so the ring goes cream there. */
+.contact input:focus-visible,
+.contact textarea:focus-visible {
+  outline: 3px solid var(--cream);
+  outline-offset: 2px;
+}
+
+/* NOTE: `outline: none` was removed from `.field input:focus` up in the form
+   section rather than overridden here. At 0-2-1 it out-specifies the
+   0-1-1 `input:focus-visible` ring above, so layering a fix on top would have
+   left the outline suppressed and the ring invisible. Fix the source rule. */
+
+/* Respect a reduced-motion preference.
+   The hover lifts, the reveal transitions and the typing/streak animations are
+   all motion. Someone with a vestibular disorder has asked their OS to stop
+   this; honour it. Content still arrives — reveals jump straight to visible
+   rather than fading, and main.js skips its animations and paints final values. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  [data-reveal] { opacity: 1 !important; transform: none !important; }
+  .btn:hover, .btn--sm:hover, .filter:hover, .card:hover, .post:hover {
+    transform: none;
+  }
+}

@@ -1,0 +1,16 @@
+/* base.css
+   Reset and document defaults. Nothing here is a component.
+   Split out of the old monolithic components.css. Values unchanged. */
+
+/* ---------- reset / base ---------- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--cream);
+  color: var(--text-ink);
+  font-family: var(--font-body);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+::selection { background: var(--plum); color: var(--gold); }
+a { color: inherit; }

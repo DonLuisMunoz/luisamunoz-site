@@ -1,0 +1,10 @@
+/* components/section.css
+   Section shell and the two alternating surfaces.
+   Split out of the old monolithic components.css. Values unchanged. */
+
+/* ---------- generic section ---------- */
+.section { padding: 9vh 5vw; border-top: 3px solid var(--plum); }
+.section--paper { background: var(--paper); }
+.section--cream { background: var(--cream); }
+.section__inner { max-width: 1100px; margin: 0 auto; }
+.section__head { margin-bottom: 44px; }

@@ -18,9 +18,12 @@ portfolio/
 │   ├── blog/
 │   │   └── index.html         # /blog — post list, and single posts via ?p=<slug>
 │   ├── css/
-│   │   ├── styles.css         # the ONE entry point — imports everything below
-│   │   ├── components.css     # all neobrutalist component classes
-│   │   └── tokens/            # shared design tokens (colors, type, spacing, fonts)
+│   │   ├── styles.css         # the ONE entry point — import ORDER is load-bearing
+│   │   ├── tokens/            # the values (colors, type, spacing, fonts)
+│   │   ├── base.css           # reset + document defaults
+│   │   ├── components/        # reusable anywhere — THE DESIGN SYSTEM
+│   │   ├── pages/             # this site's furniture only, built from components/
+│   │   └── responsive.css     # every breakpoint, after what it overrides
 │   ├── js/
 │   │   ├── config.js          # ← set API_BASE here (the only knob)
 │   │   ├── main.js            # typing, streak, reveal, project render, contact form

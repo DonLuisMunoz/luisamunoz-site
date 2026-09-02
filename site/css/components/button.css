@@ -1,0 +1,26 @@
+/* components/button.css
+   The core brutalist interaction: hover lifts, active presses.
+   Split out of the old monolithic components.css. Values unchanged. */
+
+/* ---------- buttons (the core brutalist interaction) ---------- */
+.btn {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  border: 3px solid var(--plum);
+  box-shadow: 5px 5px 0 var(--plum);
+  padding: 15px 28px;
+  font-size: 15px;
+  color: var(--plum);
+  cursor: pointer;
+}
+.btn:hover  { transform: translate(-2px, -2px); box-shadow: 7px 7px 0 var(--plum); }
+.btn:active { transform: translate(5px, 5px);  box-shadow: 0 0 0 var(--plum); }
+.btn--gold  { background: var(--gold); }
+.btn--paper { background: var(--paper); }
+.btn--sm    { padding: 11px 20px; font-size: 14px; box-shadow: 4px 4px 0 var(--plum); }
+.btn--sm:hover  { box-shadow: 6px 6px 0 var(--plum); transform: translate(-2px,-2px); }
+.btn--sm:active { box-shadow: 0 0 0 var(--plum); transform: translate(4px,4px); }

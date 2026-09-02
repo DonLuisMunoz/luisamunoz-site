@@ -1,0 +1,14 @@
+/* components/field.css
+   Form field and status line. Used by the contact form AND admin.html.
+   Designed for a dark surface: the label is gold, which clears 7.61:1 on
+   plum and FAILS at 1.69:1 on cream. Not surface-agnostic. See /design/.
+   Split out of the old monolithic components.css. Values unchanged. */
+
+.field { display: grid; gap: 6px; }
+.field label { font-family: var(--font-mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gold); }
+.field input, .field textarea {
+  font-family: var(--font-body); font-size: 16px; color: var(--plum);
+  background: var(--cream); border: 3px solid var(--cream); padding: 12px 14px; width: 100%;
+}
+.field input:focus, .field textarea:focus { border-color: var(--gold); }
+.form-status { font-family: var(--font-mono); font-size: 13px; color: var(--gold); min-height: 18px; }

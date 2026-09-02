@@ -1,12 +1,56 @@
 /* ============================================================
    Luis — Portfolio (Neo-Brutalist)
-   Single entry point. The page links ONLY this file.
-   It pulls in the shared design tokens, then the component
-   styles below build on those tokens.
+   Single entry point. Every page links ONLY this file.
+
+   Import order is load-bearing. Several rules across these layers
+   tie on specificity, and when specificity ties, source order decides.
+   Do not reorder these lines to tidy them up.
+
+     1. tokens      the values. Nothing above this can use them.
+     2. base        reset and document defaults.
+     3. components  reusable anywhere. The design system proper.
+     4. pages       this site only. Consumes the layer above.
+     5. responsive  every breakpoint, after everything it overrides.
+     6. a11y        last, so the focus ring always wins.
+
+   See /design/ for every component rendered from this stylesheet.
    ============================================================ */
 
+/* ---- 1. tokens ---- */
 @import "tokens/fonts.css";
 @import "tokens/colors.css";
 @import "tokens/typography.css";
 @import "tokens/spacing.css";
-@import "components.css";
+
+/* ---- 2. base ---- */
+@import "base.css";
+
+/* ---- 3. components — reusable, not tied to any page ---- */
+@import "components/primitives.css";
+@import "components/button.css";
+@import "components/badge.css";
+@import "components/section.css";
+@import "components/card.css";
+@import "components/post.css";
+@import "components/field.css";
+@import "components/filter.css";
+@import "components/utilities.css";
+
+/* ---- 4. pages — this site's furniture, built from the above ---- */
+@import "pages/nav.css";
+@import "pages/hero.css";
+@import "pages/terminal.css";
+@import "pages/strip.css";
+@import "pages/featured.css";
+@import "pages/skills.css";
+@import "pages/writing.css";
+@import "pages/contact.css";
+@import "pages/foundation.css";
+@import "pages/footer.css";
+@import "pages/blog.css";
+
+/* ---- 5. responsive — ties on specificity, so it must come after ---- */
+@import "responsive.css";
+
+/* ---- 6. accessibility — LAST. See the note in components/a11y.css ---- */
+@import "components/a11y.css";

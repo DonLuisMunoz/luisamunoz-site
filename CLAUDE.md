@@ -142,6 +142,11 @@ Good recall prompts are about *why the code is shaped this way*, never definitio
 
 ## Conventions that are load-bearing
 
+- **CSS is layered, and `styles.css` import order is load-bearing.** `tokens` → `base` →
+  `components/` (reusable) → `pages/` (this site only) → `responsive.css` → `components/a11y.css`.
+  Several rules across those layers tie on specificity, and a tie is decided by source order —
+  reordering the imports to tidy them up will silently change rendering. A new reusable component
+  goes in `components/` and gets added to `/design/`; anything only this site uses goes in `pages/`.
 - **Never write a raw hex value outside `site/css/tokens/`.** The whole palette is
   tokens, which is why fixing every contrast failure on the site was a three-line
   change. Adding `#somehex` to a component breaks that property.
