@@ -12,7 +12,7 @@
   "use strict";
   const CFG = window.PORTFOLIO_CONFIG || { API_BASE: "", PROJECTS_FALLBACK: "./data/projects.json" };
 
-  /* ---------- 4. data-driven project cards ---------- */
+  /* ---------- 1. data-driven project cards ---------- */
   const listEl = document.getElementById("project-list");
 
   const ESCAPES = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
@@ -76,7 +76,7 @@
   }
   loadProjects();
 
-  /* ---------- 4b. tech stack, computed from each project's tools ---------- */
+  /* ---------- 2. tech stack, computed from each project's tools ---------- */
   // XP by reps: a tool's level = how many projects use it. Bars grow as Luis ships.
   const STACK_NEXT = ["Power BI"]; // targeted but not shipped yet — shown as "next up"
   const STACK_PRIORITY = ["SQL", "PostgreSQL", "Python", "Power BI", "Docker", "Excel"];
@@ -133,7 +133,7 @@
     }
   }
 
-  /* ---------- 4c. latest posts, from the same manifest /blog reads ---------- */
+  /* ---------- 3. latest posts, from the same manifest /blog reads ---------- */
   // The section starts hidden and only appears if there are real posts,
   // so the home page can never show placeholder writing.
   (async function latestPosts() {
@@ -168,7 +168,7 @@
     } catch { /* no posts, section stays hidden */ }
   })();
 
-  /* ---------- 5. contact form ---------- */
+  /* ---------- 4. contact form ---------- */
   const form = document.getElementById("contact-form");
   const status = document.getElementById("form-status");
   if (form) {

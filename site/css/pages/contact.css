@@ -1,17 +1,6 @@
 /* pages/contact.css
-   Contact section. An ordinary surface now; the fields are components/field.css. */
+   Contact section layout only. Everything visual comes from .section,
+   .section-title, .section-lead, .btn and components/field.css. */
 
-.contact { padding: 96px 5vw; background: var(--surface); }
-.contact__inner { max-width: 760px; margin: 0 auto; }
-.contact__title { font: var(--type-h2); letter-spacing: var(--tracking-display); color: var(--text); }
-.contact__sub { font: var(--type-lead); color: var(--text-soft); margin-top: 16px; }
 .contact__links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 40px; }
-.contact__btn {
-  font: 600 16px/1 var(--font-sans); color: var(--text); background: var(--ground);
-  border: 1px solid var(--rule); border-radius: var(--radius-md);
-  padding: 14px 22px; text-decoration: none;
-}
-.contact__btn:hover { border-color: var(--text); }
-.contact__btn--primary { color: var(--on-fill); background: var(--fill); border-color: var(--fill); }
-
 .contact__form { max-width: 520px; margin-top: 40px; display: grid; gap: 14px; }

@@ -1,8 +1,6 @@
 /* components/primitives.css
    The smallest shared pieces every other component builds on. */
 
-.mono { font-family: var(--font-mono); font-variation-settings: var(--axes-mono); }
-
 .section-title {
   font: var(--type-h2);
   letter-spacing: var(--tracking-display);

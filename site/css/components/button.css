@@ -18,3 +18,4 @@
 .btn--primary { color: var(--on-fill); background: var(--fill); border-color: var(--fill); }
 .btn--primary:hover { border-color: var(--on-fill); }
 .btn--sm { padding: 10px 16px; font-size: 14px; }
+.btn--danger { border-color: var(--text); }

@@ -2,22 +2,21 @@
    The /blog reading column and rendered markdown. Post cards reuse .post. */
 
 .blog__inner { max-width: 780px; margin: 0 auto; }
-.blog__body { display: grid; gap: 24px; }
-/* A grid item defaults to min-width: auto, so a long code line would widen the
-   whole column past a phone screen. 0 lets .prose__pre scroll inside itself. */
-.blog__body > * { min-width: 0; }
+/* minmax(0, 1fr): a plain grid track grows to fit a long code line, pushing the
+   column past a phone screen. This lets .prose__pre scroll inside itself. */
+.blog__body { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; }
 
 .prose__title {
-  font: 700 48px/1.06 var(--font-sans); letter-spacing: var(--tracking-display);
+  font: var(--type-h2); letter-spacing: var(--tracking-display);
   color: var(--text); margin-top: 10px;
 }
 .prose .tags { margin-top: 20px; }
 .prose__body { margin-top: 38px; }
 
 /* long-form reading column — 21px on a 780px column keeps lines under 80ch */
-.prose__body p { font: 400 21px/1.6 var(--font-sans); color: var(--text-soft); margin: 0 0 24px; }
+.prose__body p { font: var(--type-prose); color: var(--text-soft); margin: 0 0 24px; }
 .prose__body h2 {
-  font: 700 36px/1.15 var(--font-sans); letter-spacing: var(--tracking-display);
+  font: var(--type-title); letter-spacing: var(--tracking-display);
   color: var(--text); margin: 48px 0 16px;
 }
 .prose__body h3 { font: var(--type-h3); color: var(--text); margin: 34px 0 12px; }
@@ -25,7 +24,7 @@
 .prose__body a { color: var(--link); font-weight: var(--fw-semibold); text-decoration: underline; }
 .prose__body a:hover { text-decoration: none; }
 .prose__body ul, .prose__body ol { margin: 0 0 24px; padding-left: 26px; }
-.prose__body li { font: 400 21px/1.6 var(--font-sans); color: var(--text-soft); margin-bottom: 10px; }
+.prose__body li { font: var(--type-prose); color: var(--text-soft); margin-bottom: 10px; }
 .prose__body img { max-width: 100%; border-radius: var(--radius-md); }
 .prose__body hr { border: none; border-top: 1px solid var(--rule); margin: 44px 0; }
 
@@ -39,7 +38,7 @@
   padding: 22px 24px; margin: 0 0 28px; overflow-x: auto;
 }
 .prose__pre code {
-  font: var(--type-code); font-variation-settings: var(--axes-mono); color: var(--code-text);
+  font-size: 16px; line-height: 1.6; color: var(--code-text);
   background: none; border: none; padding: 0; font-weight: var(--fw-regular);
 }
 .prose__pre[data-lang]::before {
@@ -49,5 +48,5 @@
 .prose__body blockquote {
   margin: 0 0 28px; padding: 18px 24px;
   background: var(--surface); border-left: 4px solid var(--link);
-  font: 400 21px/1.6 var(--font-sans); font-variation-settings: var(--axes-casual); color: var(--text-soft);
+  font: var(--type-prose); font-variation-settings: var(--axes-casual); color: var(--text-soft);
 }

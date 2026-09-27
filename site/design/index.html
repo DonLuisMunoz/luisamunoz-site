@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Recursive:slnt,wght,CASL,CRSV,MONO@-15..0,300..1000,0..1,0..1,0..1&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Recursive:slnt,wght,CASL,MONO@-15..0,400..700,0..1,0..1&display=swap"
       rel="stylesheet"
     />
 
@@ -25,7 +25,6 @@
       .ds-main { max-width: 1100px; margin: 0 auto; padding: 64px 5vw 120px; }
       .ds-toc { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 26px; }
       .ds-sec { margin-top: 72px; }
-      .ds-sec > h2 { font: var(--type-h2); letter-spacing: var(--tracking-display); color: var(--text); }
       .ds-sec > p { color: var(--text-soft); margin-top: 10px; max-width: 34em; }
       .ds-sub { font: var(--type-h3); color: var(--text); margin-top: 40px; }
       .ds-demo {
@@ -34,7 +33,7 @@
         display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start;
       }
       .ds-demo--stack { display: block; }
-      .ds-code { font: var(--type-small); font-family: var(--font-mono); font-variation-settings: var(--axes-mono); color: var(--text-soft); margin-top: 8px; display: block; }
+      .ds-code { font-size: 14px; color: var(--text-soft); margin-top: 8px; display: block; }
       .ds-note { background: var(--surface); border-left: 4px solid var(--link); padding: 14px 18px; margin-top: 16px; max-width: 40em; color: var(--text-soft); }
       .ds-presets { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-top: 16px; }
       .ds-preset { background: var(--ground); color: var(--text); border: 1px solid var(--rule); border-radius: var(--radius-md); padding: 22px; }
@@ -42,8 +41,12 @@
       .ds-preset p { color: var(--text-soft); margin-top: 6px; }
       .ds-preset .ds-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; align-items: center; }
       .ds-chip { width: 44px; height: 44px; border-radius: var(--radius-sm); border: 1px solid var(--rule); }
+      .ds-chip--surface { background: var(--surface); }
+      .ds-chip--soft { background: var(--text-soft); }
+      .ds-chip--link { background: var(--link); }
+      .ds-chip--rule { background: var(--rule); }
       .ds-room { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; margin-top: 16px; }
-      .ds-room__chip { height: 76px; border-radius: var(--radius-md) var(--radius-md) 0 0; }
+      .ds-room__chip { height: 76px; border: 1px solid var(--rule); border-bottom: 0; border-radius: var(--radius-md) var(--radius-md) 0 0; }
       .ds-room__meta { background: var(--surface); border: 1px solid var(--rule); border-top: 0; border-radius: 0 0 var(--radius-md) var(--radius-md); padding: 10px 12px; font: var(--type-small); color: var(--text-soft); }
       .ds-room__meta strong { display: block; color: var(--text); }
       .ds-type-row { border-bottom: 1px solid var(--rule); padding: 16px 0; }
@@ -85,7 +88,7 @@
       </nav>
 
       <section class="ds-sec" id="colour">
-        <h2>Colour</h2>
+        <h2 class="section-title">Colour</h2>
         <p>
           Five colours taken from the room. Components never use them directly: they use the
           semantic tokens below, which each time preset redefines. Contrast for every pair in
@@ -107,10 +110,10 @@
             <h3>Day, 7:00 to 16:59</h3>
             <p>Sun through the window.</p>
             <div class="ds-row">
-              <span class="ds-chip" style="background: var(--surface)"></span>
-              <span class="ds-chip" style="background: var(--text-soft)"></span>
-              <span class="ds-chip" style="background: var(--link)"></span>
-              <span class="ds-chip" style="background: var(--rule)"></span>
+              <span class="ds-chip ds-chip--surface"></span>
+              <span class="ds-chip ds-chip--soft"></span>
+              <span class="ds-chip ds-chip--link"></span>
+              <span class="ds-chip ds-chip--rule"></span>
               <a class="btn btn--primary btn--sm" href="#colour">Primary</a>
               <a class="btn btn--sm" href="#colour">Quiet</a>
             </div>
@@ -119,10 +122,10 @@
             <h3>Dusk, 17:00 to 19:59</h3>
             <p>Low amber light across the shelf.</p>
             <div class="ds-row">
-              <span class="ds-chip" style="background: var(--surface)"></span>
-              <span class="ds-chip" style="background: var(--text-soft)"></span>
-              <span class="ds-chip" style="background: var(--link)"></span>
-              <span class="ds-chip" style="background: var(--rule)"></span>
+              <span class="ds-chip ds-chip--surface"></span>
+              <span class="ds-chip ds-chip--soft"></span>
+              <span class="ds-chip ds-chip--link"></span>
+              <span class="ds-chip ds-chip--rule"></span>
               <a class="btn btn--primary btn--sm" href="#colour">Primary</a>
               <a class="btn btn--sm" href="#colour">Quiet</a>
             </div>
@@ -131,10 +134,10 @@
             <h3>Night, 20:00 to 6:59</h3>
             <p>A dark room lit by the monitor.</p>
             <div class="ds-row">
-              <span class="ds-chip" style="background: var(--surface)"></span>
-              <span class="ds-chip" style="background: var(--text-soft)"></span>
-              <span class="ds-chip" style="background: var(--link)"></span>
-              <span class="ds-chip" style="background: var(--rule)"></span>
+              <span class="ds-chip ds-chip--surface"></span>
+              <span class="ds-chip ds-chip--soft"></span>
+              <span class="ds-chip ds-chip--link"></span>
+              <span class="ds-chip ds-chip--rule"></span>
               <a class="btn btn--primary btn--sm" href="#colour">Primary</a>
               <a class="btn btn--sm" href="#colour">Quiet</a>
             </div>
@@ -144,7 +147,7 @@
       </section>
 
       <section class="ds-sec" id="type">
-        <h2>Type</h2>
+        <h2 class="section-title">Type</h2>
         <p>
           One family, Recursive, in three voices set by its variable axes. Sentence case
           everywhere; no uppercase labels.
@@ -182,7 +185,7 @@
       </section>
 
       <section class="ds-sec" id="buttons">
-        <h2>Buttons</h2>
+        <h2 class="section-title">Buttons</h2>
         <p>The quiet default and the primary fill. A press moves the button 1px.</p>
         <div class="ds-demo">
           <a href="#buttons" class="btn btn--primary">Primary</a>
@@ -198,7 +201,7 @@
       </section>
 
       <section class="ds-sec" id="cards">
-        <h2>Cards</h2>
+        <h2 class="section-title">Cards</h2>
         <p>Used for projects and blog posts.</p>
         <div class="ds-demo ds-demo--stack">
           <div class="projects">
@@ -220,7 +223,7 @@
       </section>
 
       <section class="ds-sec" id="chips">
-        <h2>Tags and filters</h2>
+        <h2 class="section-title">Tags and filters</h2>
         <div class="ds-demo">
           <span class="tag">python</span>
           <span class="tag">sql</span>
@@ -236,7 +239,7 @@
       </section>
 
       <section class="ds-sec" id="forms">
-        <h2>Forms</h2>
+        <h2 class="section-title">Forms</h2>
         <p>Built from --text, --ground and --rule only, so fields work on any surface in any preset.</p>
         <div class="ds-demo ds-demo--stack">
           <div class="contact__form" style="margin-top: 0;">
@@ -255,7 +258,7 @@
       </section>
 
       <section class="ds-sec" id="code">
-        <h2>Code</h2>
+        <h2 class="section-title">Code</h2>
         <p>Code sits on the shelf colour in every preset.</p>
         <div class="ds-demo ds-demo--stack">
           <div class="code-block code-block--bad"><span class="syn-kw">JOIN</span> zhvi zh <span class="syn-kw">ON</span> zo.zip = zh.<span class="syn-str">"RegionID"</span></div>
@@ -264,7 +267,7 @@
       </section>
 
       <section class="ds-sec" id="rules">
-        <h2>Rules that are load-bearing</h2>
+        <h2 class="section-title">Rules that are load-bearing</h2>
         <div class="ds-note"><strong>1. Never write a raw hex outside <code>tokens/</code>.</strong> A test fails the build if you do.</div>
         <div class="ds-note"><strong>2. Components use semantic tokens, never the room colours.</strong> <code>--text</code>, not <code>--ink</code>: at night <code>--text</code> is light, and <code>--ink</code> is still navy.</div>
         <div class="ds-note"><strong>3. Dusk is a fill.</strong> At 1.64:1 on <code>--wall</code> it can never be small text.</div>

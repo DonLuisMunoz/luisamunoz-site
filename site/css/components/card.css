@@ -1,7 +1,9 @@
 /* components/card.css
    The card grid, the card itself, and its tag chips. */
 
-.projects { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+/* minmax(0, 1fr), not 1fr: a plain 1fr track is minmax(auto, 1fr), and a long
+   code line would widen the column past a phone screen. */
+.projects { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
 .card {
   background: var(--ground);
   border: 1px solid var(--rule);
@@ -11,10 +13,7 @@
 .card__meta { font: var(--type-small); color: var(--text-soft); }
 .card__title { font: var(--type-h3); color: var(--text); margin-top: 8px; }
 .card__body { font: var(--type-body); color: var(--text-soft); margin-top: 12px; }
-.card code, .inline-code {
-  font-family: var(--font-mono); font-variation-settings: var(--axes-mono);
-  color: var(--text); font-weight: var(--fw-semibold);
-}
+.card code, .inline-code { color: var(--text); font-weight: var(--fw-semibold); }
 .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
 .tag {
   font: var(--type-small); color: var(--text);

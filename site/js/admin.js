@@ -43,7 +43,7 @@
           `<p class="card__body">${esc(p.body || "")}</p>` +
           `<div class="tags" style="margin-top:14px;">` +
             `<button class="btn btn--sm" data-edit="${esc(p.id)}">Edit</button>` +
-            `<button class="btn btn--sm danger" data-del="${esc(p.id)}">Delete</button>` +
+            `<button class="btn btn--sm btn--danger" data-del="${esc(p.id)}">Delete</button>` +
           `</div>` +
         `</div>`
       )).join("");

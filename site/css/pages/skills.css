@@ -2,15 +2,15 @@
    Computed stack bars, and the 'next up' row beneath them. One fill colour:
    the label says which tool, colour never carried meaning here. */
 
-.skills { display: grid; grid-template-columns: 1fr 1fr; gap: 26px 50px; }
+.skills { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px 50px; }
 .skill__head {
   display: flex; justify-content: space-between;
-  font: 600 16px/1.4 var(--font-sans); color: var(--text); margin-bottom: 8px;
+  font: var(--type-label); color: var(--text); margin-bottom: 8px;
 }
 .skill__level { font-weight: var(--fw-regular); color: var(--text-soft); }
 .skill__track { height: 12px; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius-pill); overflow: hidden; }
 .skill__fill { height: 100%; background: var(--link); }
 
 .stack-next { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
-.stack-next__label { font: 600 16px/1.4 var(--font-sans); color: var(--text); }
+.stack-next__label { font: var(--type-label); color: var(--text); }
 .stack-next:empty { display: none; }

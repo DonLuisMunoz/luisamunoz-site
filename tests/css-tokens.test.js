@@ -116,16 +116,16 @@ test("both font stacks keep a system fallback", () => {
   assert.match(get("--font-mono"), /ui-monospace/);
 });
 
-// Recursive's code voice is an axis, not a family. The `font:` shorthand
-// resets font-variation-settings, so a rule that sets the mono font without
-// also setting the mono axes renders code in the proportional voice.
-test("every rule that sets the mono font also sets the mono axes", () => {
+// Recursive's code voice is an axis, not a family, and the `font:` shorthand
+// resets font-variation-settings. So exactly one rule picks the code voice —
+// `code, kbd, pre` in base.css — and nothing else may, or a later `font:`
+// in some component silently turns code proportional.
+test("only base.css picks the mono voice", () => {
   const offenders = [];
-  for (const file of walk(join(SITE, "css")).filter((f) => f.endsWith(".css") && !f.startsWith(TOKENS))) {
-    for (const [, sel, body] of stripComments(read(file)).matchAll(/([^{}]+)\{([^}]*)\}/g)) {
-      if (/var\(--(font-mono|type-code)\)/.test(body) && !/font-variation-settings:\s*var\(--axes-mono\)/.test(body)) {
-        offenders.push(`${relative(SITE, file)}: ${sel.trim()}`);
-      }
+  const BASE = join(SITE, "css", "base.css");
+  for (const file of walk(SITE).filter((f) => /\.(css|html)$/.test(f) && !f.startsWith(TOKENS) && f !== BASE)) {
+    for (const [, name] of stripComments(read(file)).matchAll(/var\((--(?:font-mono|axes-mono|type-code))\)/g)) {
+      offenders.push(`${relative(SITE, file)}: ${name}`);
     }
   }
   assert.deepEqual(offenders, []);

@@ -5,5 +5,5 @@
   padding: 34px 5vw; background: var(--ground); border-top: 1px solid var(--rule);
   display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;
 }
-.footer__name { font: 600 16px/1.4 var(--font-sans); color: var(--text); }
+.footer__name { font: var(--type-label); color: var(--text); }
 .footer__meta { font: var(--type-small); color: var(--text-soft); }

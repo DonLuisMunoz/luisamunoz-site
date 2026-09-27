@@ -5,8 +5,8 @@
 
 @media (max-width: 860px) {
   .hero__title { font-size: 48px; }
-  .projects, .skills, .writing-head + .projects { grid-template-columns: 1fr; }
-  .section-title, .contact__title { font-size: 36px; }
+  .projects, .skills, .writing-head + .projects { grid-template-columns: minmax(0, 1fr); }
+  .section-title { font-size: 36px; }
   .nav__links .nav__link { display: none; }
   .featured { padding: 28px; }
   .prose__title { font-size: 36px; }

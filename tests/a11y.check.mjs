@@ -49,23 +49,21 @@ const { chromium } = await import("playwright");
 const axeSource = await readFile(
   fileURLToPath(await import.meta.resolve("axe-core/axe.min.js")), "utf8");
 
-// [label, path, time preset]. null = no data-time attribute, which is what a
-// visitor gets today and what stage.js falls back to. Dusk and night are
-// audited on the two pages with the most colour surface: home and a
-// rendered post (code blocks, blockquotes, links).
+// [label, path, time presets to audit]. null = no data-time attribute, which
+// is what a visitor gets with JS off. Dusk and night are audited on the two
+// pages with the most colour surface: home and a rendered post (code blocks,
+// blockquotes, links). Each page loads once; the presets are re-applied in place.
+const DAY_ONLY = [null];
+const ALL_TIMES = [null, "dusk", "night"];
 const PAGES = [
-  ["home", "/index.html", null],
-  ["home at dusk", "/index.html", "dusk"],
-  ["home at night", "/index.html", "night"],
-  ["blog list", "/blog/index.html", null],
-  ["blog post", "/blog/index.html?p=a-join-that-returned-zero-rows", null],
-  ["blog post at dusk", "/blog/index.html?p=a-join-that-returned-zero-rows", "dusk"],
-  ["blog post at night", "/blog/index.html?p=a-join-that-returned-zero-rows", "night"],
-  ["admin", "/admin.html", null],
+  ["home", "/index.html", ALL_TIMES],
+  ["blog list", "/blog/index.html", DAY_ONLY],
+  ["blog post", "/blog/index.html?p=a-join-that-returned-zero-rows", ALL_TIMES],
+  ["admin", "/admin.html", DAY_ONLY],
   // The gallery renders every component in every state, including states no
   // real page currently shows. Auditing it is broader coverage than the
   // site's own pages can give.
-  ["design system", "/design/index.html", null],
+  ["design system", "/design/index.html", DAY_ONLY],
 ];
 
 // CHROMIUM_PATH lets a pre-provisioned environment point at a browser it
@@ -75,38 +73,48 @@ const browser = await chromium.launch(
   process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});
 let failures = 0;
 
-for (const [label, path, time] of PAGES) {
+function report(label, violations) {
+  if (violations.length === 0) {
+    console.log(`  PASS  ${label}`);
+    return;
+  }
+  failures += violations.length;
+  console.log(`  FAIL  ${label}`);
+  for (const v of violations) {
+    console.log(`          [${v.impact}] ${v.id}: ${v.help}`);
+    for (const n of v.nodes.slice(0, 3)) {
+      console.log(`            ${n.html.slice(0, 100).replace(/\s+/g, " ")}`);
+    }
+    console.log(`            -> ${v.helpUrl}`);
+  }
+}
+
+for (const [label, path, times] of PAGES) {
   const page = await browser.newPage();
   // The API is unreachable from CI, which is fine -- the site falls back to
   // data/projects.json, and that is the state we want audited anyway.
   await page.goto(base + path, { waitUntil: "domcontentloaded" });
   await page.waitForTimeout(1500);
-  if (time) await page.evaluate((t) => { document.documentElement.dataset.time = t; }, time);
   await page.addScriptTag({ content: axeSource });
-  const { violations } = await page.evaluate(async () =>
-    await axe.run(document, { resultTypes: ["violations"] }));
+
+  for (const time of times) {
+    await page.evaluate((t) => {
+      if (t) document.documentElement.dataset.time = t;
+      else delete document.documentElement.dataset.time;
+    }, time);
+    const { violations } = await page.evaluate(async () =>
+      await axe.run(document, { resultTypes: ["violations"] }));
+    report(time ? `${label} at ${time}` : label, violations);
+  }
 
   // WCAG 1.4.10 reflow: no sideways scrolling on a phone. axe can't see
   // this, so measure it. 390px is the spec's phone width.
   await page.setViewportSize({ width: 390, height: 844 });
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
   if (overflow > 0) {
-    violations.push({ impact: "serious", id: "reflow", help: `page is ${overflow}px wider than a 390px viewport`,
-      nodes: [], helpUrl: "https://www.w3.org/WAI/WCAG22/Understanding/reflow.html" });
-  }
-
-  if (violations.length === 0) {
-    console.log(`  PASS  ${label}`);
-  } else {
-    failures += violations.length;
-    console.log(`  FAIL  ${label}`);
-    for (const v of violations) {
-      console.log(`          [${v.impact}] ${v.id}: ${v.help}`);
-      for (const n of v.nodes.slice(0, 3)) {
-        console.log(`            ${n.html.slice(0, 100).replace(/\s+/g, " ")}`);
-      }
-      console.log(`            -> ${v.helpUrl}`);
-    }
+    report(`${label} at 390px`, [{ impact: "serious", id: "reflow",
+      help: `page is ${overflow}px wider than a 390px viewport`, nodes: [],
+      helpUrl: "https://www.w3.org/WAI/WCAG22/Understanding/reflow.html" }]);
   }
   await page.close();
 }

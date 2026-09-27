@@ -11,6 +11,8 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
 }
-code, kbd, pre { font-family: var(--font-mono); font-variation-settings: var(--axes-mono); }
+/* The ONE rule that picks Recursive's code voice. Components set size only:
+   a `font:` shorthand there would reset font-variation-settings. */
+code, kbd, pre, .code-block { font-family: var(--font-mono); font-variation-settings: var(--axes-mono); }
 ::selection { background: var(--fill); color: var(--on-fill); }
 a { color: inherit; }

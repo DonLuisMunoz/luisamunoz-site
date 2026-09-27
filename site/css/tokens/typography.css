@@ -11,18 +11,18 @@
 
   /* ---- Weights ---- */
   --fw-regular: 400;
-  --fw-medium: 500;
   --fw-semibold: 600;
-  --fw-bold: 700;
 
   /* ---- Scale — the classic 12·14·16·18·21·24·36·48·60·72 ---- */
   --type-display: 700 72px/1.0 var(--font-sans);    /* the name, and nothing else */
   --type-h2: 700 48px/1.05 var(--font-sans);        /* section titles */
+  --type-title: 700 36px/1.15 var(--font-sans);     /* featured title, h2 inside a post */
   --type-h3: 600 24px/1.25 var(--font-sans);        /* card and post titles */
   --type-lead: 400 21px/1.5 var(--font-sans);       /* the line under a title */
   --type-body: 400 18px/1.55 var(--font-sans);      /* everything you read */
+  --type-prose: 400 21px/1.6 var(--font-sans);      /* the long-form reading column */
+  --type-label: 600 16px/1.4 var(--font-sans);      /* small headings, form labels */
   --type-small: 400 14px/1.5 var(--font-sans);      /* meta, tags, captions */
-  --type-code: 400 16px/1.6 var(--font-mono);
 
   --tracking-display: -0.02em;
 }
