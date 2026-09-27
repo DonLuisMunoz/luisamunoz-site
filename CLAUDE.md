@@ -6,7 +6,8 @@ human; this file is the stuff that is easy to get wrong.
 ## What this is
 
 `luisamunoz.com` — a personal portfolio and blog. Plain HTML/CSS/JS with **no build
-step and no runtime dependencies**, served by an assets-only Cloudflare Worker. An
+step and no runtime dependencies** — with one approved exception, three.js on the home
+page (see Never) — served by an assets-only Cloudflare Worker. An
 optional FastAPI + SQLite backend (`api/`) runs in Docker on a homelab behind a
 Cloudflare Tunnel and handles the project CMS and contact form. The blog does not
 depend on it and must keep working when it is down.
@@ -18,12 +19,13 @@ update them too** — a lesson that contradicts the code is worse than no lesson
 ## Commands
 
 ```bash
-node --test                     # unit tests: markdown renderer + tests/css-tokens.test.js
+node --test                     # unit tests: markdown renderer, time presets + tests/css-tokens.test.js
                                 # (contrast in every preset, undefined vars, raw hex). No install needed.
 node --check site/js/<file>.js  # syntax gate — nothing transpiles this code
 python3 newpost.py check        # validate blog manifest + refresh read times + rebuild sitemap
 python3 newpost.py new "Title"  # scaffold a post
 node tests/a11y.check.mjs       # axe-core audit of every page state (see below)
+node scripts/render-stills.mjs  # re-render the desk's fallback still; prints link positions
 ```
 
 The a11y check needs tooling that is deliberately **not** a repo dependency:
@@ -151,7 +153,8 @@ Good recall prompts are about *why the code is shaped this way*, never definitio
 - **Never write a raw hex value outside `site/css/tokens/`.** The palette is five room
   colours and three time presets in `tokens/colors.css`; components use semantic tokens
   (`--text`, `--ground`, `--link`…) so a preset change recolours everything.
-  `tests/css-tokens.test.js` fails on a raw hex or an undefined `var()`.
+  `tests/css-tokens.test.js` fails on a raw hex or an undefined `var()`. Scene code reads
+  colours from tokens too (`token("--x")` in `js/scenes/`); the test covers it.
 - **`class` is for styling, `data-*` is for JavaScript.** `main.js` queries
   `[data-stack]`, never `.skills`. Renaming a class must never break behaviour.
 - **Escape before interpolating into `innerHTML`.** Both `main.js` and `blog.js`
@@ -185,11 +188,22 @@ Good recall prompts are about *why the code is shaped this way*, never definitio
   the XML. CI fails if a run of `newpost.py check` leaves the tree dirty.
 - **`site/404.html` uses absolute paths.** It is served for any unmatched URL at any
   depth, so `./css/...` would 404 from `/blog/nope/`.
+- **The desk has two framings that must agree.** `ASPECT` in `site/js/stage.js` equals
+  `.desk { aspect-ratio }` in `pages/hero.css`, and the inline `--x`/`--y` on the desk links
+  plus `site/assets/scenes/desk.jpg` come from `scripts/render-stills.mjs`. Change
+  `scenes/desk.js` or the camera → rerun it and paste the positions.
+- **`project()` needs a fresh camera matrix.** `stage.js` calls `camera.updateMatrixWorld()`
+  before placing the links; `render()` only refreshes it afterwards, so a desk that draws one
+  frame (phones, reduced motion) put every link in the wrong place.
+- **`time.js` is a classic script in `<head>` on purpose.** As a module it would run after
+  parsing and flash day at night.
 
 ## Never
 
 - Commit `api/.env`, tokens, or SMTP credentials. `site/js/config.js` ships to every
   visitor — it holds `API_BASE` and nothing secret, ever.
 - Add a build step, a framework, or a runtime dependency to `site/` without being
-  asked. The absence of those is the point of the project.
+  asked. The absence of those is the point of the project. The one exception is three.js,
+  approved for the desk redesign: pinned (`three@0.186.1/+esm`), home page only, and
+  optional — the page works without it.
 - Add a dependency to make a test pass. `node --test` is built in.

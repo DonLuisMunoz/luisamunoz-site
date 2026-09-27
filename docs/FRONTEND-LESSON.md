@@ -76,8 +76,8 @@ a lesson.
     of times a second and stutter. It hands the browser a list of elements and a callback, and
     the browser reports back when one enters the viewport. The scroll reveal that taught this
     was removed in the redesign (phase 1). Read it where it lived:
-    `git show 74a82aa:site/js/main.js`, section 3. The same API returns in phase 2, where
-    `stage.js` uses it to build each 3D scene only when its section nears the viewport.
+    `git show 74a82aa:site/js/main.js`, section 3. It lives on in
+    `site/js/stage.js`, which uses it to stop drawing the 3D desk while it's scrolled off screen.
 
 ## Layer 4 — The network
 
@@ -97,6 +97,8 @@ a lesson.
     run CSS hover states) until the network answers. That's why the nav still responds while
     `loadProjects()` is waiting. The alternative is what a blocking call
     would do: freeze the entire page, animation and all, until the server replies.
+    The 3D desk is the clearest case on the site: `stage.js` does `await import()` of three.js
+    after the text has painted, and the page is readable and clickable for the whole download.
 
 15. **`try`/`catch` replaces `.catch()`.** Because `await` makes async code *look* sequential,
     ordinary `try`/`catch` works on it — a rejected Promise throws right where you awaited it.
@@ -152,7 +154,8 @@ it is.
     silences CSS transitions and animations, but a JavaScript loop is not CSS. It has to read
     the same preference itself with `window.matchMedia("(prefers-reduced-motion: reduce)").matches`
     and paint its finished state instead. The site had two such loops (typing, streak); the
-    redesign removed both, and phase 2's scene code will read the same preference. "Reduced
+    redesign removed both, and `stage.js` reads the same preference: with reduced motion the desk is drawn but never
+    sways or glides. "Reduced
     motion" means show the end state, not hide the content.
 
 ## Layer 5 — Parsing and rendering

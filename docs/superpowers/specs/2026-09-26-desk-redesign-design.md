@@ -90,6 +90,9 @@ scrolls to that section.
 
 **Hero copy:** the name "Luis Munoz" and the nav. No statement. Each section introduces itself.
 
+**Hero labels** are always visible (touch has no hover); hovering or focusing one brightens its
+object. The homelab box gets its link in phase 3, when its section exists.
+
 **Links:** LinkedIn, GitHub and Instagram as profile links in About. munozit-website is out of
 scope and not linked.
 
@@ -111,7 +114,7 @@ site/js/
     homelab.js        server box + activity lights
     window.js         bay and skyline
   lib/
-    time.js           pure: hour -> preset
+    time.js           Tampa hour -> preset (lives at js/time.js: a classic <head> script)
     health.js         pure: health result -> light state
     areas.js          pure: items -> area positions, default object
 ```
@@ -123,7 +126,8 @@ site/js/
   offscreen or while the tab is hidden.
 - **Geometry in code.** Boxes, cylinders and planes with flat palette colours. No model files,
   no loaders. Paintings and Instagram photos are image textures.
-- **Budget.** Under 200 KB of JS over the wire for the homepage, most of it three.js.
+- **Budget.** Under 210 KB of JS over the wire for the homepage, most of it three.js (190 KB
+  brotli on its own, as a single `+esm` module — the package ships no minified build).
 
 ### Areas and scrolling
 
@@ -171,9 +175,10 @@ the flicker. The result affects nothing outside the homelab scene and the status
 
 - The canvas is `aria-hidden`. Every area and every hero object has a real `<button>` or link
   positioned over it, in DOM order, with a visible focus ring.
-- No WebGL, a failed three.js import, or reduced motion with a low-power device: each section
-  shows a still image of its scene with the same buttons as hotspots. One still per scene,
-  rendered once from the real scenes and committed to `site/assets/scenes/`.
+- No WebGL or a failed three.js import: each section shows a still image of its scene with the
+  same links. One still per scene (day lighting), rendered once from the real scene by
+  `scripts/render-stills.mjs` and committed to `site/assets/scenes/`. Reduced motion: the live
+  scene, frozen — no sway, no glide.
 - The content is HTML, so crawlers, screen readers and no-JS visitors get all of it.
 
 ## Instagram
@@ -211,7 +216,7 @@ check. The open lesson question in CLAUDE.md is rewritten to use them.
 
 ## Testing
 
-- **Unit, test-first** (`node --test`, no new dependencies): `lib/time.js` including boundary
+- **Unit, test-first** (`node --test`, no new dependencies): `time.js` including boundary
   hours and DST; `lib/health.js` for online, error, timeout and no `API_BASE`;
   `lib/areas.js` for positions and the default object.
 - **Syntax:** `node --check` on every new file.
@@ -227,7 +232,7 @@ One branch and one PR per phase, CI green before merge. The site works after eve
 1. **Identity.** Tokens per time preset, Recursive, neobrutalism removed, the terminal,
    typing effect, streak strip and badge deleted, `/design/`, CLAUDE.md and lesson docs
    updated. No 3D yet.
-2. **Stage and hero.** `stage.js`, `lib/time.js`, the desk scene, the fallback still, the
+2. **Stage and hero.** `stage.js`, `time.js`, the desk scene, the fallback still, the
    three.js exception in CLAUDE.md.
 3. **Homelab.** Scene and live activity lights (`lib/health.js`).
 4. **Projects.** Areas (`lib/areas.js`), Tampa export script and columns, the stack tally.
