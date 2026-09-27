@@ -49,15 +49,23 @@ const { chromium } = await import("playwright");
 const axeSource = await readFile(
   fileURLToPath(await import.meta.resolve("axe-core/axe.min.js")), "utf8");
 
+// [label, path, time preset]. null = no data-time attribute, which is what a
+// visitor gets today and what stage.js falls back to. Dusk and night are
+// audited on the two pages with the most colour surface: home and a
+// rendered post (code blocks, blockquotes, links).
 const PAGES = [
-  ["home", "/index.html"],
-  ["blog list", "/blog/index.html"],
-  ["blog post", "/blog/index.html?p=a-join-that-returned-zero-rows"],
-  ["admin", "/admin.html"],
+  ["home", "/index.html", null],
+  ["home at dusk", "/index.html", "dusk"],
+  ["home at night", "/index.html", "night"],
+  ["blog list", "/blog/index.html", null],
+  ["blog post", "/blog/index.html?p=a-join-that-returned-zero-rows", null],
+  ["blog post at dusk", "/blog/index.html?p=a-join-that-returned-zero-rows", "dusk"],
+  ["blog post at night", "/blog/index.html?p=a-join-that-returned-zero-rows", "night"],
+  ["admin", "/admin.html", null],
   // The gallery renders every component in every state, including states no
   // real page currently shows. Auditing it is broader coverage than the
   // site's own pages can give.
-  ["design system", "/design/index.html"],
+  ["design system", "/design/index.html", null],
 ];
 
 // CHROMIUM_PATH lets a pre-provisioned environment point at a browser it
@@ -67,12 +75,13 @@ const browser = await chromium.launch(
   process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});
 let failures = 0;
 
-for (const [label, path] of PAGES) {
+for (const [label, path, time] of PAGES) {
   const page = await browser.newPage();
   // The API is unreachable from CI, which is fine -- the site falls back to
   // data/projects.json, and that is the state we want audited anyway.
   await page.goto(base + path, { waitUntil: "domcontentloaded" });
   await page.waitForTimeout(1500);
+  if (time) await page.evaluate((t) => { document.documentElement.dataset.time = t; }, time);
   await page.addScriptTag({ content: axeSource });
   const { violations } = await page.evaluate(async () =>
     await axe.run(document, { resultTypes: ["violations"] }));
