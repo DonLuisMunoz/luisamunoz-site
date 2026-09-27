@@ -17,33 +17,11 @@
    Automated tooling catches roughly a third of real accessibility
    problems. Zero violations here means no REGRESSION, not "accessible".
    ============================================================ */
-import { createServer } from "node:http";
 import { readFile } from "node:fs/promises";
-import { extname, join, normalize } from "node:path";
 import { fileURLToPath } from "node:url";
+import { serveSite } from "./serve.mjs";
 
-const ROOT = join(fileURLToPath(new URL(".", import.meta.url)), "..", "site");
-const TYPES = {
-  ".html": "text/html", ".css": "text/css", ".js": "text/javascript",
-  ".json": "application/json", ".svg": "image/svg+xml", ".png": "image/png",
-  ".md": "text/markdown", ".ico": "image/x-icon",
-};
-
-const server = createServer(async (req, res) => {
-  try {
-    let p = decodeURIComponent(req.url.split("?")[0]);
-    if (p.endsWith("/")) p += "index.html";
-    const file = join(ROOT, normalize(p).replace(/^(\.\.[/\\])+/, ""));
-    const body = await readFile(file);
-    res.writeHead(200, { "Content-Type": TYPES[extname(file)] || "application/octet-stream" });
-    res.end(body);
-  } catch {
-    res.writeHead(404).end("not found");
-  }
-});
-
-await new Promise((r) => server.listen(0, r));
-const base = `http://localhost:${server.address().port}`;
+const { base, close } = await serveSite();
 
 const { chromium } = await import("playwright");
 const axeSource = await readFile(
@@ -57,6 +35,7 @@ const DAY_ONLY = [null];
 const ALL_TIMES = [null, "dusk", "night"];
 const PAGES = [
   ["home", "/index.html", ALL_TIMES],
+  ["home without WebGL", "/index.html", DAY_ONLY, { noWebGL: true }],
   ["blog list", "/blog/index.html", DAY_ONLY],
   ["blog post", "/blog/index.html?p=a-join-that-returned-zero-rows", ALL_TIMES],
   ["admin", "/admin.html", DAY_ONLY],
@@ -89,10 +68,13 @@ function report(label, violations) {
   }
 }
 
-for (const [label, path, times] of PAGES) {
+for (const [label, path, times, opts = {}] of PAGES) {
   const page = await browser.newPage();
   // The API is unreachable from CI, which is fine -- the site falls back to
   // data/projects.json, and that is the state we want audited anyway.
+  // Simulate a browser with no WebGL: stage.js must leave the still and the
+  // links in place, and the still must actually exist.
+  if (opts.noWebGL) await page.addInitScript(() => { HTMLCanvasElement.prototype.getContext = () => null; });
   await page.goto(base + path, { waitUntil: "domcontentloaded" });
   await page.waitForTimeout(1500);
   await page.addScriptTag({ content: axeSource });
@@ -105,6 +87,16 @@ for (const [label, path, times] of PAGES) {
     const { violations } = await page.evaluate(async () =>
       await axe.run(document, { resultTypes: ["violations"] }));
     report(time ? `${label} at ${time}` : label, violations);
+  }
+
+  if (opts.noWebGL) {
+    const still = await page.evaluate(() => {
+      const img = document.querySelector(".desk__still");
+      return img && img.complete && img.naturalWidth > 0 && !document.querySelector("[data-desk].is-live");
+    });
+    if (!still) report(`${label}: fallback`, [{ impact: "serious", id: "desk-fallback",
+      help: "no WebGL, but the desk still is missing or the live scene claims to be running", nodes: [],
+      helpUrl: "https://developer.mozilla.org/docs/Web/API/WebGL_API" }]);
   }
 
   // WCAG 1.4.10 reflow: no sideways scrolling on a phone. axe can't see
@@ -120,7 +112,7 @@ for (const [label, path, times] of PAGES) {
 }
 
 await browser.close();
-server.close();
+close();
 
 console.log(failures ? `\n${failures} accessibility violation(s).` : "\nNo accessibility violations.");
 process.exit(failures ? 1 : 0);
