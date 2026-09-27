@@ -83,8 +83,7 @@ Most of this page stopped being hand-edited during the 2026-08-04 phases. What's
 | You want to change | Where | What to edit |
 |---|---|---|
 | The FEATURED highlight | `index.html`, `<!-- featured entry` | Title, body, tags, the two code blocks. **Also update `data-tools="..."` on the `<article>`** — the featured project isn't in `projects.json`, so that attribute is how its tools reach the stack tally. |
-| "currently" / "reading" strip text | `index.html`, `class="strip"` | The text in each `.strip__value` |
-| IT foundation chips | `index.html`, `id="foundation"` | The `.tag` chips and the gold callout |
+| IT foundation chips | `index.html`, `id="foundation"` | The `.tag` chips and the note under them (`.foundation-note`) |
 | Social links / email | `index.html`, `class="contact__links"` | `href` on each button |
 | "next up" tools | `site/js/main.js` | the `STACK_NEXT` array |
 
@@ -93,7 +92,6 @@ Most of this page stopped being hand-edited during the 2026-08-04 phases. What's
 - **Stack XP bars** (`id="stack"`) — built by `main.js` from every project's `tools` plus the
   featured block's `data-tools`. There is no width to set. Ship a project using a tool and its
   bar grows on its own.
-- **Shipped count** (`data-shipped`) — the number of projects rendered.
 - **Blog cards** (`id="writing"`) — the two newest posts from
   `site/content/posts/index.json`. See `docs/ADD-A-POST.md`. The section hides itself when
   there are no posts.

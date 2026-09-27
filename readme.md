@@ -26,7 +26,7 @@ portfolio/
 │   │   └── responsive.css     # every breakpoint, after what it overrides
 │   ├── js/
 │   │   ├── config.js          # ← set API_BASE here (the only knob)
-│   │   ├── main.js            # typing, streak, reveal, project render, contact form
+│   │   ├── main.js            # project render, stack tally, latest posts, contact form
 │   │   ├── blog.js            # markdown renderer + the /blog views (no dependencies)
 │   │   └── admin.js           # CRUD client for the admin panel
 │   ├── content/
@@ -64,7 +64,7 @@ portfolio/
 │   ├── BACKEND-LESSON.md      # learn the backend (reinforcement-coach Phase 1)
 │   └── FRONTEND-LESSON.md     # learn the frontend (same method, five layers)
 │
-├── neobrutalism-spec.md       # authoritative component + interaction spec
+├── neobrutalism-spec.md       # borrowed reference; no longer describes this site
 ├── CLAUDE.md                  # working notes for Claude Code (conventions, traps)
 ├── LICENSE                    # MIT for the code; content is all rights reserved
 └── readme.md
@@ -99,16 +99,14 @@ node tests/a11y.check.mjs    # axe-core across home, blog, post and admin
 CI runs all of it on every push (`.github/workflows/ci.yml`). The site is at zero
 axe violations; the check fails the build if that regresses.
 
-## Design rules (Neo-Brutalist)
+## Design rules
 
-0px radius · 2–3px solid plum borders · hard offset shadows (no blur) · hover lifts, active
-presses, no fades. All color/type/spacing come from `site/css/tokens/` — edit tokens, never
-raw hex in the HTML. Full module set in `neobrutalism-spec.md`.
+The site is a desk in Tampa, and the window tells the time. Five room colours
+(`--wall`, `--ink`, `--bay`, `--dusk`, `--shelf`) and three lighting presets (day, dusk,
+night) live in `site/css/tokens/colors.css`; components use the semantic tokens (`--text`,
+`--ground`, `--link`…), never the room colours or a raw hex. One typeface, Recursive, in
+three voices set by its variable axes. Sentence case, 1px borders with small radii, no
+shadows, no scroll reveals. `--dusk` is a fill colour only — never small text.
 
-## Brand tokens
-
-brand = gold `#E0A92E` · accent = terracotta `#AC4622` · success = teal `#27695C` ·
-ink/border = plum `#2B1B2E` · surface = cream `#F2E4C9` / paper `#FBF3E2`.
-Terracotta and teal are the WCAG-AA-corrected values (was `#C8542B` / `#2E7D6F`, both of
-which failed 4.5:1 as small text). Gold is a fill/border colour only — never small text.
-Type: Space Grotesk (display), JetBrains Mono (UPPERCASE labels), Public Sans (body).
+Every component, in every preset, is rendered at `/design/`. `tests/css-tokens.test.js`
+checks contrast in all three presets and fails on a raw hex or an undefined token.

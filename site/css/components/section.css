@@ -4,5 +4,10 @@
 .section { padding: 96px 5vw; }
 .section--surface { background: var(--surface); }
 .section--ground { background: var(--ground); }
+/* Two neighbours on the same ground would merge into one band. #writing hides
+   itself when there are no posts, so neighbours can't be arranged to always
+   alternate — a hairline separates them instead. */
+.section--surface + .section--surface,
+.section--ground + .section--ground { border-top: 1px solid var(--rule); }
 .section__inner { max-width: 1100px; margin: 0 auto; }
 .section__head { margin-bottom: 44px; }
