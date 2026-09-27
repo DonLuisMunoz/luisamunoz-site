@@ -89,8 +89,14 @@ for (const name of ["day", "dusk", "night"]) {
 
 test("every var() used in site/ is defined in tokens/", () => {
   const defined = new Set(blocks.flatMap(([, d]) => Object.keys(d)));
+  const files = walk(SITE).filter((f) => /\.(css|html|js)$/.test(f));
+  // Per-element properties count too: a desk link's inline style="--x: 40%"
+  // defines the --x its CSS reads. Only a name declared nowhere is a typo.
+  for (const file of files) {
+    for (const [, name] of read(file).matchAll(/(--[\w-]+)\s*:/g)) defined.add(name);
+  }
   const missing = [];
-  for (const file of walk(SITE).filter((f) => /\.(css|html|js)$/.test(f))) {
+  for (const file of files) {
     for (const [, name] of read(file).matchAll(/var\((--[\w-]+)/g)) {
       if (!defined.has(name)) missing.push(`${relative(SITE, file)}: ${name}`);
     }
@@ -126,6 +132,36 @@ test("only base.css picks the mono voice", () => {
   for (const file of walk(SITE).filter((f) => /\.(css|html)$/.test(f) && !f.startsWith(TOKENS) && f !== BASE)) {
     for (const [, name] of stripComments(read(file)).matchAll(/var\((--(?:font-mono|axes-mono|type-code))\)/g)) {
       offenders.push(`${relative(SITE, file)}: ${name}`);
+    }
+  }
+  assert.deepEqual(offenders, []);
+});
+
+// The 3D desk reads its colours from CSS tokens (js/scenes/*.js, via
+// getComputedStyle), so the palette still lives in tokens/ alone. Every
+// token a scene names must exist in every preset, and no hex may appear.
+const SCENES = join(SITE, "js", "scenes");
+
+test("every token a scene reads is defined in every preset", () => {
+  const missing = [];
+  for (const file of readdirSync(SCENES).map((f) => join(SCENES, f))) {
+    const names = new Set([...read(file).matchAll(/"(--[\w-]+)"/g)].map((m) => m[1]));
+    for (const time of ["day", "dusk", "night"]) {
+      const vars = {};
+      for (const [sels, decls] of blocks) {
+        if (sels.includes(":root") || sels.includes(`[data-time="${time}"]`)) Object.assign(vars, decls);
+      }
+      for (const n of names) if (!vars[n]) missing.push(`${relative(SITE, file)}: ${n} (${time})`);
+    }
+  }
+  assert.deepEqual(missing, []);
+});
+
+test("no raw hex in scene code", () => {
+  const offenders = [];
+  for (const file of readdirSync(SCENES).map((f) => join(SCENES, f))) {
+    for (const m of read(file).matchAll(/["'`]#[0-9a-f]{3,8}["'`]|0x[0-9a-f]{6}\b/gi)) {
+      offenders.push(`${relative(SITE, file)}: ${m[0]}`);
     }
   }
   assert.deepEqual(offenders, []);

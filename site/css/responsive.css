@@ -4,7 +4,8 @@
    source order is what makes them win. */
 
 @media (max-width: 860px) {
-  .hero__title { font-size: 48px; }
+  .hero__name { font-size: 48px; }
+  .desk__spot { font-size: 12px; padding: 4px 8px; }
   .projects, .skills, .writing-head + .projects { grid-template-columns: minmax(0, 1fr); }
   .section-title { font-size: 36px; }
   .nav__links .nav__link { display: none; }

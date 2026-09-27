@@ -76,11 +76,10 @@
     <nav class="nav">
       <a href="#top" class="nav__brand">Luis Munoz</a>
       <div class="nav__links">
-        <a href="#log" class="nav__link">Log</a>
-        <a href="#stack" class="nav__link">Stack</a>
-        <a href="#foundation" class="nav__link">Background</a>
+        <a href="#log" class="nav__link">Projects</a>
         <a href="./blog/" class="nav__link">Writing</a>
-        <a href="#contact" class="nav__cta">Say hi</a>
+        <a href="#foundation" class="nav__link">About</a>
+        <a href="#contact" class="nav__cta">Work with me</a>
       </div>
     </nav>
 
@@ -88,16 +87,26 @@
 
     <!-- ============ HERO ============ -->
     <header id="top" class="hero">
-      <div class="hero__inner">
-        <h1 class="hero__title">I build small things and learn out loud.</h1>
-        <p class="hero__sub">
-          Hi, I'm <strong>Luis A. Munoz</strong>, teaching myself Python and data,
-          one small project at a time.
-        </p>
-        <div class="hero__actions">
-          <a href="#log" class="btn btn--primary">Read the log</a>
-          <a href="https://github.com/DonLuisMunoz" target="_blank" rel="noopener" class="btn">GitHub ↗</a>
-        </div>
+      <h1 class="hero__name">Luis Munoz</h1>
+      <!-- The desk. stage.js draws it in 3D over the still. The links work
+           either way: the inline --x/--y match the still's framing (printed
+           by scripts/render-stills.mjs), and stage.js re-projects them from
+           the live camera. -->
+      <div class="desk" data-desk>
+        <img
+          class="desk__still"
+          src="./assets/scenes/desk.jpg"
+          width="1600"
+          height="1000"
+          alt="Luis's desk: a Dell monitor on an arm, a MacBook, a window on the right, and a black shelf of paintings and figurines"
+        />
+        <canvas class="desk__canvas" data-desk-canvas aria-hidden="true"></canvas>
+        <nav class="desk__spots" aria-label="Around the desk">
+          <a class="desk__spot" data-spot="monitor" href="#log" style="--x: 50%; --y: 40%">Projects</a>
+          <a class="desk__spot" data-spot="laptop" href="./blog/" style="--x: 62%; --y: 70%">Writing</a>
+          <a class="desk__spot" data-spot="shelf" href="#foundation" style="--x: 22%; --y: 45%">About</a>
+          <a class="desk__spot" data-spot="window" href="#contact" style="--x: 88%; --y: 35%">Work with me</a>
+        </nav>
       </div>
     </header>
 
@@ -308,5 +317,6 @@
 
     <script src="./js/config.js"></script>
     <script src="./js/main.js"></script>
+    <script type="module" src="./js/stage.js"></script>
   </body>
 </html>

@@ -1,12 +1,27 @@
 /* pages/hero.css
-   Home page hero. Text only until phase 2 puts the desk scene here. */
+   Home page hero: the name, then the desk. The desk keeps one aspect ratio at
+   every width, so the still, the live canvas and the link positions share one
+   framing. ASPECT in js/stage.js must match. */
 
-.hero { padding: 120px 5vw 96px; }
-.hero__inner { max-width: 1100px; margin: 0 auto; }
-.hero__title {
-  font: var(--type-display); letter-spacing: var(--tracking-display);
-  color: var(--text); max-width: 12em;
+.hero { padding: 56px 5vw 72px; }
+.hero__name {
+  max-width: 1100px; margin: 0 auto 28px;
+  font: var(--type-display); letter-spacing: var(--tracking-display); color: var(--text);
 }
-.hero__sub { font: var(--type-lead); color: var(--text-soft); margin-top: 24px; max-width: 30em; }
-.hero__sub strong { color: var(--text); }
-.hero__actions { display: flex; gap: 12px; margin-top: 36px; flex-wrap: wrap; }
+.desk {
+  position: relative; max-width: 1100px; margin: 0 auto;
+  aspect-ratio: 16 / 10; overflow: hidden;
+  border-radius: var(--radius-md); background: var(--surface);
+}
+.desk__still, .desk__canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.desk__still { object-fit: cover; }
+.desk__canvas { visibility: hidden; }
+.desk.is-live .desk__canvas { visibility: visible; }
+.desk.is-live .desk__still { visibility: hidden; }
+.desk__spot {
+  position: absolute; left: var(--x); top: var(--y); transform: translate(-50%, -50%);
+  font: var(--type-label); font-size: 14px; color: var(--text);
+  background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius-pill);
+  padding: 6px 12px; text-decoration: none; white-space: nowrap;
+}
+.desk__spot:hover { border-color: var(--text); }

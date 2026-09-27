@@ -30,6 +30,8 @@
   --text-soft: #3B4957;
   --link: var(--bay);
   --rule: #6B7B86;       /* borders and dividers, 3:1 */
+  --scene-sky: #BFDDEF;     /* the 3D window's glass and the sky light */
+  --scene-light: #FFF4E0;   /* sunlight through the window */
 }
 
 [data-time="dusk"] {
@@ -39,6 +41,8 @@
   --text-soft: #43403F;
   --link: #1A5C73;
   --rule: #716760;
+  --scene-sky: var(--dusk);
+  --scene-light: #F5B36A;
 }
 
 [data-time="night"] {
@@ -48,6 +52,8 @@
   --text-soft: #A9B7C2;
   --link: #7CC4DD;
   --rule: #6A7F93;
+  --scene-sky: #1B2A44;
+  --scene-light: #5E7FA8;   /* moonlight */
 }
 
 /* ---- The same in every preset ---- */
@@ -58,4 +64,11 @@
   --code-text: #E4EAED;
   --syn-keyword: var(--dusk);
   --syn-string: #9FD4C8;
+}
+
+/* ---- The 3D desk — read by js/scenes/desk.js through getComputedStyle ---- */
+:root {
+  --scene-desk: #B8A58C;    /* the desktop */
+  --scene-metal: #A7ADB2;   /* monitor arm, MacBook, window frame */
+  --scene-screen: #9FD4C8;  /* the monitor's glow */
 }
