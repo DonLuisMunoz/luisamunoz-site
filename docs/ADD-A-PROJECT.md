@@ -86,8 +86,6 @@ Most of this page stopped being hand-edited during the 2026-08-04 phases. What's
 | "currently" / "reading" strip text | `index.html`, `class="strip"` | The text in each `.strip__value` |
 | IT foundation chips | `index.html`, `id="foundation"` | The `.tag` chips and the gold callout |
 | Social links / email | `index.html`, `class="contact__links"` | `href` on each button |
-| Typing-line phrases | `site/js/main.js` | the `phrases` array |
-| Streak start date | `site/js/main.js` | `var START = new Date(2026, 6, 1)` — month is 0-indexed, 6 = July |
 | "next up" tools | `site/js/main.js` | the `STACK_NEXT` array |
 
 **Computed, so don't hand-edit them:**
@@ -95,7 +93,6 @@ Most of this page stopped being hand-edited during the 2026-08-04 phases. What's
 - **Stack XP bars** (`id="stack"`) — built by `main.js` from every project's `tools` plus the
   featured block's `data-tools`. There is no width to set. Ship a project using a tool and its
   bar grows on its own.
-- **Streak** (`data-streak`) — days since the start date, computed live. Never resets.
 - **Shipped count** (`data-shipped`) — the number of projects rendered.
 - **Blog cards** (`id="writing"`) — the two newest posts from
   `site/content/posts/index.json`. See `docs/ADD-A-POST.md`. The section hides itself when

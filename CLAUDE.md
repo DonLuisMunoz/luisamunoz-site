@@ -18,7 +18,8 @@ update them too** — a lesson that contradicts the code is worse than no lesson
 ## Commands
 
 ```bash
-node --test                     # unit tests (markdown renderer). No install needed.
+node --test                     # unit tests: markdown renderer + tests/css-tokens.test.js
+                                # (contrast in every preset, undefined vars, raw hex). No install needed.
 node --check site/js/<file>.js  # syntax gate — nothing transpiles this code
 python3 newpost.py check        # validate blog manifest + refresh read times + rebuild sitemap
 python3 newpost.py new "Title"  # scaffold a post
@@ -82,9 +83,9 @@ Evidence from working sessions, not assumption. Update this as it changes.
   He conflates *performance* with *maintainability*; separate those explicitly when they come up.
 - **Open.** Async and the single thread (Layer 4, concepts 12–14). He was asked what a visitor
   sees during a blocking `fetch` and has not answered. Do **not** re-ask it in work mode — raise
-  it only in a lesson session. The scaffold that was on the table: the typing effect adds a
-  character every 95ms, so trace what happens to it during a 200ms blocking call, then ask what
-  a click on the nav does in that window.
+  it only in a lesson session. The typing effect is gone (redesign, phase 1). New scaffold: a 200ms
+  synchronous loop runs on click; ask what happens to the nav hover state and a second click
+  during it, then contrast with `await fetch` in `loadProjects()`.
 
 ### How a session runs
 
@@ -109,8 +110,8 @@ Evidence from working sessions, not assumption. Update this as it changes.
 |----|-------|-------------------------------|
 | 1 | #3 Copy button | You can't select an element JS hasn't created yet (delegation) |
 | 2 | #4 Tables, test-first | A parser is all edge cases; tests are a design tool, not a chore |
-| 3 | #13 Palette audit | A token nobody references is documentation, not architecture |
-| 4 | #2 Dark mode | Custom properties are live in the cascade, not compile-time substitution |
+| 3 | #13 Palette audit — superseded by the desk redesign (spec 2026-09-26) | A token nobody references is documentation, not architecture |
+| 4 | #2 Dark mode — becomes the day/dusk/night presets (phase 2) | Custom properties are live in the cascade, not compile-time substitution |
 | 5 | #1 Per-post URLs | A DOM fix works for humans and fails for crawlers |
 | 6 | #7 API tests | Parameterised queries and bearer auth, proven rather than asserted |
 | 7 | #6 Deploy | The tunnel makes an *outbound* connection — that's why no ports open |
@@ -130,7 +131,7 @@ Good recall prompts are about *why the code is shaped this way*, never definitio
 - Why is `computeStack()` a `function` declaration when everything else became an arrow?
 - Why does an empty list from the API count as a failure?
 - Why did adding an `input:focus-visible` rule not restore the focus ring?
-- Why can gold be a border but never small text on cream?
+- Why can dusk be a button fill but never small text on the wall?
 
 ### Misconceptions to watch for
 
@@ -147,25 +148,26 @@ Good recall prompts are about *why the code is shaped this way*, never definitio
   Several rules across those layers tie on specificity, and a tie is decided by source order —
   reordering the imports to tidy them up will silently change rendering. A new reusable component
   goes in `components/` and gets added to `/design/`; anything only this site uses goes in `pages/`.
-- **Never write a raw hex value outside `site/css/tokens/`.** The whole palette is
-  tokens, which is why fixing every contrast failure on the site was a three-line
-  change. Adding `#somehex` to a component breaks that property.
+- **Never write a raw hex value outside `site/css/tokens/`.** The palette is five room
+  colours and three time presets in `tokens/colors.css`; components use semantic tokens
+  (`--text`, `--ground`, `--link`…) so a preset change recolours everything.
+  `tests/css-tokens.test.js` fails on a raw hex or an undefined `var()`.
 - **`class` is for styling, `data-*` is for JavaScript.** `main.js` queries
   `[data-stack]`, never `.skills`. Renaming a class must never break behaviour.
 - **Escape before interpolating into `innerHTML`.** Both `main.js` and `blog.js`
   have an `esc()`; `renderMarkdown` escapes the entire source *before* parsing, so
   a post can never inject markup. Do not reorder that. `.textContent` when you only
   need words on screen.
-- **Design rules**: 0px radius, 2–3px solid plum borders, hard offset shadows with
-  no blur, hover lifts, active presses, no fades. The source of truth is
-  **`site/design/index.html`** (served at `/design/`), which renders every component
-  from the real stylesheet. `neobrutalism-spec.md` is borrowed generic material for a
-  React/Tailwind system — useful as a component inventory, not as this site's values;
-  see the note at the top of that file.
+- **Design rules**: the room palette, Recursive only, sentence case, 1px `--rule`
+  borders with small radii, no shadows, no scroll reveals, motion only in answer to the
+  visitor. The source of truth is **`site/design/index.html`** (served at `/design/`),
+  which renders every component from the real stylesheet. `neobrutalism-spec.md` no
+  longer describes this site.
 - **Accessibility is a gate, not a nice-to-have.** The site is at zero axe
   violations. Keep `:focus-visible` rings, the `<main>` landmark, the skip link,
-  and the `prefers-reduced-motion` branches intact. Gold (`--gold`) is a
-  fill/border colour only — it cannot pass contrast as small text on cream.
+  and the `prefers-reduced-motion` branches intact. `--dusk` is a fill
+  colour only — 1.64:1 on `--wall`. Contrast must pass in all three presets; the a11y
+  check audits dusk and night.
 
 ## Traps that have already bitten
 

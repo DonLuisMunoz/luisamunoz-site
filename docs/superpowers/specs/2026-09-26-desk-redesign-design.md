@@ -224,8 +224,9 @@ check. The open lesson question in CLAUDE.md is rewritten to use them.
 
 One branch and one PR per phase, CI green before merge. The site works after every phase.
 
-1. **Identity.** Tokens per time preset, Recursive, neobrutalism removed, `/design/`, CLAUDE.md
-   and lesson docs updated. No 3D yet.
+1. **Identity.** Tokens per time preset, Recursive, neobrutalism removed, the terminal,
+   typing effect, streak strip and badge deleted, `/design/`, CLAUDE.md and lesson docs
+   updated. No 3D yet.
 2. **Stage and hero.** `stage.js`, `lib/time.js`, the desk scene, the fallback still, the
    three.js exception in CLAUDE.md.
 3. **Homelab.** Scene and live activity lights (`lib/health.js`).

@@ -13,7 +13,7 @@ a lesson.
 ## Layer 1 — The document
 
 1. **HTML is not the DOM.** This is the single most important idea on this page. `index.html`
-   ships `<div data-reveal class="skills" data-stack></div>` — an *empty div*. Every stack bar
+   ships `<div class="skills" data-stack></div>` — an *empty div*. Every stack bar
    you see on the live site was created by JavaScript after the page loaded. **View Source**
    shows the HTML file the server sent; **Inspect Element** shows the DOM, the live tree the
    browser built and JS has been mutating since. They are different things, and confusing them
@@ -63,7 +63,7 @@ a lesson.
 
 ## Layer 3 — The DOM
 
-9. **Two kinds of hooks, kept separate.** `<div data-reveal class="skills" data-stack>` carries
+9. **Two kinds of hooks, kept separate.** `<div class="skills" data-stack>` carries
    `class` for *styling* and `data-*` for *JS targeting*. `main.js` queries `[data-stack]`, never
    `.skills`. That separation means you can rename a class for visual reasons without silently
    breaking the JavaScript. It's a deliberate convention, and a good one.
@@ -72,10 +72,12 @@ a lesson.
     browser invokes when that event fires. `e.preventDefault()` in the contact handler stops the
     browser's built-in behavior (a full page navigation) so JS can send it via `fetch` instead.
 
-11. **`IntersectionObserver`.** The reveal-on-scroll effect doesn't poll the scroll position —
-    that would run hundreds of times a second and stutter. It hands the browser a list of
-    elements and a callback, and the browser reports back when one enters the viewport.
-    `io.unobserve(e.target)` after revealing stops watching an element that's already done.
+11. **`IntersectionObserver`.** It doesn't poll the scroll position — that would run hundreds
+    of times a second and stutter. It hands the browser a list of elements and a callback, and
+    the browser reports back when one enters the viewport. The scroll reveal that taught this
+    was removed in the redesign (phase 1). Read it where it lived:
+    `git show 74a82aa:site/js/main.js`, section 3. The same API returns in phase 2, where
+    `stage.js` uses it to build each 3D scene only when its section nears the viewport.
 
 ## Layer 4 — The network
 
@@ -92,8 +94,8 @@ a lesson.
 
 14. **Nothing here is multi-threaded.** JavaScript runs on ONE thread. `await` doesn't run code
     in parallel — it *yields*, letting the browser do other work (respond to clicks, paint,
-    fire the typing effect) until the network answers. That's why the typing animation keeps
-    running smoothly while `loadProjects()` is waiting. The alternative is what a blocking call
+    run CSS hover states) until the network answers. That's why the nav still responds while
+    `loadProjects()` is waiting. The alternative is what a blocking call
     would do: freeze the entire page, animation and all, until the server replies.
 
 15. **`try`/`catch` replaces `.catch()`.** Because `await` makes async code *look* sequential,
@@ -106,9 +108,9 @@ a lesson.
     empty-list case is a real bug that was really hit (see the comment on line ~95), and it's the
     kind of thing tests exist for.
 
-17. **Graceful degradation.** `if ("IntersectionObserver" in window)` checks whether the browser
-    supports the feature and, if not, just marks everything visible. The page gets worse, not
-    broken. Same instinct as the JSON fallback.
+17. **Graceful degradation.** `if (!listEl) return;` in `loadProjects()`, and the `#writing`
+    section that stays hidden until real posts exist: when a piece is missing, the page gets
+    smaller, not broken. Same instinct as the JSON fallback.
 
 ## Layer 4.5 — Accessibility (cuts across all of them)
 
@@ -128,6 +130,8 @@ it is.
     value — which is why the token comment records the ratios for each role. Gold is the
     instructive exception: at 1.9:1 on cream, no adjustment saves it as text, so it is
     documented as a fill-and-border colour only. Not every colour can do every job.
+    The redesign replaced these colours; `tests/css-tokens.test.js` now computes every ratio in
+    every preset instead of a comment recording them.
 
 21. **Landmarks are how a screen reader skims.** A sighted visitor's eye jumps to the content;
     a screen-reader user presses a key to jump to `<main>`. There wasn't one — eleven sections
@@ -145,11 +149,11 @@ it is.
     navigation but not for mouse clicks.
 
 23. **A CSS media query cannot stop a `setTimeout`.** `@media (prefers-reduced-motion: reduce)`
-    silences CSS transitions and animations, but the typing effect and the streak count-up are
-    *JavaScript* loops. They had to read the same preference themselves with
-    `window.matchMedia("(prefers-reduced-motion: reduce)").matches` and paint their finished
-    state instead. A useful reminder that CSS and JS are separate systems that both have to
-    agree — and that "reduced motion" means show the end state, not hide the content.
+    silences CSS transitions and animations, but a JavaScript loop is not CSS. It has to read
+    the same preference itself with `window.matchMedia("(prefers-reduced-motion: reduce)").matches`
+    and paint its finished state instead. The site had two such loops (typing, streak); the
+    redesign removed both, and phase 2's scene code will read the same preference. "Reduced
+    motion" means show the end state, not hide the content.
 
 ## Layer 5 — Parsing and rendering
 
