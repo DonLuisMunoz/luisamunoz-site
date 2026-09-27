@@ -81,10 +81,21 @@ async function start() {
       const from = camera.position.clone();
       const to = from.clone().lerp(desk.anchors[name], 0.35);
       const t0 = performance.now();
+      // Navigate when the glide ends, or after 500ms whatever happens: frames
+      // stop when the desk scrolls away or the tab hides, and the click must
+      // not wait for them.
+      const go = () => {
+        if (!glide) return;
+        glide = null;
+        camera.position.copy(home);
+        location.href = a.href;
+        request();
+      };
+      setTimeout(go, 500);
       glide = (now) => {
         const k = Math.min(1, (now - t0) / 450);
         camera.position.lerpVectors(from, to, THREE.MathUtils.smoothstep(k, 0, 1));
-        if (k === 1) { glide = null; camera.position.copy(home); location.href = a.href; }
+        if (k === 1) go();
       };
       request();
     });

@@ -1,9 +1,9 @@
 /* tokens/colors.css
    The room's palette, and three lighting presets built from it.
 
-   The site is Luis's desk in Tampa and the window tells the time: phase 2's
-   stage.js writes data-time="day|dusk|night" on <html> from Tampa's hour.
-   Until then, and whenever JS is off, the day values apply.
+   The site is Luis's desk in Tampa and the window tells the time: js/time.js
+   writes data-time="day|dusk|night" on <html> from Tampa's hour, before first
+   paint. With JS off, the day values apply.
 
    Attribute selectors rather than :root[data-time=…], so any element can
    scope a preset. /design/ uses that to show all three side by side.
