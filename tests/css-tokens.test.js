@@ -35,11 +35,17 @@ const blocks = [...tokenCss.matchAll(/([^{}]+)\{([^}]*)\}/g)].map(([, sel, body]
   Object.fromEntries([...body.matchAll(/(--[\w-]+)\s*:\s*([^;]+);/g)].map(([, k, v]) => [k, v.trim()])),
 ]);
 
-function preset(name) {
+// Every token in a preset: the :root values, overridden by the preset's block.
+function presetVars(name) {
   const vars = {};
   for (const [sels, decls] of blocks) {
     if (sels.includes(":root") || sels.includes(`[data-time="${name}"]`)) Object.assign(vars, decls);
   }
+  return vars;
+}
+
+function preset(name) {
+  const vars = presetVars(name);
   const get = (k) => {
     const v = vars[k];
     assert.ok(v, `${k} is not defined in the ${name} preset`);
@@ -90,10 +96,13 @@ for (const name of ["day", "dusk", "night"]) {
 test("every var() used in site/ is defined in tokens/", () => {
   const defined = new Set(blocks.flatMap(([, d]) => Object.keys(d)));
   const files = walk(SITE).filter((f) => /\.(css|html|js)$/.test(f));
-  // Per-element properties count too: a desk link's inline style="--x: 40%"
-  // defines the --x its CSS reads. Only a name declared nowhere is a typo.
-  for (const file of files) {
-    for (const [, name] of read(file).matchAll(/(--[\w-]+)\s*:/g)) defined.add(name);
+  // Per-element properties: a desk link's inline style="--x: 40%" defines the
+  // --x its CSS reads. Only inline style attributes count; tokens still have
+  // to live in tokens/.
+  for (const file of files.filter((f) => f.endsWith(".html"))) {
+    for (const [, attr] of read(file).matchAll(/style="([^"]*)"/g)) {
+      for (const [, name] of attr.matchAll(/(--[\w-]+)\s*:/g)) defined.add(name);
+    }
   }
   const missing = [];
   for (const file of files) {
@@ -143,19 +152,17 @@ test("only base.css picks the mono voice", () => {
 const SCENES = join(SITE, "js", "scenes");
 
 test("every token a scene reads is defined in every preset", () => {
+  const presets = ["day", "dusk", "night"].map((time) => [time, presetVars(time)]);
   const missing = [];
   for (const file of readdirSync(SCENES).map((f) => join(SCENES, f))) {
     const names = new Set([...read(file).matchAll(/"(--[\w-]+)"/g)].map((m) => m[1]));
-    for (const time of ["day", "dusk", "night"]) {
-      const vars = {};
-      for (const [sels, decls] of blocks) {
-        if (sels.includes(":root") || sels.includes(`[data-time="${time}"]`)) Object.assign(vars, decls);
-      }
+    for (const [time, vars] of presets) {
       for (const n of names) if (!vars[n]) missing.push(`${relative(SITE, file)}: ${n} (${time})`);
     }
   }
   assert.deepEqual(missing, []);
 });
+
 
 test("no raw hex in scene code", () => {
   const offenders = [];

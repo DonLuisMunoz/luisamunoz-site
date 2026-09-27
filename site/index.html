@@ -47,6 +47,8 @@
     <!-- fonts (Google Fonts, by reference) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- three.js for the desk (js/stage.js): connect early, fetch after the text -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Recursive:slnt,wght,CASL,MONO@-15..0,400..700,0..1,0..1&display=swap"
       rel="stylesheet"
@@ -102,10 +104,10 @@
         />
         <canvas class="desk__canvas" data-desk-canvas aria-hidden="true"></canvas>
         <nav class="desk__spots" aria-label="Around the desk">
-          <a class="desk__spot" data-spot="monitor" href="#log" style="--x: 49.7%; --y: 46.7%">Projects</a>
-          <a class="desk__spot" data-spot="laptop" href="./blog/" style="--x: 65.3%; --y: 64.5%">Writing</a>
-          <a class="desk__spot" data-spot="shelf" href="#foundation" style="--x: 19.6%; --y: 49.6%">About</a>
-          <a class="desk__spot" data-spot="window" href="#contact" style="--x: 84.5%; --y: 27.8%">Work with me</a>
+          <a class="filter desk__spot" data-spot="monitor" href="#log" style="--x: 49.7%; --y: 46.7%">Projects</a>
+          <a class="filter desk__spot" data-spot="laptop" href="./blog/" style="--x: 65.3%; --y: 64.4%">Writing</a>
+          <a class="filter desk__spot" data-spot="shelf" href="#foundation" style="--x: 19.6%; --y: 49.6%">About</a>
+          <a class="filter desk__spot" data-spot="window" href="#contact" style="--x: 88.8%; --y: 28.2%">Work with me</a>
         </nav>
       </div>
     </header>

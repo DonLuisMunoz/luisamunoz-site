@@ -35,6 +35,13 @@ export function buildDesk(THREE, scene, time, token) {
     return mesh;
   }
 
+  function plane(w, h, material, x, y, z, parent) {
+    const mesh = new THREE.Mesh(new THREE.PlaneGeometry(w, h), material);
+    mesh.position.set(x, y, z);
+    parent.add(mesh);
+    return mesh;
+  }
+
   function group(name) {
     const g = new THREE.Group();
     groups[name] = g;
@@ -69,9 +76,7 @@ export function buildDesk(THREE, scene, time, token) {
   box(0.03, 0.36, 0.03, "--scene-metal", 0.1, 0.96, -0.3, monitor);   // post
   box(0.03, 0.03, 0.24, "--scene-metal", 0.1, 1.14, -0.19, monitor);  // arm
   box(0.62, 0.37, 0.03, "--shelf", 0.1, 1.15, -0.08, monitor);        // body
-  const screen = new THREE.Mesh(
-    new THREE.PlaneGeometry(0.59, 0.33),
-    new THREE.MeshBasicMaterial({ map: painted(512, 288, (g, w, h) => {
+  plane(0.59, 0.33, new THREE.MeshBasicMaterial({ map: painted(512, 288, (g, w, h) => {
       g.fillStyle = token("--shelf");
       g.fillRect(0, 0, w, h);
       // Twelve lines of "code", the same on every load.
@@ -81,10 +86,7 @@ export function buildDesk(THREE, scene, time, token) {
         g.fillStyle = token(inks[i % inks.length]);
         g.fillRect(24 + n * 28, 20 + i * 21, 60 + ((i * 97) % 220), 9);
       });
-    }) }),
-  );
-  screen.position.set(0.1, 1.15, -0.064);
-  monitor.add(screen);
+    }) }), 0.1, 1.15, -0.064, monitor);
 
   // ---- MacBook, lid open, cabled to the monitor ----
   const laptop = group("laptop");
@@ -93,10 +95,7 @@ export function buildDesk(THREE, scene, time, token) {
   hinge.position.set(0.5, 0.775, 0.01);
   hinge.rotation.x = -0.25;                                   // leaning back, open
   box(0.31, 0.21, 0.01, "--scene-metal", 0, 0.105, 0, hinge); // lid
-  const lcd = new THREE.Mesh(new THREE.PlaneGeometry(0.28, 0.18),
-    new THREE.MeshBasicMaterial({ color: color("--shelf") }));
-  lcd.position.set(0, 0.105, 0.006);
-  hinge.add(lcd);
+  plane(0.28, 0.18, new THREE.MeshBasicMaterial({ color: color("--shelf") }), 0, 0.105, 0.006, hinge);
   laptop.add(hinge);
   const cable = new THREE.CatmullRomCurve3([
     new THREE.Vector3(0.35, 0.77, 0.08),
@@ -126,11 +125,8 @@ export function buildDesk(THREE, scene, time, token) {
     g.fillStyle = token("--dusk"); g.fillRect(w * 0.45, h * 0.5, w * 0.45, h * 0.4);
   });
   for (const [map, x] of [[sunset, left], [blocks, right]]) {
-    const p = new THREE.Mesh(new THREE.PlaneGeometry(0.26, 0.29),
-      new THREE.MeshStandardMaterial({ map, roughness: 0.9 }));
-    p.position.set(x, row(3) + 0.18, S.z - 0.02);
-    p.rotation.x = -0.12;
-    shelf.add(p);
+    plane(0.26, 0.29, new THREE.MeshStandardMaterial({ map, roughness: 0.9 }), x, row(3) + 0.18, S.z - 0.02, shelf)
+      .rotation.x = -0.12;
   }
 
   // Three figurines in the third row.
@@ -144,17 +140,13 @@ export function buildDesk(THREE, scene, time, token) {
   });
 
   // The homelab: a small box in the second row. Phase 3 gives it lights and a link.
-  const homelab = group("homelab");
-  box(0.22, 0.07, 0.2, "--scene-metal", left, row(1) + 0.05, S.z, homelab);
+  box(0.22, 0.07, 0.2, "--scene-metal", left, row(1) + 0.05, S.z, shelf);
 
   // ---- The window on the right wall ----
   const win = group("window");
   const W = { x: 1.42, y: 1.45, z: -0.35, w: 0.9, h: 1.0 };
-  const glass = new THREE.Mesh(new THREE.PlaneGeometry(W.w, W.h),
-    new THREE.MeshBasicMaterial({ color: color("--scene-sky") }));
-  glass.position.set(W.x, W.y, W.z);
-  glass.rotation.y = -Math.PI / 2;
-  win.add(glass);
+  plane(W.w, W.h, new THREE.MeshBasicMaterial({ color: color("--scene-sky") }), W.x, W.y, W.z, win)
+    .rotation.y = -Math.PI / 2;
   for (const dz of [-W.w / 2, 0, W.w / 2]) box(0.04, W.h + 0.06, 0.04, "--scene-metal", W.x - 0.01, W.y, W.z + dz, win);
   for (const dy of [-W.h / 2, W.h / 2]) box(0.04, 0.04, W.w + 0.06, "--scene-metal", W.x - 0.01, W.y + dy, W.z, win);
 
@@ -168,7 +160,6 @@ export function buildDesk(THREE, scene, time, token) {
   glow.position.set(0.1, 1.15, 0.3);
   scene.add(glow);
 
-  const off = new THREE.Color(0, 0, 0);
   const lit = color("--scene-screen");
 
   return {
@@ -177,13 +168,12 @@ export function buildDesk(THREE, scene, time, token) {
       monitor: new THREE.Vector3(0.1, 1.15, -0.06),
       laptop: new THREE.Vector3(0.5, 0.86, 0.1),
       shelf: new THREE.Vector3(S.x, 1.0, S.z + 0.2),
-      window: new THREE.Vector3(W.x, W.y, W.z - W.w * 0.3),   // inward, so the label fits on phones
-      homelab: new THREE.Vector3(left, row(1) + 0.05, S.z + 0.1),
+      window: new THREE.Vector3(W.x, W.y, W.z),
     },
     highlight(name, on) {
       groups[name]?.traverse((o) => {
         if (!o.material?.emissive) return;
-        o.material.emissive.copy(on ? lit : off);
+        o.material.emissive.copy(lit);
         o.material.emissiveIntensity = on ? 0.2 : 0;
       });
     },

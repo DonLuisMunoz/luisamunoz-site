@@ -25,7 +25,7 @@ node --check site/js/<file>.js  # syntax gate — nothing transpiles this code
 python3 newpost.py check        # validate blog manifest + refresh read times + rebuild sitemap
 python3 newpost.py new "Title"  # scaffold a post
 node tests/a11y.check.mjs       # axe-core audit of every page state (see below)
-node scripts/render-stills.mjs  # re-render the desk's fallback still; prints link positions
+node scripts/render-stills.mjs  # re-render the desk's fallback still + link positions in index.html
 ```
 
 The a11y check needs tooling that is deliberately **not** a repo dependency:
@@ -190,8 +190,8 @@ Good recall prompts are about *why the code is shaped this way*, never definitio
   depth, so `./css/...` would 404 from `/blog/nope/`.
 - **The desk has two framings that must agree.** `ASPECT` in `site/js/stage.js` equals
   `.desk { aspect-ratio }` in `pages/hero.css`, and the inline `--x`/`--y` on the desk links
-  plus `site/assets/scenes/desk.jpg` come from `scripts/render-stills.mjs`. Change
-  `scenes/desk.js` or the camera → rerun it and paste the positions.
+  plus `site/assets/scenes/desk.jpg` both come from `scripts/render-stills.mjs`. Change
+  `scenes/desk.js` or the camera → rerun it; it rewrites both.
 - **`project()` needs a fresh camera matrix.** `stage.js` calls `camera.updateMatrixWorld()`
   before placing the links; `render()` only refreshes it afterwards, so a desk that draws one
   frame (phones, reduced motion) put every link in the wrong place.

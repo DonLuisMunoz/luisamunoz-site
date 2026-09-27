@@ -18,10 +18,10 @@
 .desk__canvas { visibility: hidden; }
 .desk.is-live .desk__canvas { visibility: visible; }
 .desk.is-live .desk__still { visibility: hidden; }
+/* Each link is a .filter chip, placed on its object. Shifting it by its own --x
+   keeps it inside the box at any width: centred at 50%, flush left at 0, flush
+   right at 100%. */
 .desk__spot {
-  position: absolute; left: var(--x); top: var(--y); transform: translate(-50%, -50%);
-  font: var(--type-label); font-size: 14px; color: var(--text);
-  background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius-pill);
-  padding: 6px 12px; text-decoration: none; white-space: nowrap;
+  position: absolute; left: var(--x); top: var(--y);
+  transform: translate(calc(-1 * var(--x)), -50%); white-space: nowrap;
 }
-.desk__spot:hover { border-color: var(--text); }
