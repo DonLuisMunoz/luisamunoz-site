@@ -1,23 +1,12 @@
 /* pages/hero.css
-   Home page hero. The badge that sat in here moved to components/.
-   Split out of the old monolithic components.css. Values unchanged. */
+   Home page hero. Text only until phase 2 puts the desk scene here. */
 
-/* ---------- hero ---------- */
-.hero { position: relative; padding: 8vh 5vw 9vh; overflow: hidden; }
-.hero__grid {
-  position: relative; display: grid; grid-template-columns: 1.1fr 0.9fr;
-  gap: 60px; align-items: center; max-width: 1320px; margin: 0 auto;
-}
-
+.hero { padding: 120px 5vw 96px; }
+.hero__inner { max-width: 1100px; margin: 0 auto; }
 .hero__title {
-  font-family: var(--font-display); font-weight: 700;
-  font-size: 76px; line-height: 0.98; letter-spacing: -0.035em;
-  color: var(--plum); margin-top: 26px;
+  font: var(--type-display); letter-spacing: var(--tracking-display);
+  color: var(--text); max-width: 12em;
 }
-.hl {                              /* terracotta highlight on text */
-  background: var(--accent); color: var(--cream); padding: 0 10px;
-  box-decoration-break: clone; -webkit-box-decoration-break: clone;
-}
-.hero__sub { font-size: 21px; line-height: 1.6; color: var(--text-soft); margin-top: 26px; max-width: 560px; }
-.hero__sub strong { color: var(--plum); }
-.hero__actions { display: flex; gap: 16px; margin-top: 36px; flex-wrap: wrap; }
+.hero__sub { font: var(--type-lead); color: var(--text-soft); margin-top: 24px; max-width: 30em; }
+.hero__sub strong { color: var(--text); }
+.hero__actions { display: flex; gap: 12px; margin-top: 36px; flex-wrap: wrap; }

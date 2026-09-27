@@ -35,7 +35,7 @@
   // has no scheme. It gets the same new-tab and noopener treatment as https.
   const isExternal = (href) => /^(https?:)?\/\//i.test(href);
 
-  const MONTHS = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+  const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
   const fmtDate = (iso) => {
     const parts = String(iso || "").split("-");
@@ -46,8 +46,8 @@
 
   const metaLine = (post) => {
     const bits = [fmtDate(post.date)];
-    if (post.minutes) bits.push(`${post.minutes} MIN READ`);
-    return bits.join(" · ");
+    if (post.minutes) bits.push(`${post.minutes} min read`);
+    return bits.join(", ");
   };
 
   /* ---------- markdown -> html ----------
@@ -175,7 +175,7 @@
     const cats = categoriesIn(posts);
     if (cats.length < 2) { mount.innerHTML = ""; return; }  // one topic needs no filter
     mount.innerHTML =
-      `<a class="filter${active ? "" : " is-on"}" href="./">everything</a>` +
+      `<a class="filter${active ? "" : " is-on"}" href="./">Everything</a>` +
       cats.map((c) =>
         `<a class="filter${c === active ? " is-on" : ""}" ` +
         `href="?c=${encodeURIComponent(c)}">${esc(c)}</a>`
@@ -217,7 +217,7 @@
         (tags ? `<div class="tags">${tags}</div>` : "") +
         `<div class="prose__body">${renderMarkdown(body)}</div>` +
       `</article>` +
-      `<a class="btn btn--paper btn--sm" href="./" style="margin-top:40px;">← all posts</a>`;
+      `<a class="btn btn--sm" href="./" style="margin-top:40px;">All posts</a>`;
     document.title = `${post.title || post.slug} · Luis A. Munoz`;
     const desc = document.querySelector('meta[name="description"]');
     if (desc && post.summary) desc.setAttribute("content", post.summary);
@@ -240,7 +240,7 @@
     mount.innerHTML =
       `<h1 class="prose__title">That post isn't here.</h1>` +
       `<p class="section-lead">The link might be old or the slug might be wrong.</p>` +
-      `<a class="btn btn--gold btn--sm" href="./" style="margin-top:24px;">← all posts</a>`;
+      `<a class="btn btn--primary btn--sm" href="./" style="margin-top:24px;">All posts</a>`;
   };
 
   // Exported so the renderer can be unit-tested outside a browser.

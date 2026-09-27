@@ -1,23 +1,16 @@
 /* pages/skills.css
-   Computed stack bars, and the 'next up' row beneath them.
-   Split out of the old monolithic components.css. Values unchanged. */
+   Computed stack bars, and the 'next up' row beneath them. One fill colour:
+   the label says which tool, colour never carried meaning here. */
 
-/* ---------- skill bars ---------- */
 .skills { display: grid; grid-template-columns: 1fr 1fr; gap: 26px 50px; }
 .skill__head {
   display: flex; justify-content: space-between;
-  font-family: var(--font-mono); font-size: 15px; font-weight: 600; color: var(--plum);
-  margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.04em;
+  font: 600 16px/1.4 var(--font-sans); color: var(--text); margin-bottom: 8px;
 }
-.skill__level { color: var(--text-faint); }
-.skill__track { height: 18px; background: var(--paper); border: 3px solid var(--plum); overflow: hidden; }
-.skill__fill { height: 100%; border-right: 3px solid var(--plum); }
-.fill--gold { background: var(--gold); }
-.fill--teal { background: var(--teal); }
-.fill--accent { background: var(--accent); }
-.fill--pink { background: var(--pink); }
+.skill__level { font-weight: var(--fw-regular); color: var(--text-soft); }
+.skill__track { height: 12px; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius-pill); overflow: hidden; }
+.skill__fill { height: 100%; background: var(--link); }
 
-/* "next up" row under the computed stack bars */
 .stack-next { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
-.stack-next .section-kicker { margin: 0; }
+.stack-next__label { font: 600 16px/1.4 var(--font-sans); color: var(--text); }
 .stack-next:empty { display: none; }

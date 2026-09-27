@@ -1,46 +1,61 @@
+/* tokens/colors.css
+   The room's palette, and three lighting presets built from it.
+
+   The site is Luis's desk in Tampa and the window tells the time: phase 2's
+   stage.js writes data-time="day|dusk|night" on <html> from Tampa's hour.
+   Until then, and whenever JS is off, the day values apply.
+
+   Attribute selectors rather than :root[data-time=…], so any element can
+   scope a preset. /design/ uses that to show all three side by side.
+
+   Contrast is not recorded here — tests/css-tokens.test.js computes it for
+   every pair in every preset and fails the build if one drops below AA. */
+
 :root {
-  /* ---- Palette B — bold, flat, saturated (Parra / Hulda energy) ----
+  /* ---- The room — five colours, named for where they come from ---- */
+  --wall: #DCE3E6;   /* daylight on a pale wall */
+  --ink: #18222E;    /* deep navy, not a tinted black */
+  --bay: #1F6B85;    /* Tampa Bay water */
+  --dusk: #F0A04B;   /* sunset through the window. Fills and large type
+                        only: 1.64:1 on --wall, so never small text. */
+  --shelf: #232326;  /* the black IKEA shelf */
+}
 
-     Terracotta and teal were darkened (from #C8542B and #2E7D6F) to clear
-     WCAG AA 4.5:1. Same hue, same saturation, ~8% less lightness — the palette
-     reads identically, it just no longer fails as small text. Both now pass in
-     BOTH directions: as text on cream/paper, and as a fill behind cream text.
-     Verified with axe-core; the ratios are in the table below.
+/* ---- Lighting presets ---- */
+:root,
+[data-time="day"] {
+  --ground: var(--wall);
+  --surface: #F2F5F6;
+  --text: var(--ink);
+  --text-soft: #3B4957;
+  --link: var(--bay);
+  --rule: #6B7B86;       /* borders and dividers, 3:1 */
+}
 
-       token         on --paper   on --cream   cream text on it
-       terracotta    5.21         4.58         4.58
-       teal          5.83         5.13         5.13
+[data-time="dusk"] {
+  --ground: #D8CCC4;
+  --surface: #E9E1DB;
+  --text: var(--ink);
+  --text-soft: #43403F;
+  --link: #1A5C73;
+  --rule: #716760;
+}
 
-     Gold is deliberately NOT corrected: at 1.9:1 on cream nothing would save it
-     as text, so it stays a fill/border/large-display colour only. Never set gold
-     as small text on a light surface. */
-  --terracotta: #AC4622;    /* lead accent */
-  --gold: #E0A92E;          /* the sun, highlights — fills and borders, never small text */
-  --teal: #27695C;          /* "it works" / calm */
-  --pink: #E66D8A;          /* playful pop */
-  --plum: #2B1B2E;          /* ink / dark background */
-  --cream: #F2E4C9;         /* light background */
-  --paper: #FBF3E2;         /* card surface on cream */
-  --paper-border: #D8C4A0;  /* hairline on cream */
+[data-time="night"] {
+  --ground: var(--ink);
+  --surface: #223040;
+  --text: #E4EAED;
+  --text-soft: #A9B7C2;
+  --link: #7CC4DD;
+  --rule: #6A7F93;
+}
 
-  /* ---- Text ---- */
-  --text-ink: #2B1B2E;      /* near-black plum */
-  --text-soft: #5A4438;     /* body brown */
-  /* was #9A7B5A, which sat at 3.12:1 on cream — the single most common
-     contrast failure on the site (captions, footer meta, strip labels). */
-  --text-faint: #7E5F41;    /* captions, hex labels — 4.64 on cream, 5.28 on paper */
-  --text-on-dark: #F2E4C9;  /* cream text on plum */
-  --text-on-dark-muted: #C9A9BC;
-
-  /* ---- Semantic aliases ---- */
-  --accent: var(--terracotta);
-  --accent-2: var(--gold);
-  --success: var(--teal);
-  --danger: var(--terracotta);  /* roadblocks read in terracotta */
-
-  /* ---- Syntax (code blocks on plum) ---- */
-  --syn-keyword: #E66D8A;
-  --syn-fn: #E0A92E;
-  --syn-string: #F2C9A0;
-  --syn-accent: var(--gold);
+/* ---- The same in every preset ---- */
+:root {
+  --fill: var(--dusk);          /* primary buttons, the skip link */
+  --on-fill: var(--ink);
+  --code-bg: var(--shelf);      /* code sits on the shelf, day or night */
+  --code-text: #E4EAED;
+  --syn-keyword: var(--dusk);
+  --syn-string: #9FD4C8;
 }

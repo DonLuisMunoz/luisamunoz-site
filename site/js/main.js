@@ -1,7 +1,7 @@
 /* ============================================================
    main.js — plain JS, no build step, no dependencies.
-   Handles: typing effect, streak count-up, scroll reveal,
-   data-driven project cards, and the contact form.
+   Handles: data-driven project cards, the stack tally, latest posts,
+   and the contact form.
 
    ES2020 syntax. There's still no build step and nothing
    transpiles this: every browser that can load the site has
@@ -11,63 +11,6 @@
 (function () {
   "use strict";
   const CFG = window.PORTFOLIO_CONFIG || { API_BASE: "", PROJECTS_FALLBACK: "./data/projects.json" };
-
-  // CSS can silence transitions, but it can't stop a setTimeout loop. The two
-  // animations below are driven from JS, so they have to check the preference
-  // themselves and paint their finished state instead.
-  const REDUCED_MOTION = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  /* ---------- 1. typing effect ---------- */
-  const typeEl = document.querySelector("[data-type]");
-  if (typeEl) {
-    const phrases = ['python practice.py', 'git commit -m "day 4"', 'open new_project/', 'learn --everyday'];
-    let pi = 0, ci = 0, deleting = false;
-    const tick = () => {
-      if (REDUCED_MOTION) { typeEl.textContent = phrases[0]; return; }
-      const word = phrases[pi];
-      if (!deleting) {
-        typeEl.textContent = word.slice(0, ci++);
-        if (ci > word.length) { deleting = true; setTimeout(tick, 1600); return; }
-      } else {
-        typeEl.textContent = word.slice(0, ci--);
-        if (ci < 0) { deleting = false; ci = 0; pi = (pi + 1) % phrases.length; }
-      }
-      setTimeout(tick, deleting ? 45 : 95);
-    };
-    tick();
-  }
-
-  /* ---------- 2. streak count-up ---------- */
-  const streakEl = document.querySelector("[data-streak]");
-  if (streakEl) {
-    // Days since Luis started (2026-07-01), computed live so it's always current.
-    const START = new Date(2026, 6, 1); // month is 0-indexed: 6 = July
-    const target = Math.max(0, Math.floor((Date.now() - START.getTime()) / 86400000));
-    if (REDUCED_MOTION) {
-      streakEl.textContent = target;   // the number is the point, not the count-up
-    } else {
-      let n = 0;
-      const up = () => {
-        n += 1;
-        streakEl.textContent = n;
-        if (n < target) setTimeout(up, 32);
-      };
-      setTimeout(up, 500);
-    }
-  }
-
-  /* ---------- 3. reveal on scroll (IntersectionObserver) ---------- */
-  const reveals = Array.from(document.querySelectorAll("[data-reveal]"));
-  if ("IntersectionObserver" in window) {
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) { e.target.classList.add("is-visible"); io.unobserve(e.target); }
-      });
-    }, { threshold: 0.08 });
-    reveals.forEach((el) => io.observe(el));
-  } else {
-    reveals.forEach((el) => el.classList.add("is-visible"));
-  }
 
   /* ---------- 4. data-driven project cards ---------- */
   const listEl = document.getElementById("project-list");
@@ -80,7 +23,7 @@
   const cardHTML = (p) => {
     const tags = (p.tags || []).map((t) => `<span class="tag">${esc(t)}</span>`).join("");
     const link = p.url
-      ? `<a href="${esc(p.url)}" target="_blank" rel="noopener" class="btn btn--gold btn--sm" style="margin-top:18px;">view the code ↗</a>`
+      ? `<a href="${esc(p.url)}" target="_blank" rel="noopener" class="btn btn--primary btn--sm" style="margin-top:18px;">View the code ↗</a>`
       : "";
     return (
       `<article class="card">` +
@@ -97,11 +40,6 @@
     if (!listEl) return;
     if (!projects || !projects.length) { listEl.innerHTML = ""; return; }
     listEl.innerHTML = projects.map(cardHTML).join("");
-    // The featured project is bespoke HTML, not a projects.json entry, so
-    // counting only the JSON undercounted the real number of shipped projects.
-    const shipped = document.querySelector("[data-shipped]");
-    const featured = document.querySelectorAll(".featured").length;
-    if (shipped) shipped.textContent = projects.length + featured;
   };
 
   const fromFile = async () => {
@@ -144,7 +82,6 @@
   const STACK_PRIORITY = ["SQL", "PostgreSQL", "Python", "Power BI", "Docker", "Excel"];
   const STACK_LEVELS = [null, "starting out", "getting reps", "comfortable", "strong", "daily"];
   const STACK_WIDTHS = [0, 32, 56, 78, 90, 100];
-  const STACK_FILLS = ["fill--gold", "fill--teal", "fill--accent", "fill--pink"];
 
   // Declared with `function`, not `const`, on purpose: loadProjects() above
   // calls it before this line is reached. Function declarations are hoisted;
@@ -171,7 +108,7 @@
     const tools = Object.keys(counts).sort((a, b) => (
       counts[b] !== counts[a] ? counts[b] - counts[a] : priority(a) - priority(b)
     ));
-    stackEl.innerHTML = tools.map((t, i) => {
+    stackEl.innerHTML = tools.map((t) => {
       const c = counts[t];
       const tier = Math.min(c, 5);
       return (
@@ -181,7 +118,7 @@
             `<span class="skill__level">${STACK_LEVELS[tier]} · ${c}${c === 1 ? " project" : " projects"}</span>` +
           `</div>` +
           `<div class="skill__track">` +
-            `<div class="skill__fill ${STACK_FILLS[i % STACK_FILLS.length]}" style="width:${STACK_WIDTHS[tier]}%"></div>` +
+            `<div class="skill__fill" style="width:${STACK_WIDTHS[tier]}%"></div>` +
           `</div>` +
         `</div>`
       );
@@ -190,7 +127,7 @@
     if (nextEl) {
       const upcoming = STACK_NEXT.filter((t) => !counts[t]);
       nextEl.innerHTML = upcoming.length
-        ? `<span class="section-kicker">// next up</span>` +
+        ? `<span class="stack-next__label">Next up</span>` +
             upcoming.map((t) => `<span class="tag">${esc(t)}</span>`).join("")
         : "";
     }
@@ -204,11 +141,11 @@
     const list = document.getElementById("writing-list");
     if (!wrap || !list) return;
 
-    const MONTHS = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+    const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     const meta = (p) => {
       const d = String(p.date || "").split("-");
       const when = d.length === 3 ? `${MONTHS[parseInt(d[1], 10) - 1]} ${d[0]}` : "";
-      return when + (p.minutes ? ` · ${p.minutes} MIN READ` : "");
+      return when + (p.minutes ? `, ${p.minutes} min read` : "");
     };
 
     try {

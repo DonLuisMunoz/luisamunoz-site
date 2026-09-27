@@ -1,8 +1,13 @@
 :root {
-  /* ---- Families — three jobs, three faces ---- */
-  --font-display: 'Space Grotesk', system-ui, sans-serif;  /* headlines */
-  --font-mono: 'JetBrains Mono', ui-monospace, monospace;  /* code, labels, day counts */
-  --font-body: 'Public Sans', system-ui, sans-serif;       /* everything you read */
+  /* ---- One family, three voices ----
+     font-family picks Recursive; font-variation-settings picks the voice.
+     Each stack keeps a system fallback, so if Recursive can't load, code is
+     still monospace. tests/css-tokens.test.js checks that. */
+  --font-sans: 'Recursive', system-ui, sans-serif;
+  --font-mono: 'Recursive', ui-monospace, monospace;
+  --axes-sans: "MONO" 0, "CASL" 0;
+  --axes-casual: "MONO" 0, "CASL" 1;   /* handwritten-style notes on shelf items */
+  --axes-mono: "MONO" 1, "CASL" 0;     /* code */
 
   /* ---- Weights ---- */
   --fw-regular: 400;
@@ -10,21 +15,14 @@
   --fw-semibold: 600;
   --fw-bold: 700;
 
-  /* ---- Display scale (headlines, Space Grotesk) ---- */
-  --type-display-xl: 700 88px/1.02 var(--font-display);
-  --type-display-l: 700 60px/1.05 var(--font-display);
-  --type-display-m: 600 34px/1.1 var(--font-display);
-  --type-title: 600 26px/1.1 var(--font-display);
+  /* ---- Scale — the classic 12·14·16·18·21·24·36·48·60·72 ---- */
+  --type-display: 700 72px/1.0 var(--font-sans);    /* the name, and nothing else */
+  --type-h2: 700 48px/1.05 var(--font-sans);        /* section titles */
+  --type-h3: 600 24px/1.25 var(--font-sans);        /* card and post titles */
+  --type-lead: 400 21px/1.5 var(--font-sans);       /* the line under a title */
+  --type-body: 400 18px/1.55 var(--font-sans);      /* everything you read */
+  --type-small: 400 14px/1.5 var(--font-sans);      /* meta, tags, captions */
+  --type-code: 400 16px/1.6 var(--font-mono);
 
-  /* ---- Body (Public Sans) ---- */
-  --type-body-l: 400 23px/1.55 var(--font-body);
-  --type-body: 400 17px/1.6 var(--font-body);
-  --type-caption: 400 13px/1.5 var(--font-body);
-
-  /* ---- Mono label (UPPERCASE + tracked) ---- */
-  --type-label: 500 12px/1.5 var(--font-mono);
-  --label-tracking: 0.3em;
-
-  /* ---- Common letter-spacing ---- */
-  --tracking-display: -0.025em;
+  --tracking-display: -0.02em;
 }

@@ -48,7 +48,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Public+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Recursive:slnt,wght,CASL,CRSV,MONO@-15..0,300..1000,0..1,0..1,0..1&display=swap"
       rel="stylesheet"
     />
 
@@ -73,16 +73,13 @@
     <a class="skip-link" href="#main">Skip to content</a>
     <!-- ============ NAV ============ -->
     <nav class="nav">
-      <a href="#top" class="nav__brand">
-        <span class="nav__mark">&gt;_</span>
-        <span class="nav__wordmark">luis<span class="dot">.</span>learns</span>
-      </a>
+      <a href="#top" class="nav__brand">Luis Munoz</a>
       <div class="nav__links">
-        <a href="#log" class="nav__link">log</a>
-        <a href="#stack" class="nav__link">stack</a>
-        <a href="#foundation" class="nav__link">background</a>
-        <a href="./blog/" class="nav__link">writing</a>
-        <a href="#contact" class="nav__cta">say hi</a>
+        <a href="#log" class="nav__link">Log</a>
+        <a href="#stack" class="nav__link">Stack</a>
+        <a href="#foundation" class="nav__link">Background</a>
+        <a href="./blog/" class="nav__link">Writing</a>
+        <a href="#contact" class="nav__cta">Say hi</a>
       </div>
     </nav>
 
@@ -90,95 +87,23 @@
 
     <!-- ============ HERO ============ -->
     <header id="top" class="hero">
-      <div class="hero__grid">
-        <div>
-          <div class="badge">
-            <span class="badge__dot"></span> learning in public
-          </div>
-          <h1 class="hero__title">
-            I build small things and learn <span class="hl">out loud.</span>
-          </h1>
-          <p class="hero__sub">
-            Hi, I'm <strong>Luis A. Munoz</strong> — teaching myself Python
-            &amp; data, one tiny project at a time. This is the messy, honest
-            log of what I'm figuring out.
-          </p>
-          <div class="hero__actions">
-            <a href="#log" class="btn btn--gold">read the log →</a>
-            <a
-              href="https://github.com/DonLuisMunoz"
-              target="_blank"
-              rel="noopener"
-              class="btn btn--paper"
-              >github ↗</a
-            >
-          </div>
-        </div>
-
-        <div class="term">
-          <div class="term__tag term__tag--a">def learn():</div>
-          <div class="term__tag term__tag--b">import pandas</div>
-          <div class="term__window">
-            <div class="term__bar">
-              <span class="term__dot term__dot--r"></span>
-              <span class="term__dot term__dot--y"></span>
-              <span class="term__dot term__dot--g"></span>
-              <span class="term__path">luis@learning ~ %</span>
-            </div>
-            <div class="term__body">
-              <div class="term__muted">
-                <span class="term__prompt">$</span> whoami
-              </div>
-              <div class="term__out">
-                aspiring data analyst, full-time learner
-              </div>
-              <div class="term__muted term__gap">
-                <span class="term__prompt">$</span> cat goals.txt
-              </div>
-              <div class="term__goal">→ ship one small project a week</div>
-              <div class="term__goal">→ break things, write down why</div>
-              <div class="term__muted term__gap">
-                <span class="term__prompt">$</span>
-                <span data-type class="term__goal"></span
-                ><span class="term__caret"></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- currently strip -->
-      <div class="strip">
-        <div class="strip__cell">
-          <span class="strip__label">// currently</span>
-          <div class="strip__value">
-            learning <span class="t-teal">pandas</span>
-          </div>
-        </div>
-        <div class="strip__cell">
-          <span class="strip__label">// streak</span>
-          <div class="strip__value">
-            <span data-streak class="t-accent">0</span> days
-          </div>
-        </div>
-        <div class="strip__cell">
-          <span class="strip__label">// shipped</span>
-          <div class="strip__value">
-            <span class="t-accent" data-shipped>3</span> projects
-          </div>
-        </div>
-        <div class="strip__cell">
-          <span class="strip__label">// reading</span>
-          <div class="strip__value">Crash Course</div>
+      <div class="hero__inner">
+        <h1 class="hero__title">I build small things and learn out loud.</h1>
+        <p class="hero__sub">
+          Hi, I'm <strong>Luis A. Munoz</strong>, teaching myself Python and data,
+          one small project at a time.
+        </p>
+        <div class="hero__actions">
+          <a href="#log" class="btn btn--primary">Read the log</a>
+          <a href="https://github.com/DonLuisMunoz" target="_blank" rel="noopener" class="btn">GitHub ↗</a>
         </div>
       </div>
     </header>
 
     <!-- ============ LEARNING LOG ============ -->
-    <section id="log" class="section section--paper">
+    <section id="log" class="section section--surface">
       <div class="section__inner">
-        <div data-reveal class="section__head">
-          <div class="section-kicker">// the learning log</div>
+        <div class="section__head">
           <h2 class="section-title">What I've been building</h2>
           <p class="section-lead">
             Each entry is a tiny project and the lesson that actually stuck.
@@ -187,8 +112,7 @@
         </div>
 
         <!-- featured entry (hand-curated highlight). data-tools feeds the stack tally. -->
-        <article data-reveal class="featured" data-tools="SQL,PostgreSQL">
-          <div class="featured__flag">FEATURED</div>
+        <article class="featured" data-tools="SQL,PostgreSQL">
           <div class="featured__row">
             <div class="featured__col">
               <div class="card__meta">2026 · IN PROGRESS</div>
@@ -212,13 +136,13 @@
                 href="https://github.com/DonLuisMunoz/tampa-affordability-analysis"
                 target="_blank"
                 rel="noopener"
-                class="btn btn--gold btn--sm"
+                class="btn btn--primary btn--sm"
                 style="margin-top: 24px"
-                >view the code ↗</a
+                >View the code ↗</a
               >
             </div>
             <div class="featured__col">
-              <div class="bug-label">// the bug that taught me most</div>
+              <div class="bug-label">The bug that taught me most</div>
               <div class="code-block code-block--bad">
                 <span class="syn-kw">JOIN</span> zhvi zh
                 <span class="syn-kw">ON</span> zo.zip =
@@ -226,9 +150,7 @@
               </div>
               <p class="bug-note">
                 My three-way join returned
-                <span class="inline-code" style="color: var(--accent)"
-                  >0 rows</span
-                >
+                <span class="inline-code">0 rows</span>
                 with no error. I'd joined a real ZIP (33510) to Zillow's
                 internal RegionID. 0 rows from an inner join with no error means
                 the keys never matched, not a syntax bug.
@@ -243,17 +165,16 @@
         </article>
 
         <!-- data-driven project cards: rendered by js/main.js from data/projects.json -->
-        <div id="project-list" data-reveal class="projects">
+        <div id="project-list" class="projects">
           <!-- cards injected here -->
         </div>
       </div>
     </section>
 
     <!-- ============ TECH STACK ============ -->
-    <section id="stack" class="section section--cream">
+    <section id="stack" class="section section--ground">
       <div class="section__inner">
-        <div data-reveal class="section__head">
-          <div class="section-kicker">// the stack</div>
+        <div class="section__head">
           <h2 class="section-title">Tools I'm getting my hands dirty with</h2>
           <p class="section-lead">
             Ranked by how many projects I've actually shipped with each tool.
@@ -261,16 +182,15 @@
           </p>
         </div>
         <!-- bars are computed by js/main.js from each project's tools, ranked by reps -->
-        <div data-reveal class="skills" data-stack></div>
-        <div data-reveal class="stack-next" data-stack-next></div>
+        <div class="skills" data-stack></div>
+        <div class="stack-next" data-stack-next></div>
       </div>
     </section>
 
     <!-- ============ IT FOUNDATION ============ -->
-    <section id="foundation" class="section section--paper">
+    <section id="foundation" class="section section--surface">
       <div class="section__inner">
-        <div data-reveal class="section__head">
-          <div class="section-kicker">// the foundation</div>
+        <div class="section__head">
           <h2 class="section-title">Ten years in IT, before data</h2>
           <p class="section-lead">
             I'm not starting from zero. Before the pivot I spent 10+ years in
@@ -278,7 +198,7 @@
             analytics on, not something I left behind.
           </p>
         </div>
-        <div data-reveal class="tags tags--foundation">
+        <div class="tags tags--foundation">
           <span class="tag">Windows &amp; Windows Server</span>
           <span class="tag">Active Directory</span>
           <span class="tag">Microsoft 365</span>
@@ -293,7 +213,7 @@
           <span class="tag">Monitoring (SolarWinds)</span>
           <span class="tag">Ticketing &amp; RMM</span>
         </div>
-        <p data-reveal class="foundation-note">
+        <p class="foundation-note">
           My Tampa project's database isn't in a sandbox. It runs on Postgres in
           Docker on my own Proxmox homelab.
         </p>
@@ -304,23 +224,21 @@
          Cards are rendered by main.js from site/content/posts/index.json,
          the same manifest /blog reads. The section hides itself when
          there are no posts, so it can never show placeholders. -->
-    <section id="writing" class="section section--paper" hidden>
+    <section id="writing" class="section section--surface" hidden>
       <div class="section__inner">
-        <div data-reveal class="writing-head">
+        <div class="writing-head">
           <div>
-            <div class="section-kicker">// from the blog</div>
             <h2 class="section-title">Writing it down</h2>
           </div>
-          <a href="./blog/" class="btn btn--paper btn--sm">all posts →</a>
+          <a href="./blog/" class="btn btn--sm">All posts</a>
         </div>
-        <div data-reveal class="projects" id="writing-list"></div>
+        <div class="projects" id="writing-list"></div>
       </div>
     </section>
 
     <!-- ============ CONTACT ============ -->
     <section id="contact" class="contact">
-      <div data-reveal class="contact__inner">
-        <div class="contact__kicker">// say hi</div>
+      <div class="contact__inner">
         <h2 class="contact__title">
           Building something, hiring, or just learning too?
         </h2>
@@ -347,7 +265,7 @@
               required
             ></textarea>
           </div>
-          <button type="submit" class="btn btn--gold">send it →</button>
+          <button type="submit" class="btn btn--primary">Send it</button>
           <div class="form-status" id="form-status" aria-live="polite"></div>
         </form>
 
@@ -356,10 +274,10 @@
             href="https://github.com/DonLuisMunoz"
             target="_blank"
             rel="noopener"
-            class="contact__btn contact__btn--gold"
+            class="contact__btn contact__btn--primary"
             >GitHub ↗</a
           >
-          <a href="./blog/" class="contact__btn">Blog →</a>
+          <a href="./blog/" class="contact__btn">Blog</a>
           <a
             href="https://www.linkedin.com/in/luisalfredomunoz/"
             target="_blank"
@@ -383,11 +301,8 @@
     </main>
 
     <footer class="footer">
-      <div class="footer__brand">
-        <span class="footer__mark">&gt;_</span>
-        <span class="footer__name">Luis A. Munoz · learning in public</span>
-      </div>
-      <div class="footer__meta">built &amp; hosted by hand · 2026</div>
+      <span class="footer__name">Luis Munoz</span>
+      <span class="footer__meta">Built and hosted by hand, 2026</span>
     </footer>
 
     <script src="./js/config.js"></script>

@@ -1,28 +1,22 @@
 /* pages/featured.css
-   The hand-curated featured log entry and its code blocks.
-   Split out of the old monolithic components.css. Values unchanged. */
+   The hand-curated featured project and its before/after code blocks. */
 
-/* featured log entry */
 .featured {
-  background: var(--cream); border: 3px solid var(--plum); box-shadow: 8px 8px 0 var(--plum);
-  padding: 42px; margin-bottom: 30px; position: relative;
-}
-.featured__flag {
-  position: absolute; top: -3px; right: -3px;
-  font-family: var(--font-mono); font-size: 12px; font-weight: 700; color: var(--plum);
-  background: var(--gold); padding: 8px 18px; border: 3px solid var(--plum); letter-spacing: 0.1em;
+  background: var(--ground); border: 1px solid var(--rule); border-radius: var(--radius-md);
+  padding: 42px; margin-bottom: 24px;
 }
 .featured__row { display: flex; gap: 40px; flex-wrap: wrap; }
 .featured__col { flex: 1; min-width: 280px; }
-.featured__title { font-family: var(--font-display); font-weight: 700; font-size: 36px; color: var(--plum); margin-top: 8px; letter-spacing: -0.02em; }
-.featured__body { font-size: 18px; line-height: 1.6; color: var(--text-soft); margin-top: 14px; }
-.bug-label { font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px; }
+.featured__title { font: 700 36px/1.1 var(--font-sans); letter-spacing: var(--tracking-display); color: var(--text); margin-top: 8px; }
+.featured__body { font: var(--type-body); color: var(--text-soft); margin-top: 14px; }
+.bug-label { font: 600 16px/1.4 var(--font-sans); color: var(--text); margin-bottom: 12px; }
 .code-block {
-  background: var(--plum); border: 3px solid var(--plum); padding: 16px 20px;
-  font-family: var(--font-mono); font-size: 16px; color: var(--cream);
+  font: var(--type-code); font-variation-settings: var(--axes-mono);
+  color: var(--code-text); background: var(--code-bg);
+  border-radius: var(--radius-sm); padding: 16px 20px;
 }
-.code-block--bad  { border-left: 6px solid var(--accent); }
-.code-block--good { border-left: 6px solid var(--teal); }
+.code-block--bad  { border-left: 6px solid var(--dusk); }
+.code-block--good { border-left: 6px solid var(--syn-string); }
 .syn-kw { color: var(--syn-keyword); }
 .syn-str { color: var(--syn-string); }
-.bug-note { font-size: 15px; line-height: 1.55; color: var(--text-soft); margin: 14px 0; }
+.bug-note { font: 400 16px/1.55 var(--font-sans); color: var(--text-soft); margin: 14px 0; }

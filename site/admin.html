@@ -7,39 +7,30 @@
   <meta name="robots" content="noindex">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Public+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Recursive:slnt,wght,CASL,CRSV,MONO@-15..0,300..1000,0..1,0..1,0..1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./css/styles.css">
   <style>
     .admin { max-width: 760px; margin: 0 auto; padding: 6vh 5vw; }
     .admin .field { margin-bottom: 16px; }
-    .admin .field label { color: var(--text-soft); }
-    .admin .field input, .admin .field textarea {
-      background: var(--paper); border: 3px solid var(--plum); color: var(--plum);
-    }
-    .admin .field input:focus, .admin .field textarea:focus { border-color: var(--gold); }
     .admin-list .card { margin-bottom: 16px; }
     .row { display: flex; gap: 12px; flex-wrap: wrap; align-items: end; }
     .row > .field { flex: 1; min-width: 180px; }
-    .danger { background: var(--accent); color: var(--cream); border-color: var(--plum); }
+    .danger { color: var(--text); background: var(--surface); border-color: var(--text); }
   </style>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
   <nav class="nav">
-    <a href="./index.html" class="nav__brand">
-      <span class="nav__mark">&gt;_</span>
-      <span class="nav__wordmark">luis<span class="dot">.</span>admin</span>
-    </a>
-    <a href="./index.html" class="nav__cta">view site ↗</a>
+    <a href="./index.html" class="nav__brand">Luis Munoz, admin</a>
+    <a href="./index.html" class="nav__cta">View site</a>
   </nav>
 
   <main id="main">
 
   <div class="admin">
     <div class="section__head">
-      <div class="section-kicker">// admin</div>
       <h1 class="section-title">Add a project</h1>
-      <p class="section-lead">New entries appear in the learning log instantly. Paste your admin token once to unlock.</p>
+      <p class="section-lead">New entries appear on the home page instantly. Paste your admin token once to unlock.</p>
     </div>
 
     <div class="field">
@@ -47,7 +38,7 @@
       <input id="token" type="password" placeholder="ADMIN_TOKEN from your backend .env">
     </div>
 
-    <form id="project-form" class="nb-block" style="padding:24px;background:var(--paper);">
+    <form id="project-form" class="card">
       <input type="hidden" id="f-id">
       <div class="row">
         <div class="field">
@@ -77,8 +68,8 @@
         <label for="f-url">Repo / link URL (leave blank if there's no repo)</label>
         <input id="f-url" type="url" placeholder="https://github.com/you/repo">
       </div>
-      <button type="submit" class="btn btn--gold">save project →</button>
-      <div class="form-status" id="status" style="color:var(--accent);"></div>
+      <button type="submit" class="btn btn--primary">Save project</button>
+      <div class="form-status" id="status"></div>
     </form>
 
     <h2 class="section-title" style="font-size:28px;margin-top:40px;">Existing projects</h2>

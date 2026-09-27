@@ -42,8 +42,8 @@
           `<h3 class="card__title">${esc(p.title)}</h3>` +
           `<p class="card__body">${esc(p.body || "")}</p>` +
           `<div class="tags" style="margin-top:14px;">` +
-            `<button class="btn btn--sm btn--paper" data-edit="${esc(p.id)}">edit</button>` +
-            `<button class="btn btn--sm danger" data-del="${esc(p.id)}">delete</button>` +
+            `<button class="btn btn--sm" data-edit="${esc(p.id)}">Edit</button>` +
+            `<button class="btn btn--sm danger" data-del="${esc(p.id)}">Delete</button>` +
           `</div>` +
         `</div>`
       )).join("");

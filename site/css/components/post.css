@@ -1,11 +1,11 @@
 /* components/post.css
-   Post card. Used by the home page AND /blog, so it is a component.
-   Split out of the old monolithic components.css. Values unchanged. */
+   Post card. Used by the home page AND /blog, so it is a component. */
 
 .post {
-  text-decoration: none; background: var(--cream); border: 3px solid var(--plum);
-  box-shadow: 6px 6px 0 var(--plum); padding: 32px; display: block;
+  display: block; text-decoration: none;
+  background: var(--ground); border: 1px solid var(--rule);
+  border-radius: var(--radius-md); padding: 32px;
 }
-.post:hover { transform: translate(-2px,-2px); box-shadow: 8px 8px 0 var(--plum); }
-.post__title { font-family: var(--font-display); font-weight: 700; font-size: 25px; color: var(--plum); margin-top: 10px; line-height: 1.25; }
-.post__body { font-size: 16px; line-height: 1.6; color: var(--text-soft); margin-top: 12px; }
+.post:hover { border-color: var(--text); }
+.post__title { font: var(--type-h3); color: var(--text); margin-top: 10px; }
+.post__body { font: var(--type-body); color: var(--text-soft); margin-top: 12px; }

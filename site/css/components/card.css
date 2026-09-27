@@ -1,20 +1,23 @@
 /* components/card.css
-   The card grid, the card itself, and its tag chips.
-   Split out of the old monolithic components.css. Values unchanged. */
+   The card grid, the card itself, and its tag chips. */
 
-/* ---------- project / log cards ---------- */
-.projects { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
+.projects { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
 .card {
-  background: var(--cream); border: 3px solid var(--plum);
-  box-shadow: 6px 6px 0 var(--plum); padding: 32px;
+  background: var(--ground);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-md);
+  padding: 32px;
 }
-.card:hover { transform: translate(-2px,-2px); box-shadow: 8px 8px 0 var(--plum); }
-.card__meta { font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--text-faint); }
-.card__title { font-family: var(--font-display); font-weight: 700; font-size: 26px; color: var(--plum); margin-top: 8px; }
-.card__body { font-size: 16px; line-height: 1.6; color: var(--text-soft); margin-top: 12px; }
-.card code, .inline-code { font-family: var(--font-mono); color: var(--teal); font-weight: 600; }
+.card__meta { font: var(--type-small); color: var(--text-soft); }
+.card__title { font: var(--type-h3); color: var(--text); margin-top: 8px; }
+.card__body { font: var(--type-body); color: var(--text-soft); margin-top: 12px; }
+.card code, .inline-code {
+  font-family: var(--font-mono); font-variation-settings: var(--axes-mono);
+  color: var(--text); font-weight: var(--fw-semibold);
+}
 .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
 .tag {
-  font-family: var(--font-mono); font-size: 12px; font-weight: 500; color: var(--plum);
-  background: var(--paper); border: 2px solid var(--plum); padding: 5px 12px;
+  font: var(--type-small); color: var(--text);
+  background: var(--surface); border: 1px solid var(--rule);
+  border-radius: var(--radius-sm); padding: 3px 10px;
 }

@@ -1,15 +1,13 @@
 /* components/filter.css
-   Category filter chips, and the category tag variant.
-   Split out of the old monolithic components.css. Values unchanged. */
+   Category filter chips, and the category tag variant. */
 
-/* category filter chips on /blog — built from whatever the posts declare */
-.filters { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+.filters { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 26px; }
 .filters:empty { display: none; }
 .filter {
-  font: 600 13px/1 var(--font-mono); text-transform: lowercase; letter-spacing: 0.04em;
-  color: var(--plum); background: var(--paper); text-decoration: none;
-  border: 3px solid var(--plum); box-shadow: 3px 3px 0 var(--plum); padding: 9px 15px;
+  font: 500 14px/1 var(--font-sans); color: var(--text);
+  background: var(--surface); border: 1px solid var(--rule);
+  border-radius: var(--radius-pill); padding: 8px 14px; text-decoration: none;
 }
-.filter:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--plum); }
-.filter.is-on { background: var(--gold); }
-.tag--cat { background: var(--teal); color: var(--cream); }
+.filter:hover { border-color: var(--text); }
+.filter.is-on { color: var(--ground); background: var(--text); border-color: var(--text); }
+.tag--cat { color: var(--surface); background: var(--link); border-color: var(--link); }

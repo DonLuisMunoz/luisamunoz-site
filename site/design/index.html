@@ -3,75 +3,52 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Design system · Luis A. Munoz</title>
-    <meta name="description" content="Every reusable component in the luisamunoz.com design system, in every state." />
-    <!-- Internal reference, not a portfolio page. Kept out of search so it
-         never competes with the site itself. robots.txt disallows it too. -->
+    <title>Design system · Luis Munoz</title>
+    <meta name="description" content="Every reusable component on luisamunoz.com, in every state and every time of day." />
+    <!-- Internal reference, not a portfolio page. robots.txt disallows it too. -->
     <meta name="robots" content="noindex" />
 
     <link rel="icon" type="image/png" href="/assets/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Public+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Recursive:slnt,wght,CASL,CRSV,MONO@-15..0,300..1000,0..1,0..1,0..1&display=swap"
       rel="stylesheet"
     />
 
-    <!-- The REAL stylesheet, not a copy. That is the whole point: if a
-         component drifts, this page drifts with it and shows the truth. -->
+    <!-- The REAL stylesheet, not a copy: if a component drifts, this page
+         drifts with it and shows the truth. -->
     <link rel="stylesheet" href="../css/styles.css" />
 
     <style>
-      /* Gallery chrome only — layout for the reference page itself, never
-         component styles. Prefixed ds- so it can't collide with the system.
-         Tokens only, no raw hex: the same rule the rest of the CSS follows. */
-      .ds-main { max-width: 1100px; margin: 0 auto; padding: 6vh 5vw 12vh; }
-      .ds-lede { font-size: 19px; color: var(--text-soft); max-width: 640px; margin-top: 14px; }
-      .ds-sec { margin-top: 72px; border-top: 3px solid var(--plum); padding-top: 34px; }
-      .ds-sec > h2 {
-        font-family: var(--font-display); font-weight: 700; font-size: 34px;
-        letter-spacing: -0.02em; color: var(--plum);
-      }
-      .ds-sec > p { color: var(--text-soft); margin-top: 10px; max-width: 640px; }
-      .ds-sub {
-        font-family: var(--font-mono); font-size: 12px; font-weight: 600;
-        text-transform: uppercase; letter-spacing: 0.12em;
-        color: var(--text-faint); margin-top: 34px;
-      }
-      /* the demo surface: components sit on paper so borders read clearly */
+      /* Gallery chrome only, prefixed ds-. Tokens only, no raw hex. */
+      .ds-main { max-width: 1100px; margin: 0 auto; padding: 64px 5vw 120px; }
+      .ds-toc { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 26px; }
+      .ds-sec { margin-top: 72px; }
+      .ds-sec > h2 { font: var(--type-h2); letter-spacing: var(--tracking-display); color: var(--text); }
+      .ds-sec > p { color: var(--text-soft); margin-top: 10px; max-width: 34em; }
+      .ds-sub { font: var(--type-h3); color: var(--text); margin-top: 40px; }
       .ds-demo {
-        border: 3px solid var(--plum); background: var(--paper);
+        background: var(--ground); border: 1px solid var(--rule); border-radius: var(--radius-md);
         padding: 28px; margin-top: 12px;
-        display: flex; flex-wrap: wrap; gap: 18px; align-items: flex-start;
+        display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start;
       }
       .ds-demo--stack { display: block; }
-      .ds-demo--dark { background: var(--plum); }
-      .ds-code {
-        font-family: var(--font-mono); font-size: 12px; color: var(--text-faint);
-        margin-top: 8px; display: block;
-      }
-      .ds-note {
-        border-left: 4px solid var(--terracotta); background: var(--paper);
-        padding: 14px 18px; margin-top: 16px; max-width: 640px;
-        font-size: 15px; color: var(--text-soft);
-      }
-      /* colour swatches */
-      .ds-swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 16px; margin-top: 16px; }
-      .ds-swatch { border: 3px solid var(--plum); background: var(--paper); }
-      .ds-swatch__chip { height: 76px; border-bottom: 3px solid var(--plum); }
-      .ds-swatch__meta { padding: 12px 14px; }
-      .ds-swatch__name { font-family: var(--font-mono); font-size: 13px; font-weight: 700; color: var(--plum); }
-      .ds-swatch__hex  { font-family: var(--font-mono); font-size: 12px; color: var(--text-soft); margin-top: 2px; }
-      .ds-ratios { font-family: var(--font-mono); font-size: 11px; color: var(--text-soft); margin-top: 8px; line-height: 1.6; }
-      .ds-pass::before { content: "PASS "; font-weight: 700; }
-      .ds-fail::before { content: "FAIL "; font-weight: 700; color: var(--terracotta); }
-      /* type scale */
-      .ds-type-row { border-bottom: 2px solid var(--paper-border); padding: 16px 0; }
+      .ds-code { font: var(--type-small); font-family: var(--font-mono); font-variation-settings: var(--axes-mono); color: var(--text-soft); margin-top: 8px; display: block; }
+      .ds-note { background: var(--surface); border-left: 4px solid var(--link); padding: 14px 18px; margin-top: 16px; max-width: 40em; color: var(--text-soft); }
+      .ds-presets { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-top: 16px; }
+      .ds-preset { background: var(--ground); color: var(--text); border: 1px solid var(--rule); border-radius: var(--radius-md); padding: 22px; }
+      .ds-preset h3 { font: var(--type-h3); }
+      .ds-preset p { color: var(--text-soft); margin-top: 6px; }
+      .ds-preset .ds-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; align-items: center; }
+      .ds-chip { width: 44px; height: 44px; border-radius: var(--radius-sm); border: 1px solid var(--rule); }
+      .ds-room { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; margin-top: 16px; }
+      .ds-room__chip { height: 76px; border-radius: var(--radius-md) var(--radius-md) 0 0; }
+      .ds-room__meta { background: var(--surface); border: 1px solid var(--rule); border-top: 0; border-radius: 0 0 var(--radius-md) var(--radius-md); padding: 10px 12px; font: var(--type-small); color: var(--text-soft); }
+      .ds-room__meta strong { display: block; color: var(--text); }
+      .ds-type-row { border-bottom: 1px solid var(--rule); padding: 16px 0; }
       .ds-type-row:last-child { border-bottom: 0; }
-      .ds-type-label { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-faint); }
-      .ds-shadow-row { display: flex; gap: 22px; flex-wrap: wrap; }
-      .ds-shadow-demo { width: 120px; height: 66px; border: 3px solid var(--plum); background: var(--gold); }
-      .ds-toc { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+      .ds-type-label { font: var(--type-small); color: var(--text-soft); }
     </style>
   </head>
 
@@ -79,432 +56,226 @@
     <a class="skip-link" href="#main">Skip to content</a>
 
     <nav class="nav">
-      <a href="/" class="nav__brand">
-        <span class="nav__mark">&gt;_</span>
-        <span class="nav__wordmark">luis<span class="dot">.</span>learns</span>
-      </a>
+      <a href="/" class="nav__brand">Luis Munoz</a>
       <div class="nav__links">
-        <a href="/#log" class="nav__link">log</a>
-        <a href="/#stack" class="nav__link">stack</a>
-        <a href="/blog/" class="nav__link">writing</a>
-        <a href="/#contact" class="nav__cta">say hi</a>
+        <a href="/#log" class="nav__link">Log</a>
+        <a href="/#stack" class="nav__link">Stack</a>
+        <a href="/blog/" class="nav__link">Writing</a>
+        <a href="/#contact" class="nav__cta">Say hi</a>
       </div>
     </nav>
 
     <main id="main" class="ds-main">
-      <div class="section-kicker">// design system</div>
-      <h1 class="section-title">Every part, every state</h1>
-      <p class="ds-lede">
+      <h1 class="section-title">Every part, every state, every hour</h1>
+      <p class="section-lead">
         The reusable components behind luisamunoz.com, rendered from the site's own
-        stylesheet. If something drifts here, it has drifted everywhere — this page
-        can't go stale, because it isn't a copy.
+        stylesheet. The site is a desk in Tampa, and the window tells the time, so every
+        colour exists three times: day, dusk and night.
       </p>
 
       <nav class="ds-toc" aria-label="Sections">
-        <a class="filter" href="#tokens">tokens</a>
-        <a class="filter" href="#primitives">primitives</a>
-        <a class="filter" href="#buttons">buttons</a>
-        <a class="filter" href="#cards">cards</a>
-        <a class="filter" href="#chips">tags &amp; badges</a>
-        <a class="filter" href="#forms">forms</a>
-        <a class="filter" href="#surfaces">surfaces</a>
-        <a class="filter" href="#rules">rules</a>
+        <a class="filter" href="#colour">Colour</a>
+        <a class="filter" href="#type">Type</a>
+        <a class="filter" href="#buttons">Buttons</a>
+        <a class="filter" href="#cards">Cards</a>
+        <a class="filter" href="#chips">Tags and filters</a>
+        <a class="filter" href="#forms">Forms</a>
+        <a class="filter" href="#code">Code</a>
+        <a class="filter" href="#rules">Rules</a>
       </nav>
 
-      <!-- ============ TOKENS ============ -->
-      <section class="ds-sec" id="tokens">
-        <h2>Tokens</h2>
+      <section class="ds-sec" id="colour">
+        <h2>Colour</h2>
         <p>
-          Every value comes from <code class="mono">site/css/tokens/</code>. No component
-          anywhere writes a raw hex. Contrast figures are measured against the two light
-          surfaces and against plum; AA needs <strong>4.5:1</strong> for normal text.
+          Five colours taken from the room. Components never use them directly: they use the
+          semantic tokens below, which each time preset redefines. Contrast for every pair in
+          every preset is checked by <code>tests/css-tokens.test.js</code>.
         </p>
 
-        <h3 class="ds-sub">Colour</h3>
-        <div class="ds-swatches">
-
-          <div class="ds-swatch">
-            <div class="ds-swatch__chip" style="background: var(--terracotta)"></div>
-            <div class="ds-swatch__meta">
-              <div class="ds-swatch__name">--terracotta</div>
-              <div class="ds-swatch__hex">#AC4622 · lead accent</div>
-              <div class="ds-ratios">
-                <span class="ds-pass">cream 4.58</span><br />
-                <span class="ds-pass">paper 5.21</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="ds-swatch">
-            <div class="ds-swatch__chip" style="background: var(--gold)"></div>
-            <div class="ds-swatch__meta">
-              <div class="ds-swatch__name">--gold</div>
-              <div class="ds-swatch__hex">#E0A92E · fills and borders only</div>
-              <div class="ds-ratios">
-                <span class="ds-fail">cream 1.69</span><br />
-                <span class="ds-fail">paper 1.92</span><br />
-                <span class="ds-pass">on plum 7.61</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="ds-swatch">
-            <div class="ds-swatch__chip" style="background: var(--teal)"></div>
-            <div class="ds-swatch__meta">
-              <div class="ds-swatch__name">--teal</div>
-              <div class="ds-swatch__hex">#27695C · "it works" / calm</div>
-              <div class="ds-ratios">
-                <span class="ds-pass">cream 5.13</span><br />
-                <span class="ds-pass">paper 5.83</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="ds-swatch">
-            <div class="ds-swatch__chip" style="background: var(--pink)"></div>
-            <div class="ds-swatch__meta">
-              <div class="ds-swatch__name">--pink</div>
-              <div class="ds-swatch__hex">#E66D8A · syntax on plum only</div>
-              <div class="ds-ratios">
-                <span class="ds-fail">cream 2.42</span><br />
-                <span class="ds-pass">on plum 5.33</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="ds-swatch">
-            <div class="ds-swatch__chip" style="background: var(--plum)"></div>
-            <div class="ds-swatch__meta">
-              <div class="ds-swatch__name">--plum</div>
-              <div class="ds-swatch__hex">#2B1B2E · ink, borders, shadows</div>
-              <div class="ds-ratios">
-                <span class="ds-pass">cream 12.87</span><br />
-                <span class="ds-pass">paper 14.64</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="ds-swatch">
-            <div class="ds-swatch__chip" style="background: var(--cream)"></div>
-            <div class="ds-swatch__meta">
-              <div class="ds-swatch__name">--cream</div>
-              <div class="ds-swatch__hex">#F2E4C9 · page background</div>
-              <div class="ds-ratios">surface — 39% of the home page</div>
-            </div>
-          </div>
-
-          <div class="ds-swatch">
-            <div class="ds-swatch__chip" style="background: var(--paper)"></div>
-            <div class="ds-swatch__meta">
-              <div class="ds-swatch__name">--paper</div>
-              <div class="ds-swatch__hex">#FBF3E2 · card surface on cream</div>
-              <div class="ds-ratios">surface — 32% of the home page</div>
-            </div>
-          </div>
-
-          <div class="ds-swatch">
-            <div class="ds-swatch__chip" style="background: var(--paper-border)"></div>
-            <div class="ds-swatch__meta">
-              <div class="ds-swatch__name">--paper-border</div>
-              <div class="ds-swatch__hex">#D8C4A0 · hairline on cream</div>
-              <div class="ds-ratios">non-text use only</div>
-            </div>
-          </div>
-
-          <div class="ds-swatch">
-            <div class="ds-swatch__chip" style="background: var(--text-soft)"></div>
-            <div class="ds-swatch__meta">
-              <div class="ds-swatch__name">--text-soft</div>
-              <div class="ds-swatch__hex">#5A4438 · body copy</div>
-              <div class="ds-ratios">
-                <span class="ds-pass">cream 7.21</span><br />
-                <span class="ds-pass">paper 8.20</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="ds-swatch">
-            <div class="ds-swatch__chip" style="background: var(--text-faint)"></div>
-            <div class="ds-swatch__meta">
-              <div class="ds-swatch__name">--text-faint</div>
-              <div class="ds-swatch__hex">#7E5F41 · captions, meta</div>
-              <div class="ds-ratios">
-                <span class="ds-pass">cream 4.64</span><br />
-                <span class="ds-pass">paper 5.28</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="ds-swatch">
-            <div class="ds-swatch__chip" style="background: var(--text-on-dark-muted)"></div>
-            <div class="ds-swatch__meta">
-              <div class="ds-swatch__name">--text-on-dark-muted</div>
-              <div class="ds-swatch__hex">#C9A9BC · muted text on plum</div>
-              <div class="ds-ratios">
-                <span class="ds-pass">on plum 7.61</span>
-              </div>
-            </div>
-          </div>
-
+        <h3 class="ds-sub">The room</h3>
+        <div class="ds-room">
+          <div><div class="ds-room__chip" style="background: var(--wall)"></div><div class="ds-room__meta"><strong>--wall</strong>Daylight on a pale wall</div></div>
+          <div><div class="ds-room__chip" style="background: var(--ink)"></div><div class="ds-room__meta"><strong>--ink</strong>Text by day, the room at night</div></div>
+          <div><div class="ds-room__chip" style="background: var(--bay)"></div><div class="ds-room__meta"><strong>--bay</strong>Tampa Bay; links and focus</div></div>
+          <div><div class="ds-room__chip" style="background: var(--dusk)"></div><div class="ds-room__meta"><strong>--dusk</strong>Sunset; fills only, never small text</div></div>
+          <div><div class="ds-room__chip" style="background: var(--shelf)"></div><div class="ds-room__meta"><strong>--shelf</strong>The IKEA shelf; code blocks</div></div>
         </div>
 
-        <h3 class="ds-sub">Type scale</h3>
+        <h3 class="ds-sub">Three times of day</h3>
+        <div class="ds-presets">
+          <div class="ds-preset" data-time="day">
+            <h3>Day, 7:00 to 16:59</h3>
+            <p>Sun through the window.</p>
+            <div class="ds-row">
+              <span class="ds-chip" style="background: var(--surface)"></span>
+              <span class="ds-chip" style="background: var(--text-soft)"></span>
+              <span class="ds-chip" style="background: var(--link)"></span>
+              <span class="ds-chip" style="background: var(--rule)"></span>
+              <a class="btn btn--primary btn--sm" href="#colour">Primary</a>
+              <a class="btn btn--sm" href="#colour">Quiet</a>
+            </div>
+          </div>
+          <div class="ds-preset" data-time="dusk">
+            <h3>Dusk, 17:00 to 19:59</h3>
+            <p>Low amber light across the shelf.</p>
+            <div class="ds-row">
+              <span class="ds-chip" style="background: var(--surface)"></span>
+              <span class="ds-chip" style="background: var(--text-soft)"></span>
+              <span class="ds-chip" style="background: var(--link)"></span>
+              <span class="ds-chip" style="background: var(--rule)"></span>
+              <a class="btn btn--primary btn--sm" href="#colour">Primary</a>
+              <a class="btn btn--sm" href="#colour">Quiet</a>
+            </div>
+          </div>
+          <div class="ds-preset" data-time="night">
+            <h3>Night, 20:00 to 6:59</h3>
+            <p>A dark room lit by the monitor.</p>
+            <div class="ds-row">
+              <span class="ds-chip" style="background: var(--surface)"></span>
+              <span class="ds-chip" style="background: var(--text-soft)"></span>
+              <span class="ds-chip" style="background: var(--link)"></span>
+              <span class="ds-chip" style="background: var(--rule)"></span>
+              <a class="btn btn--primary btn--sm" href="#colour">Primary</a>
+              <a class="btn btn--sm" href="#colour">Quiet</a>
+            </div>
+          </div>
+        </div>
+        <code class="ds-code">&lt;html data-time="day|dusk|night"&gt; · any element can scope a preset</code>
+      </section>
+
+      <section class="ds-sec" id="type">
+        <h2>Type</h2>
+        <p>
+          One family, Recursive, in three voices set by its variable axes. Sentence case
+          everywhere; no uppercase labels.
+        </p>
         <div class="ds-demo ds-demo--stack">
           <div class="ds-type-row">
-            <div class="ds-type-label">display 76 / hero title</div>
-            <div style="font-family: var(--font-display); font-weight: 700; font-size: 76px; line-height: 0.98; letter-spacing: -0.035em; color: var(--plum);">Learning</div>
+            <div class="ds-type-label">Display 72, the name only</div>
+            <div style="font: var(--type-display); letter-spacing: var(--tracking-display);">Luis Munoz</div>
           </div>
           <div class="ds-type-row">
-            <div class="ds-type-label">display 48 / section title</div>
-            <div class="section-title" style="margin-top: 4px;">Section title</div>
+            <div class="ds-type-label">Heading 48, section titles</div>
+            <div class="section-title">What I've been building</div>
           </div>
           <div class="ds-type-row">
-            <div class="ds-type-label">display 26 / card title</div>
-            <div class="card__title">Card title</div>
+            <div class="ds-type-label">Heading 24, card titles</div>
+            <div class="card__title" style="margin-top: 0;">Tampa Bay Affordability Analysis</div>
           </div>
           <div class="ds-type-row">
-            <div class="ds-type-label">body 19 / section lead</div>
-            <p class="section-lead" style="margin-top: 4px;">The lead paragraph that introduces a section.</p>
+            <div class="ds-type-label">Lead 21</div>
+            <p class="section-lead" style="margin-top: 0;">The line under a section title.</p>
           </div>
           <div class="ds-type-row">
-            <div class="ds-type-label">body 16 / card body</div>
-            <p class="card__body" style="margin-top: 4px;">Standard body copy, used inside cards and prose.</p>
+            <div class="ds-type-label">Body 18</div>
+            <p>Everything you read, at under 80 characters a line.</p>
           </div>
           <div class="ds-type-row">
-            <div class="ds-type-label">mono 13 / kicker</div>
-            <div class="section-kicker">// the learning log</div>
+            <div class="ds-type-label">Casual, for notes on shelf items</div>
+            <p style="font-variation-settings: var(--axes-casual);">Painted this one in 2019.</p>
           </div>
           <div class="ds-type-row">
-            <div class="ds-type-label">mono 12 / tag</div>
-            <span class="tag">python</span>
+            <div class="ds-type-label">Mono, for code</div>
+            <code>JOIN zhvi zh ON zo.zip = zh."RegionName"</code>
           </div>
-        </div>
-
-        <h3 class="ds-sub">Shadows — hard offset, zero blur</h3>
-        <div class="ds-demo">
-          <div>
-            <div class="ds-shadow-demo" style="box-shadow: 3px 3px 0 var(--plum)"></div>
-            <code class="ds-code">3px · tag, filter, badge</code>
-          </div>
-          <div>
-            <div class="ds-shadow-demo" style="box-shadow: 4px 4px 0 var(--plum)"></div>
-            <code class="ds-code">4px · nb-block, btn--sm</code>
-          </div>
-          <div>
-            <div class="ds-shadow-demo" style="box-shadow: 5px 5px 0 var(--plum)"></div>
-            <code class="ds-code">5px · btn</code>
-          </div>
-          <div>
-            <div class="ds-shadow-demo" style="box-shadow: 6px 6px 0 var(--plum)"></div>
-            <code class="ds-code">6px · card</code>
-          </div>
-        </div>
-        <div class="ds-note">
-          Never a blur radius. The fourth value is always <code class="mono">0</code>, and the
-          colour is always <code class="mono">var(--plum)</code> — the same value as the border.
         </div>
       </section>
 
-      <!-- ============ PRIMITIVES ============ -->
-      <section class="ds-sec" id="primitives">
-        <h2>Primitives</h2>
-        <p>The smallest shared pieces. Everything else is built from these.</p>
-
-        <h3 class="ds-sub">.nb-block — any bordered, shadowed surface</h3>
-        <div class="ds-demo">
-          <div class="nb-block" style="padding: 22px 26px;">A block.</div>
-        </div>
-        <code class="ds-code">&lt;div class="nb-block"&gt;</code>
-
-        <h3 class="ds-sub">Section headings</h3>
-        <div class="ds-demo ds-demo--stack">
-          <div class="section-kicker">// section kicker</div>
-          <h3 class="section-title">Section title</h3>
-          <p class="section-lead">The lead paragraph that sits under a section title and explains what follows.</p>
-        </div>
-        <code class="ds-code">.section-kicker · .section-title · .section-lead</code>
-      </section>
-
-      <!-- ============ BUTTONS ============ -->
       <section class="ds-sec" id="buttons">
         <h2>Buttons</h2>
-        <p>
-          The core interaction. Hover lifts the button up and lengthens its shadow; pressing
-          pushes it down into the page and removes the shadow entirely. Try it — these are live,
-          not pictures.
-        </p>
-
-        <h3 class="ds-sub">Variants</h3>
+        <p>The quiet default and the primary fill. A press moves the button 1px.</p>
         <div class="ds-demo">
-          <a href="#buttons" class="btn btn--gold">gold button</a>
-          <a href="#buttons" class="btn btn--paper">paper button</a>
-          <a href="#buttons" class="btn btn--gold btn--sm">gold small</a>
-          <a href="#buttons" class="btn btn--paper btn--sm">paper small</a>
+          <a href="#buttons" class="btn btn--primary">Primary</a>
+          <a href="#buttons" class="btn">Quiet</a>
+          <a href="#buttons" class="btn btn--primary btn--sm">Primary small</a>
+          <a href="#buttons" class="btn btn--sm">Quiet small</a>
         </div>
-        <code class="ds-code">.btn .btn--gold · .btn .btn--paper · add .btn--sm</code>
-
+        <code class="ds-code">.btn · .btn.btn--primary · add .btn--sm</code>
         <div class="ds-note">
-          <strong>States are physical, not visual.</strong> Hover: <code class="mono">translate(-2px,-2px)</code>
-          with a 7px shadow. Active: <code class="mono">translate(5px,5px)</code> with no shadow —
-          the button has been pressed flat. Focus: a 3px gold ring, offset 3px, shown for keyboard
-          users only via <code class="mono">:focus-visible</code>. Tab to one and see.
+          Focus is a 3px <code>--link</code> ring, offset 3px, for keyboard users only via
+          <code>:focus-visible</code>. Tab to a button to see it.
         </div>
       </section>
 
-      <!-- ============ CARDS ============ -->
       <section class="ds-sec" id="cards">
         <h2>Cards</h2>
-        <p>The workhorse. Used for projects, blog posts and the learning log.</p>
-
+        <p>Used for projects and blog posts.</p>
         <div class="ds-demo ds-demo--stack">
           <div class="projects">
             <article class="card">
-              <div class="card__meta">AUG 2026 · SQL</div>
+              <div class="card__meta">Aug 2026, SQL</div>
               <h3 class="card__title">A join that returned zero rows</h3>
-              <p class="card__body">
-                A card with meta, title, body and tags. The body wraps to as many lines as it needs.
-              </p>
-              <div class="tags">
-                <span class="tag">sql</span>
-                <span class="tag">debugging</span>
-              </div>
-              <a href="#cards" class="btn btn--gold btn--sm" style="margin-top: 18px;">view the code ↗</a>
+              <p class="card__body">A card with meta, title, body and tags.</p>
+              <div class="tags"><span class="tag">SQL</span><span class="tag">debugging</span></div>
+              <a href="#cards" class="btn btn--primary btn--sm" style="margin-top: 18px;">View the code ↗</a>
             </article>
             <article class="card">
-              <div class="card__meta">JUL 2026 · PYTHON</div>
+              <div class="card__meta">Jul 2026, Python</div>
               <h3 class="card__title">A card with no tags</h3>
-              <p class="card__body">
-                The tags block is omitted entirely rather than rendered empty, so no stray gap appears.
-              </p>
+              <p class="card__body">The tags block is left out rather than rendered empty.</p>
             </article>
           </div>
         </div>
         <code class="ds-code">.card &gt; .card__meta · .card__title · .card__body · .tags</code>
       </section>
 
-      <!-- ============ TAGS & BADGES ============ -->
       <section class="ds-sec" id="chips">
-        <h2>Tags, badges and filters</h2>
-
-        <h3 class="ds-sub">Tags</h3>
+        <h2>Tags and filters</h2>
         <div class="ds-demo">
           <span class="tag">python</span>
           <span class="tag">sql</span>
           <span class="tag tag--cat">building</span>
         </div>
-        <code class="ds-code">.tag · .tag.tag--cat (category, teal fill)</code>
-
-        <h3 class="ds-sub">Badge</h3>
+        <code class="ds-code">.tag · .tag.tag--cat</code>
         <div class="ds-demo">
-          <span class="badge"><span class="badge__dot"></span> open to work</span>
+          <a class="filter is-on" href="#chips">Everything</a>
+          <a class="filter" href="#chips">Building</a>
+          <a class="filter" href="#chips">Notes</a>
         </div>
-        <code class="ds-code">.badge &gt; .badge__dot</code>
-
-        <h3 class="ds-sub">Filters — default and active</h3>
-        <div class="ds-demo">
-          <a class="filter is-on" href="#chips">everything</a>
-          <a class="filter" href="#chips">building</a>
-          <a class="filter" href="#chips">notes</a>
-        </div>
-        <code class="ds-code">.filter · .filter.is-on (gold fill marks the active one)</code>
+        <code class="ds-code">.filter · .filter.is-on</code>
       </section>
 
-      <!-- ============ FORMS ============ -->
       <section class="ds-sec" id="forms">
-        <h2>Form fields</h2>
-        <p>
-          Shown on plum, which is the only surface they are designed for. The label uses
-          <code class="mono">--gold</code>, which clears 7.61:1 on plum and would
-          <strong>fail at 1.69:1</strong> on cream. This component is not surface-agnostic,
-          and that is worth knowing before reusing it.
-        </p>
-
-        <div class="ds-demo ds-demo--dark ds-demo--stack">
-          <div class="contact__form" style="max-width: 520px; margin: 0 auto; text-align: left;">
+        <h2>Forms</h2>
+        <p>Built from --text, --ground and --rule only, so fields work on any surface in any preset.</p>
+        <div class="ds-demo ds-demo--stack">
+          <div class="contact__form" style="margin-top: 0;">
             <div class="field">
-              <label for="ds-name">your name</label>
+              <label for="ds-name">Name</label>
               <input id="ds-name" type="text" value="Luis" />
             </div>
-            <div class="field" style="margin-top: 18px;">
-              <label for="ds-msg">message</label>
-              <textarea id="ds-msg" rows="3">Focus a field to see the border shift to gold.</textarea>
+            <div class="field">
+              <label for="ds-msg">Message</label>
+              <textarea id="ds-msg" rows="3">Focus a field to see its border turn --link.</textarea>
             </div>
-            <p class="form-status" style="margin-top: 14px;">Sending…</p>
+            <p class="form-status">Sending…</p>
           </div>
         </div>
         <code class="ds-code">.field &gt; label + input | textarea · .form-status</code>
       </section>
 
-      <!-- ============ SURFACES ============ -->
-      <section class="ds-sec" id="surfaces">
-        <h2>Surfaces</h2>
-        <p>
-          Sections alternate between cream and paper to separate bands without adding rules
-          or shadows. Every section is topped by a 3px plum border.
-        </p>
-        <div class="ds-demo ds-demo--stack" style="padding: 0; border: 0;">
-          <div class="section section--cream" style="padding: 34px 30px;">
-            <div class="section-kicker">// cream</div>
-            <p class="card__body">.section.section--cream — the page background.</p>
-          </div>
-          <div class="section section--paper" style="padding: 34px 30px;">
-            <div class="section-kicker">// paper</div>
-            <p class="card__body">.section.section--paper — the lighter alternating band.</p>
-          </div>
+      <section class="ds-sec" id="code">
+        <h2>Code</h2>
+        <p>Code sits on the shelf colour in every preset.</p>
+        <div class="ds-demo ds-demo--stack">
+          <div class="code-block code-block--bad"><span class="syn-kw">JOIN</span> zhvi zh <span class="syn-kw">ON</span> zo.zip = zh.<span class="syn-str">"RegionID"</span></div>
+          <div class="code-block code-block--good" style="margin-top: 12px;"><span class="syn-kw">JOIN</span> zhvi zh <span class="syn-kw">ON</span> zo.zip = zh.<span class="syn-str">"RegionName"</span></div>
         </div>
-
-        <h3 class="ds-sub">Skip link</h3>
-        <p>
-          Invisible until focused, then it lands top-left as a gold button. It is the first tab
-          stop on every page. Press <kbd class="mono">Tab</kbd> from the top of this page to see it.
-        </p>
-        <code class="ds-code">&lt;a class="skip-link" href="#main"&gt;Skip to content&lt;/a&gt;</code>
       </section>
 
-      <!-- ============ RULES ============ -->
       <section class="ds-sec" id="rules">
         <h2>Rules that are load-bearing</h2>
-
-        <div class="ds-note">
-          <strong>1. Never write a raw hex outside <code class="mono">tokens/</code>.</strong>
-          Fixing every contrast failure on the site was a three-line change precisely because
-          nothing hardcodes colour. One <code class="mono">#somehex</code> in a component breaks
-          that property permanently.
-        </div>
-
-        <div class="ds-note">
-          <strong>2. Gold is a fill and border colour. Never small text on a light surface.</strong>
-          At 1.69:1 on cream there is no adjustment that saves it — it is used on plum, or as a
-          background with plum text on top.
-        </div>
-
-        <div class="ds-note">
-          <strong>3. A colour has to pass in both directions.</strong> Any value used as text on a
-          light surface <em>and</em> as a fill under light text must clear 4.5:1 both ways.
-          That is why terracotta and teal are the shades they are.
-        </div>
-
-        <div class="ds-note">
-          <strong>4. <code class="mono">class</code> styles, <code class="mono">data-*</code>
-          targets.</strong> JavaScript queries <code class="mono">[data-stack]</code>, never
-          <code class="mono">.skills</code>. Renaming a class for visual reasons must never break
-          behaviour.
-        </div>
-
-        <div class="ds-note">
-          <strong>5. Motion is physical, and optional.</strong> Hover lifts, active presses,
-          nothing fades. All of it is disabled under
-          <code class="mono">prefers-reduced-motion: reduce</code>.
-        </div>
+        <div class="ds-note"><strong>1. Never write a raw hex outside <code>tokens/</code>.</strong> A test fails the build if you do.</div>
+        <div class="ds-note"><strong>2. Components use semantic tokens, never the room colours.</strong> <code>--text</code>, not <code>--ink</code>: at night <code>--text</code> is light, and <code>--ink</code> is still navy.</div>
+        <div class="ds-note"><strong>3. Dusk is a fill.</strong> At 1.64:1 on <code>--wall</code> it can never be small text.</div>
+        <div class="ds-note"><strong>4. <code>class</code> styles, <code>data-*</code> targets.</strong> JavaScript queries <code>[data-stack]</code>, never <code>.skills</code>.</div>
+        <div class="ds-note"><strong>5. Motion answers the visitor.</strong> Nothing fades in on scroll. Reduced motion is respected everywhere.</div>
       </section>
     </main>
 
     <footer class="footer">
-      <div class="footer__brand">
-        <span class="footer__mark">&gt;_</span>
-        <span>luis<span class="dot">.</span>learns</span>
-      </div>
-      <div class="footer__meta">design system · rendered from the site's own CSS</div>
+      <span class="footer__name">Luis Munoz</span>
+      <span class="footer__meta">Design system, rendered from the site's own CSS</span>
     </footer>
   </body>
 </html>

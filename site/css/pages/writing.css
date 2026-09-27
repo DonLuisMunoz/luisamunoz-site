@@ -1,6 +1,4 @@
 /* pages/writing.css
-   The writing section header on the home page.
-   Split out of the old monolithic components.css. Values unchanged. */
+   The writing section header on the home page. */
 
-/* ---------- writing ---------- */
 .writing-head { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-bottom: 40px; }

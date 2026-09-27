@@ -1,2 +1,4 @@
-/* Webfonts — all three are Google Fonts, loaded by reference. */
-@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Public+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap");
+/* Webfont — one Google Font, loaded by reference. Recursive is variable:
+   the MONO and CASL axes give it a text voice, a casual voice and a code
+   voice, so one family does the work three used to. */
+@import url("https://fonts.googleapis.com/css2?family=Recursive:slnt,wght,CASL,CRSV,MONO@-15..0,300..1000,0..1,0..1,0..1&display=swap");

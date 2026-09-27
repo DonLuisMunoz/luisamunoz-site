@@ -1,17 +1,9 @@
 /* pages/footer.css
-   Site footer.
-   Split out of the old monolithic components.css. Values unchanged. */
+   Site footer. */
 
-/* ---------- footer ---------- */
 .footer {
-  padding: 34px 5vw; border-top: 3px solid var(--plum); background: var(--cream);
+  padding: 34px 5vw; background: var(--ground); border-top: 1px solid var(--rule);
   display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;
 }
-.footer__brand { display: flex; align-items: center; gap: 12px; }
-.footer__mark {
-  width: 36px; height: 36px; background: var(--gold); border: 3px solid var(--plum);
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--font-mono); font-weight: 700; font-size: 16px; color: var(--plum);
-}
-.footer__name { font-family: var(--font-display); font-weight: 600; font-size: 15px; color: var(--plum); }
-.footer__meta { font-family: var(--font-mono); font-size: 13px; color: var(--text-faint); }
+.footer__name { font: 600 16px/1.4 var(--font-sans); color: var(--text); }
+.footer__meta { font: var(--type-small); color: var(--text-soft); }

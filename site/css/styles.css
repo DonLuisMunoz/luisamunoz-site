@@ -1,6 +1,5 @@
 /* ============================================================
-   Luis — Portfolio (Neo-Brutalist)
-   Single entry point. Every page links ONLY this file.
+   Luis Munoz — the desk. Single entry point. Every page links ONLY this file.
 
    Import order is load-bearing. Several rules across these layers
    tie on specificity, and when specificity ties, source order decides.
@@ -28,19 +27,15 @@
 /* ---- 3. components — reusable, not tied to any page ---- */
 @import "components/primitives.css";
 @import "components/button.css";
-@import "components/badge.css";
 @import "components/section.css";
 @import "components/card.css";
 @import "components/post.css";
 @import "components/field.css";
 @import "components/filter.css";
-@import "components/utilities.css";
 
 /* ---- 4. pages — this site's furniture, built from the above ---- */
 @import "pages/nav.css";
 @import "pages/hero.css";
-@import "pages/terminal.css";
-@import "pages/strip.css";
 @import "pages/featured.css";
 @import "pages/skills.css";
 @import "pages/writing.css";

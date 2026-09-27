@@ -1,37 +1,16 @@
 /* components/primitives.css
-   The smallest shared pieces every other component builds on.
-   Split out of the old monolithic components.css. Values unchanged. */
+   The smallest shared pieces every other component builds on. */
 
-/* ---------- shared neobrutalist primitives ---------- */
-.nb-block {                       /* any bordered, shadowed block */
-  border: 3px solid var(--plum);
-  box-shadow: 4px 4px 0 var(--plum);
-  background: var(--paper);
-}
-.mono {
-  font-family: var(--font-mono);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-}
-.section-kicker {                 /* "// the learning log" */
-  font-family: var(--font-mono);
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  color: var(--teal);
-  text-transform: uppercase;
-}
+.mono { font-family: var(--font-mono); font-variation-settings: var(--axes-mono); }
+
 .section-title {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 48px;
-  letter-spacing: -0.03em;
-  color: var(--plum);
-  margin-top: 12px;
+  font: var(--type-h2);
+  letter-spacing: var(--tracking-display);
+  color: var(--text);
 }
 .section-lead {
-  font-size: 19px;
+  font: var(--type-lead);
   color: var(--text-soft);
   margin-top: 12px;
-  max-width: 620px;
+  max-width: 34em;
 }
