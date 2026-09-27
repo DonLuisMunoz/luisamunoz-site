@@ -86,6 +86,15 @@ for (const [label, path, time] of PAGES) {
   const { violations } = await page.evaluate(async () =>
     await axe.run(document, { resultTypes: ["violations"] }));
 
+  // WCAG 1.4.10 reflow: no sideways scrolling on a phone. axe can't see
+  // this, so measure it. 390px is the spec's phone width.
+  await page.setViewportSize({ width: 390, height: 844 });
+  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
+  if (overflow > 0) {
+    violations.push({ impact: "serious", id: "reflow", help: `page is ${overflow}px wider than a 390px viewport`,
+      nodes: [], helpUrl: "https://www.w3.org/WAI/WCAG22/Understanding/reflow.html" });
+  }
+
   if (violations.length === 0) {
     console.log(`  PASS  ${label}`);
   } else {

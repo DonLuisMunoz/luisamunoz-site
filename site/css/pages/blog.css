@@ -3,6 +3,9 @@
 
 .blog__inner { max-width: 780px; margin: 0 auto; }
 .blog__body { display: grid; gap: 24px; }
+/* A grid item defaults to min-width: auto, so a long code line would widen the
+   whole column past a phone screen. 0 lets .prose__pre scroll inside itself. */
+.blog__body > * { min-width: 0; }
 
 .prose__title {
   font: 700 48px/1.06 var(--font-sans); letter-spacing: var(--tracking-display);
