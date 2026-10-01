@@ -43,6 +43,7 @@
   border: 2px solid var(--paper-border); padding: 1px 6px;
 }
 .prose__pre {
+  position: relative;            /* anchors components/copy-button.css */
   background: var(--plum); border: 3px solid var(--plum); box-shadow: 6px 6px 0 var(--plum);
   padding: 22px 24px; margin: 0 0 28px; overflow-x: auto;
 }
