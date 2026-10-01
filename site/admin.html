@@ -20,7 +20,13 @@
     .admin-list .card { margin-bottom: 16px; }
     .row { display: flex; gap: 12px; flex-wrap: wrap; align-items: end; }
     .row > .field { flex: 1; min-width: 180px; }
-    .danger { background: var(--accent); color: var(--cream); border-color: var(--plum); }
+    .danger { background: var(--danger); color: var(--cream); border-color: var(--plum); }
+    /* Status line on a light surface. The shared .form-status is gold, built
+       for the plum contact panel, and would fail at 1.69:1 here. State
+       colours both clear AA on cream: success 5.13, danger 4.58. */
+    .admin .form-status { color: var(--text-soft); }
+    .admin .form-status.is-ok { color: var(--success); }
+    .admin .form-status.is-error { color: var(--danger); }
   </style>
 </head>
 <body>
@@ -78,7 +84,7 @@
         <input id="f-url" type="url" placeholder="https://github.com/you/repo">
       </div>
       <button type="submit" class="btn btn--gold">save project →</button>
-      <div class="form-status" id="status" style="color:var(--accent);"></div>
+      <div class="form-status" id="status" aria-live="polite"></div>
     </form>
 
     <h2 class="section-title" style="font-size:28px;margin-top:40px;">Existing projects</h2>

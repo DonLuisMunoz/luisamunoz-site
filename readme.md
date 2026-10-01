@@ -110,5 +110,7 @@ raw hex in the HTML. Full module set in `neobrutalism-spec.md`.
 brand = gold `#E0A92E` · accent = terracotta `#AC4622` · success = teal `#27695C` ·
 ink/border = plum `#2B1B2E` · surface = cream `#F2E4C9` / paper `#FBF3E2`.
 Terracotta and teal are the WCAG-AA-corrected values (was `#C8542B` / `#2E7D6F`, both of
-which failed 4.5:1 as small text). Gold is a fill/border colour only — never small text.
+which failed 4.5:1 as small text). Gold and pink are **fill-only** accents — neither passes
+as small text on a light surface. Accent colour is deliberately rare (under 3% of the page);
+cream, paper and plum carry the layout. Every value, with contrast ratios: `/design/`.
 Type: Space Grotesk (display), JetBrains Mono (UPPERCASE labels), Public Sans (body).

@@ -164,7 +164,7 @@
             <div class="ds-swatch__chip" style="background: var(--pink)"></div>
             <div class="ds-swatch__meta">
               <div class="ds-swatch__name">--pink</div>
-              <div class="ds-swatch__hex">#E66D8A · syntax on plum only</div>
+              <div class="ds-swatch__hex">#E66D8A · fill-only accent</div>
               <div class="ds-ratios">
                 <span class="ds-fail">cream 2.42</span><br />
                 <span class="ds-pass">on plum 5.33</span>
@@ -255,6 +255,14 @@
             </div>
           </div>
 
+        </div>
+
+        <div class="ds-note">
+          <strong>Semantic aliases.</strong> <code class="mono">--accent</code> and
+          <code class="mono">--danger</code> resolve to terracotta, <code class="mono">--success</code>
+          to teal. Use the alias that says what something <em>means</em> — the admin delete button
+          is <code class="mono">--danger</code>, not <code class="mono">--accent</code> — so a future
+          change to "what danger looks like" is one line. An alias nobody references is deleted, not kept.
         </div>
 
         <h3 class="ds-sub">Type scale</h3>
