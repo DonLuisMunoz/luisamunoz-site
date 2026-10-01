@@ -35,6 +35,7 @@
 @import "components/field.css";
 @import "components/filter.css";
 @import "components/copy-button.css";
+@import "components/theme-toggle.css";
 @import "components/utilities.css";
 
 /* ---- 4. pages — this site's furniture, built from the above ---- */

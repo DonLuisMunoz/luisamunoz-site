@@ -14,8 +14,8 @@
 .skip-link {
   position: absolute; left: -9999px; top: 0; z-index: 100;
   font: 600 13px/1 var(--font-mono); text-transform: lowercase; letter-spacing: 0.04em;
-  color: var(--plum); background: var(--gold); text-decoration: none;
-  border: 3px solid var(--plum); box-shadow: 4px 4px 0 var(--plum); padding: 11px 18px;
+  color: var(--on-accent); background: var(--gold); text-decoration: none;
+  border: 3px solid var(--line); box-shadow: 4px 4px 0 var(--line); padding: 11px 18px;
 }
 .skip-link:focus { left: 12px; top: 12px; }
 

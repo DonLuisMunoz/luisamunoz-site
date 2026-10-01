@@ -33,13 +33,67 @@
   --text-on-dark: #F2E4C9;  /* cream text on plum */
   --text-on-dark-muted: #C9A9BC;
 
+  /* ---- Roles ----
+     Components use THESE, not the palette names above. A palette name says
+     what colour something is; a role says what it is FOR. Dark mode exposed
+     the difference: --plum was doing three jobs (text, every border and
+     shadow, and the dark panels), and --cream two (page background and text
+     on dark panels). Those jobs need different values in a dark theme, so
+     they need different names. In light mode every role resolves to the
+     exact palette value it replaced. */
+  --bg: var(--cream);              /* page, cards, nav, footer */
+  --surface: var(--paper);         /* alternate band, chips, tracks */
+  --line: var(--plum);             /* every border and hard shadow */
+  --inverse: var(--plum);          /* dark panels: terminal, code, contact */
+  --on-accent: var(--plum);        /* text on a gold or pink fill, both themes */
+  --text-teal: var(--teal);        /* teal used as text on a light surface */
+  --text-accent: var(--terracotta);/* terracotta used as text on a light surface */
+
   /* ---- Semantic aliases ---- */
   --accent: var(--terracotta);
-  --success: var(--teal);       /* admin status: saved */
-  --danger: var(--terracotta);  /* admin delete button, failed saves */
+  --success: var(--text-teal);  /* status text: saved */
+  --danger: var(--text-accent); /* status text: failed */
 
   /* ---- Syntax (code blocks on plum) ---- */
   --syn-keyword: #E66D8A;
   --syn-fn: #E0A92E;
   --syn-string: #F2C9A0;
+}
+
+/* ============================================================
+   Dark theme. ONLY roles change. Gold, teal and terracotta FILLS keep
+   their values, so cream-on-teal (5.13) and plum-on-gold (7.61) still
+   hold. The dark panels were already dark and stay as they are.
+
+   Two selectors carry the same values on purpose:
+   - the media query follows the OS setting unless the visitor chose light;
+   - [data-theme="dark"] is an explicit choice from the toggle (js/theme.js).
+   ============================================================ */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1A1220;
+    --surface: #241A29;
+    --line: #E8D5B5;
+    --inverse: #2B1B2E;
+    --text-ink: #F2E4C9;          /* 14.5 on bg */
+    --text-soft: #D9C6AC;         /* 11.0 */
+    --text-faint: #B8A186;        /*  7.4 */
+    --text-teal: #6CC0AE;         /*  8.5 */
+    --text-accent: #F08C66;       /*  7.5 */
+    --paper-border: #5A4A5E;      /* decorative hairline, not a UI boundary */
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+    --bg: #1A1220;
+    --surface: #241A29;
+    --line: #E8D5B5;
+    --inverse: #2B1B2E;
+    --text-ink: #F2E4C9;          /* 14.5 on bg */
+    --text-soft: #D9C6AC;         /* 11.0 */
+    --text-faint: #B8A186;        /*  7.4 */
+    --text-teal: #6CC0AE;         /*  8.5 */
+    --text-accent: #F08C66;       /*  7.5 */
+    --paper-border: #5A4A5E;      /* decorative hairline, not a UI boundary */
+  color-scheme: dark;
 }

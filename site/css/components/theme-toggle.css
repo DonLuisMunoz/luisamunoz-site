@@ -1,0 +1,12 @@
+/* components/theme-toggle.css
+   The light/dark switch in the nav. A real <button> with aria-pressed; the
+   pressed state is the gold fill, so the state is visible without relying
+   on the label changing. Driven by js/theme.js via [data-theme-toggle]. */
+
+.theme-toggle {
+  font: 600 13px/1 var(--font-mono); text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--text-ink); background: var(--surface);
+  border: 2px solid var(--line); padding: 9px 12px; cursor: pointer;
+}
+.theme-toggle:hover { background: var(--bg); }
+.theme-toggle[aria-pressed="true"] { background: var(--gold); color: var(--on-accent); }

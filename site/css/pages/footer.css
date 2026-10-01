@@ -4,14 +4,14 @@
 
 /* ---------- footer ---------- */
 .footer {
-  padding: 34px 5vw; border-top: 3px solid var(--plum); background: var(--cream);
+  padding: 34px 5vw; border-top: 3px solid var(--line); background: var(--bg);
   display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;
 }
 .footer__brand { display: flex; align-items: center; gap: 12px; }
 .footer__mark {
-  width: 36px; height: 36px; background: var(--gold); border: 3px solid var(--plum);
+  width: 36px; height: 36px; background: var(--gold); border: 3px solid var(--line);
   display: flex; align-items: center; justify-content: center;
-  font-family: var(--font-mono); font-weight: 700; font-size: 16px; color: var(--plum);
+  font-family: var(--font-mono); font-weight: 700; font-size: 16px; color: var(--on-accent);
 }
-.footer__name { font-family: var(--font-display); font-weight: 600; font-size: 15px; color: var(--plum); }
+.footer__name { font-family: var(--font-display); font-weight: 600; font-size: 15px; color: var(--text-ink); }
 .footer__meta { font-family: var(--font-mono); font-size: 13px; color: var(--text-faint); }

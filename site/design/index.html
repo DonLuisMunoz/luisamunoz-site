@@ -3,6 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- before first paint: applies a saved theme with no flash -->
+    <script src="../js/theme.js"></script>
     <title>Design system · Luis A. Munoz</title>
     <meta name="description" content="Every reusable component in the luisamunoz.com design system, in every state." />
     <!-- Internal reference, not a portfolio page. Kept out of search so it
@@ -27,10 +29,10 @@
          Tokens only, no raw hex: the same rule the rest of the CSS follows. */
       .ds-main { max-width: 1100px; margin: 0 auto; padding: 6vh 5vw 12vh; }
       .ds-lede { font-size: 19px; color: var(--text-soft); max-width: 640px; margin-top: 14px; }
-      .ds-sec { margin-top: 72px; border-top: 3px solid var(--plum); padding-top: 34px; }
+      .ds-sec { margin-top: 72px; border-top: 3px solid var(--line); padding-top: 34px; }
       .ds-sec > h2 {
         font-family: var(--font-display); font-weight: 700; font-size: 34px;
-        letter-spacing: -0.02em; color: var(--plum);
+        letter-spacing: -0.02em; color: var(--text-ink);
       }
       .ds-sec > p { color: var(--text-soft); margin-top: 10px; max-width: 640px; }
       .ds-sub {
@@ -40,27 +42,27 @@
       }
       /* the demo surface: components sit on paper so borders read clearly */
       .ds-demo {
-        border: 3px solid var(--plum); background: var(--paper);
+        border: 3px solid var(--line); background: var(--surface);
         padding: 28px; margin-top: 12px;
         display: flex; flex-wrap: wrap; gap: 18px; align-items: flex-start;
       }
       .ds-demo--stack { display: block; }
-      .ds-demo--dark { background: var(--plum); }
+      .ds-demo--dark { background: var(--inverse); }
       .ds-code {
         font-family: var(--font-mono); font-size: 12px; color: var(--text-faint);
         margin-top: 8px; display: block;
       }
       .ds-note {
-        border-left: 4px solid var(--terracotta); background: var(--paper);
+        border-left: 4px solid var(--terracotta); background: var(--surface);
         padding: 14px 18px; margin-top: 16px; max-width: 640px;
         font-size: 15px; color: var(--text-soft);
       }
       /* colour swatches */
       .ds-swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 16px; margin-top: 16px; }
-      .ds-swatch { border: 3px solid var(--plum); background: var(--paper); }
-      .ds-swatch__chip { height: 76px; border-bottom: 3px solid var(--plum); }
+      .ds-swatch { border: 3px solid var(--line); background: var(--surface); }
+      .ds-swatch__chip { height: 76px; border-bottom: 3px solid var(--line); }
       .ds-swatch__meta { padding: 12px 14px; }
-      .ds-swatch__name { font-family: var(--font-mono); font-size: 13px; font-weight: 700; color: var(--plum); }
+      .ds-swatch__name { font-family: var(--font-mono); font-size: 13px; font-weight: 700; color: var(--text-ink); }
       .ds-swatch__hex  { font-family: var(--font-mono); font-size: 12px; color: var(--text-soft); margin-top: 2px; }
       .ds-ratios { font-family: var(--font-mono); font-size: 11px; color: var(--text-soft); margin-top: 8px; line-height: 1.6; }
       .ds-pass::before { content: "PASS "; font-weight: 700; }
@@ -70,7 +72,7 @@
       .ds-type-row:last-child { border-bottom: 0; }
       .ds-type-label { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-faint); }
       .ds-shadow-row { display: flex; gap: 22px; flex-wrap: wrap; }
-      .ds-shadow-demo { width: 120px; height: 66px; border: 3px solid var(--plum); background: var(--gold); }
+      .ds-shadow-demo { width: 120px; height: 66px; border: 3px solid var(--line); background: var(--gold); }
       .ds-toc { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
     </style>
   </head>
@@ -87,6 +89,7 @@
         <a href="/#log" class="nav__link">log</a>
         <a href="/#stack" class="nav__link">stack</a>
         <a href="/blog/" class="nav__link">writing</a>
+        <button type="button" class="theme-toggle" data-theme-toggle aria-pressed="false">dark mode</button>
         <a href="/#contact" class="nav__cta">say hi</a>
       </div>
     </nav>
@@ -258,18 +261,22 @@
         </div>
 
         <div class="ds-note">
-          <strong>Semantic aliases.</strong> <code class="mono">--accent</code> and
-          <code class="mono">--danger</code> resolve to terracotta, <code class="mono">--success</code>
-          to teal. Use the alias that says what something <em>means</em> — the admin delete button
-          is <code class="mono">--danger</code>, not <code class="mono">--accent</code> — so a future
-          change to "what danger looks like" is one line. An alias nobody references is deleted, not kept.
+          <strong>Palette vs roles.</strong> The swatches above are the <em>palette</em> — what each
+          colour is. Components use <em>roles</em> — what each colour is for:
+          <code class="mono">--bg</code>, <code class="mono">--surface</code>, <code class="mono">--line</code>
+          (every border and shadow), <code class="mono">--inverse</code> (dark panels),
+          <code class="mono">--on-accent</code> (text on gold or pink), <code class="mono">--text-ink</code>,
+          <code class="mono">--text-teal</code>, <code class="mono">--text-accent</code>. In light mode every
+          role equals a palette colour; dark mode changes only the roles. <code class="mono">--success</code>
+          and <code class="mono">--danger</code> are <em>text</em> roles — a danger <em>fill</em> names
+          <code class="mono">--terracotta</code>, because a fill and a text colour need different shades in the dark.
         </div>
 
         <h3 class="ds-sub">Type scale</h3>
         <div class="ds-demo ds-demo--stack">
           <div class="ds-type-row">
             <div class="ds-type-label">display 76 / hero title</div>
-            <div style="font-family: var(--font-display); font-weight: 700; font-size: 76px; line-height: 0.98; letter-spacing: -0.035em; color: var(--plum);">Learning</div>
+            <div style="font-family: var(--font-display); font-weight: 700; font-size: 76px; line-height: 0.98; letter-spacing: -0.035em; color: var(--text-ink);">Learning</div>
           </div>
           <div class="ds-type-row">
             <div class="ds-type-label">display 48 / section title</div>
@@ -300,19 +307,19 @@
         <h3 class="ds-sub">Shadows — hard offset, zero blur</h3>
         <div class="ds-demo">
           <div>
-            <div class="ds-shadow-demo" style="box-shadow: 3px 3px 0 var(--plum)"></div>
+            <div class="ds-shadow-demo" style="box-shadow: 3px 3px 0 var(--line)"></div>
             <code class="ds-code">3px · tag, filter, badge</code>
           </div>
           <div>
-            <div class="ds-shadow-demo" style="box-shadow: 4px 4px 0 var(--plum)"></div>
+            <div class="ds-shadow-demo" style="box-shadow: 4px 4px 0 var(--line)"></div>
             <code class="ds-code">4px · nb-block, btn--sm</code>
           </div>
           <div>
-            <div class="ds-shadow-demo" style="box-shadow: 5px 5px 0 var(--plum)"></div>
+            <div class="ds-shadow-demo" style="box-shadow: 5px 5px 0 var(--line)"></div>
             <code class="ds-code">5px · btn</code>
           </div>
           <div>
-            <div class="ds-shadow-demo" style="box-shadow: 6px 6px 0 var(--plum)"></div>
+            <div class="ds-shadow-demo" style="box-shadow: 6px 6px 0 var(--line)"></div>
             <code class="ds-code">6px · card</code>
           </div>
         </div>

@@ -8,8 +8,8 @@
 .copy-btn {
   position: absolute; top: 10px; right: 10px;
   font: 600 12px/1 var(--font-mono); text-transform: lowercase; letter-spacing: 0.06em;
-  color: var(--plum); background: var(--gold);
-  border: 2px solid var(--plum); padding: 7px 11px; cursor: pointer;
+  color: var(--on-accent); background: var(--gold);
+  border: 2px solid var(--line); padding: 7px 11px; cursor: pointer;
 }
 .copy-btn:hover { background: var(--cream); }
 .copy-btn.is-done { background: var(--cream); }

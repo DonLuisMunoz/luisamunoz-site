@@ -6,11 +6,11 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
-  background: var(--cream);
+  background: var(--bg);
   color: var(--text-ink);
   font-family: var(--font-body);
   min-height: 100vh;
   overflow-x: hidden;
 }
-::selection { background: var(--plum); color: var(--gold); }
+::selection { background: var(--inverse); color: var(--gold); }
 a { color: inherit; }

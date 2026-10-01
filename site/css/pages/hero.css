@@ -12,12 +12,12 @@
 .hero__title {
   font-family: var(--font-display); font-weight: 700;
   font-size: 76px; line-height: 0.98; letter-spacing: -0.035em;
-  color: var(--plum); margin-top: 26px;
+  color: var(--text-ink); margin-top: 26px;
 }
 .hl {                              /* terracotta highlight on text */
   background: var(--accent); color: var(--cream); padding: 0 10px;
   box-decoration-break: clone; -webkit-box-decoration-break: clone;
 }
 .hero__sub { font-size: 21px; line-height: 1.6; color: var(--text-soft); margin-top: 26px; max-width: 560px; }
-.hero__sub strong { color: var(--plum); }
+.hero__sub strong { color: var(--text-ink); }
 .hero__actions { display: flex; gap: 16px; margin-top: 36px; flex-wrap: wrap; }

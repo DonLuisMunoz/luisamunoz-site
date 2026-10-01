@@ -5,16 +5,16 @@
 /* ---------- project / log cards ---------- */
 .projects { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
 .card {
-  background: var(--cream); border: 3px solid var(--plum);
-  box-shadow: 6px 6px 0 var(--plum); padding: 32px;
+  background: var(--bg); border: 3px solid var(--line);
+  box-shadow: 6px 6px 0 var(--line); padding: 32px;
 }
-.card:hover { transform: translate(-2px,-2px); box-shadow: 8px 8px 0 var(--plum); }
+.card:hover { transform: translate(-2px,-2px); box-shadow: 8px 8px 0 var(--line); }
 .card__meta { font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--text-faint); }
-.card__title { font-family: var(--font-display); font-weight: 700; font-size: 26px; color: var(--plum); margin-top: 8px; }
+.card__title { font-family: var(--font-display); font-weight: 700; font-size: 26px; color: var(--text-ink); margin-top: 8px; }
 .card__body { font-size: 16px; line-height: 1.6; color: var(--text-soft); margin-top: 12px; }
-.card code, .inline-code { font-family: var(--font-mono); color: var(--teal); font-weight: 600; }
+.card code, .inline-code { font-family: var(--font-mono); color: var(--text-teal); font-weight: 600; }
 .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
 .tag {
-  font-family: var(--font-mono); font-size: 12px; font-weight: 500; color: var(--plum);
-  background: var(--paper); border: 2px solid var(--plum); padding: 5px 12px;
+  font-family: var(--font-mono); font-size: 12px; font-weight: 500; color: var(--text-ink);
+  background: var(--surface); border: 2px solid var(--line); padding: 5px 12px;
 }
