@@ -14,7 +14,7 @@
 .term__window { background: var(--plum); border: 3px solid var(--plum); box-shadow: 8px 8px 0 var(--plum); overflow: hidden; }
 .term__bar {
   display: flex; align-items: center; gap: 8px;
-  padding: 13px 18px; background: #3A2A3E; border-bottom: 3px solid var(--plum);
+  padding: 13px 18px; background: var(--plum-raised); border-bottom: 3px solid var(--plum);
 }
 .term__dot { width: 13px; height: 13px; border: 2px solid var(--cream); }
 .term__dot--r { background: var(--accent); }
