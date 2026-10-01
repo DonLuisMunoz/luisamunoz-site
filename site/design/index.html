@@ -416,6 +416,12 @@
           <a class="filter" href="#chips">notes</a>
         </div>
         <code class="ds-code">.filter · .filter.is-on (gold fill marks the active one)</code>
+
+        <h3 class="ds-sub">Copy button — on a code block</h3>
+        <div class="ds-demo ds-demo--stack">
+          <pre class="prose__pre" data-lang="sql"><code>SELECT name FROM projects;</code><button type="button" class="copy-btn" aria-label="Copy this code to the clipboard">copy</button></pre>
+        </div>
+        <code class="ds-code">.copy-btn inside .prose__pre · added by blog.js after render, clicks handled by one delegated listener</code>
       </section>
 
       <!-- ============ FORMS ============ -->

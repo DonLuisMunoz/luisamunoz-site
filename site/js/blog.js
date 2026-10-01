@@ -207,6 +207,66 @@
     }).join("");
   };
 
+  /* ---------- copy buttons on code blocks ----------
+     The <pre> blocks don't exist when the page loads -- renderPost() builds
+     them from markdown after a fetch. So there is nothing to attach a
+     listener to at startup. Instead, ONE listener sits on #blog-root (which
+     always exists) and checks what was clicked: event delegation. The
+     buttons themselves are added after each render, but they never need a
+     listener of their own.
+  */
+  const addCopyButtons = (root) => {
+    root.querySelectorAll(".prose__pre").forEach((pre) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "copy-btn";
+      btn.textContent = "copy";
+      btn.setAttribute("aria-label", "Copy this code to the clipboard");
+      pre.appendChild(btn);
+    });
+  };
+
+  // Screen readers can't see a button's label change on its own; a polite
+  // live region announces the result without stealing focus.
+  const announce = (msg) => {
+    let live = document.getElementById("copy-status");
+    if (!live) {
+      live = document.createElement("p");
+      live.id = "copy-status";
+      live.className = "sr-only";
+      live.setAttribute("aria-live", "polite");
+      document.body.appendChild(live);
+    }
+    live.textContent = "";
+    // A tick later, so repeating the same message is still announced.
+    setTimeout(() => { live.textContent = msg; }, 30);
+  };
+
+  const onCopyClick = async (e) => {
+    const btn = e.target.closest(".copy-btn");
+    if (!btn) return;
+    const code = btn.parentElement.querySelector("code");
+    // textContent, not innerHTML: the source was escaped for display, and
+    // textContent hands back the original characters, newlines intact.
+    const text = code ? code.textContent : "";
+    let ok = false;
+    try {
+      // Needs a secure context: works on https:// and localhost, fails over
+      // plain http:// to a LAN address -- so handle the rejection.
+      await navigator.clipboard.writeText(text);
+      ok = true;
+    } catch { /* fall through to the failure message */ }
+    btn.textContent = ok ? "copied" : "copy failed";
+    btn.classList.toggle("is-done", ok);
+    announce(ok ? "Code copied to the clipboard."
+                : "Couldn't copy. Select the code and copy it manually.");
+    clearTimeout(btn._reset);
+    btn._reset = setTimeout(() => {
+      btn.textContent = "copy";
+      btn.classList.remove("is-done");
+    }, 1800);
+  };
+
   /* ---------- view: single post ---------- */
   const renderPost = (post, body, mount) => {
     const tags = chipsFor(post).join("");
@@ -218,6 +278,7 @@
         `<div class="prose__body">${renderMarkdown(body)}</div>` +
       `</article>` +
       `<a class="btn btn--paper btn--sm" href="./" style="margin-top:40px;">← all posts</a>`;
+    addCopyButtons(mount);
     document.title = `${post.title || post.slug} · Luis A. Munoz`;
     const desc = document.querySelector('meta[name="description"]');
     if (desc && post.summary) desc.setAttribute("content", post.summary);
@@ -252,6 +313,8 @@
   if (typeof document === "undefined") return;
   const mount = document.getElementById("blog-root");
   if (!mount) return;
+
+  mount.addEventListener("click", onCopyClick);
 
   const params = new URLSearchParams(window.location.search);
   const slug = params.get("p");
