@@ -19,6 +19,7 @@
   --teal: #27695C;          /* "it works" / calm */
   --pink: #E66D8A;          /* playful pop */
   --plum: #2B1B2E;          /* ink / dark background */
+  --plum-raised: #3A2A3E;   /* one step lighter than plum: window chrome on a plum surface */
   --cream: #F2E4C9;         /* light background */
   --paper: #FBF3E2;         /* card surface on cream */
   --paper-border: #D8C4A0;  /* hairline on cream */
