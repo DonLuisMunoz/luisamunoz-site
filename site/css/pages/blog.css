@@ -9,6 +9,10 @@
    ============================================================ */
 .blog__inner { max-width: 780px; margin: 0 auto; }
 .blog__body { display: grid; gap: 26px; }
+/* Grid items default to min-width: auto, so one long line in a code block
+   (which has overflow-x: auto) still stretched the whole column to 541px
+   on a 320px screen. min-width: 0 lets the pre scroll instead. */
+.blog__body > * { min-width: 0; }
 
 .prose__title {
   font-family: var(--font-display); font-weight: 700; font-size: 46px;

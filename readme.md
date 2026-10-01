@@ -62,6 +62,7 @@ portfolio/
 │   ├── DEPLOY.md              # the Worker (done) + the backend (CLI or Portainer)
 │   ├── ADD-A-PROJECT.md       # how to add/update a project (admin or JSON)
 │   ├── ADD-A-POST.md          # how to write a blog post (markdown + manifest)
+│   ├── ACCESSIBILITY.md       # what axe misses: the manual pass and what still needs a person
 │   ├── BACKEND-LESSON.md      # learn the backend (reinforcement-coach Phase 1)
 │   └── FRONTEND-LESSON.md     # learn the frontend (same method, five layers)
 │

@@ -13,7 +13,7 @@
   background: var(--gold); padding: 8px 18px; border: 3px solid var(--line); letter-spacing: 0.1em;
 }
 .featured__row { display: flex; gap: 40px; flex-wrap: wrap; }
-.featured__col { flex: 1; min-width: 280px; }
+.featured__col { flex: 1; min-width: min(280px, 100%); }   /* never wider than its container at 320px */
 .featured__title { font-family: var(--font-display); font-weight: 700; font-size: 36px; color: var(--text-ink); margin-top: 8px; letter-spacing: -0.02em; }
 .featured__body { font-size: 18px; line-height: 1.6; color: var(--text-soft); margin-top: 14px; }
 .bug-label { font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--text-accent); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px; }

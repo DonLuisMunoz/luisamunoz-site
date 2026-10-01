@@ -100,6 +100,24 @@ for (const theme of THEMES) for (const [baseLabel, path] of PAGES) {
   await page.close();
 }
 
+// Reflow (WCAG 1.4.10): at 320 CSS px no page may scroll sideways. axe
+// doesn't check this. The manual pass in #5 found every page overflowing at
+// 320px -- the nav, a grid item's min-width, and one oversized specimen.
+for (const [baseLabel, path] of PAGES) {
+  const label = `${baseLabel} (320px reflow)`;
+  const page = await browser.newPage({ viewport: { width: 320, height: 800 } });
+  await page.goto(base + path, { waitUntil: "domcontentloaded" });
+  await page.waitForTimeout(800);
+  const width = await page.evaluate(() => document.documentElement.scrollWidth);
+  if (width <= 320) {
+    console.log(`  PASS  ${label}`);
+  } else {
+    failures += 1;
+    console.log(`  FAIL  ${label}: page is ${width}px wide, so it scrolls sideways`);
+  }
+  await page.close();
+}
+
 await browser.close();
 server.close();
 

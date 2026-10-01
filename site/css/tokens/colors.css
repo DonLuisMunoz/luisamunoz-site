@@ -17,6 +17,7 @@
   --terracotta: #AC4622;    /* lead accent */
   --gold: #E0A92E;          /* the sun, highlights — fills and borders, never small text */
   --teal: #27695C;          /* "it works" / calm */
+  --teal-light: #6CC0AE;    /* teal for text ON plum (terminal prompt): 7.54 there; dark-theme text teal */
   --pink: #E66D8A;          /* fill-only accent (2.42 on cream): term tag, a stack bar, syntax on plum */
   --plum: #2B1B2E;          /* ink / dark background */
   --plum-raised: #3A2A3E;   /* one step lighter than plum: window chrome on a plum surface */
@@ -78,7 +79,7 @@
     --text-ink: #F2E4C9;          /* 14.5 on bg */
     --text-soft: #D9C6AC;         /* 11.0 */
     --text-faint: #B8A186;        /*  7.4 */
-    --text-teal: #6CC0AE;         /*  8.5 */
+    --text-teal: var(--teal-light); /*  8.5 */
     --text-accent: #F08C66;       /*  7.5 */
     --paper-border: #5A4A5E;      /* decorative hairline, not a UI boundary */
     color-scheme: dark;
@@ -92,7 +93,7 @@
     --text-ink: #F2E4C9;          /* 14.5 on bg */
     --text-soft: #D9C6AC;         /* 11.0 */
     --text-faint: #B8A186;        /*  7.4 */
-    --text-teal: #6CC0AE;         /*  8.5 */
+    --text-teal: var(--teal-light); /*  8.5 */
     --text-accent: #F08C66;       /*  7.5 */
     --paper-border: #5A4A5E;      /* decorative hairline, not a UI boundary */
   color-scheme: dark;

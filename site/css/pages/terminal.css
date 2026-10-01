@@ -23,7 +23,7 @@
 .term__path { font-family: var(--font-mono); font-size: 13px; color: var(--text-on-dark-muted); margin-left: 8px; }
 .term__body { padding: 26px 24px; font-family: var(--font-mono); font-size: 15.5px; line-height: 1.85; }
 .term__muted { color: var(--text-on-dark-muted); }
-.term__prompt { color: var(--teal); }
+.term__prompt { color: var(--teal-light); }   /* --teal was 2.51:1 on plum; axe missed it */
 .term__out  { color: var(--cream); }
 .term__goal { color: var(--gold); }
 .term__gap  { margin-top: 10px; }
