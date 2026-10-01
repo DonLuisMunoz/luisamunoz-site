@@ -27,8 +27,16 @@
   const failure = (err, verb) =>
     (err && err.status === 401) ? "Bad token." : `${verb} failed.`;
 
+  // Every status message goes through here so its colour says what kind of
+  // message it is. Classes, not data-*: data attributes are for JS hooks.
+  const setStatus = (msg, state = "") => {
+    statusEl.textContent = msg;
+    statusEl.classList.toggle("is-ok", state === "ok");
+    statusEl.classList.toggle("is-error", state === "error");
+  };
+
   if (!API) {
-    statusEl.textContent = "Set API_BASE in js/config.js before using the admin panel.";
+    setStatus("Set API_BASE in js/config.js before using the admin panel.", "error");
   }
 
   /* ---- list ---- */
@@ -59,7 +67,7 @@
   /* ---- create / update ---- */
   $("project-form").addEventListener("submit", async (e) => {
     e.preventDefault();
-    if (!token()) { statusEl.textContent = "Enter your admin token first."; return; }
+    if (!token()) { setStatus("Enter your admin token first.", "error"); return; }
     const id = $("f-id").value.trim();
     const body = {
       meta: $("f-meta").value.trim(),
@@ -71,17 +79,17 @@
     };
     const method = id ? "PUT" : "POST";
     const url = id ? `${API}/api/projects/${encodeURIComponent(id)}` : `${API}/api/projects`;
-    statusEl.textContent = "Saving…";
+    setStatus("Saving…");
     try {
       const res = await fetch(url, { method, headers: headers(), body: JSON.stringify(body) });
       if (!res.ok) throw httpError(res);
       await res.json();
-      statusEl.textContent = "Saved.";
+      setStatus("Saved.", "ok");
       e.target.reset();
       $("f-id").value = "";
       refresh();
     } catch (err) {
-      statusEl.textContent = failure(err, "Save");
+      setStatus(failure(err, "Save"), "error");
     }
   });
 
@@ -108,7 +116,7 @@
     }
 
     if (dl) {
-      if (!token()) { statusEl.textContent = "Enter your admin token first."; return; }
+      if (!token()) { setStatus("Enter your admin token first.", "error"); return; }
       if (!confirm("Delete this project?")) return;
       try {
         const res = await fetch(`${API}/api/projects/${encodeURIComponent(dl)}`, {
@@ -118,7 +126,7 @@
         if (!res.ok) throw httpError(res);
         refresh();
       } catch (err) {
-        statusEl.textContent = failure(err, "Delete");
+        setStatus(failure(err, "Delete"), "error");
       }
     }
   });

@@ -17,7 +17,7 @@
   --terracotta: #AC4622;    /* lead accent */
   --gold: #E0A92E;          /* the sun, highlights — fills and borders, never small text */
   --teal: #27695C;          /* "it works" / calm */
-  --pink: #E66D8A;          /* playful pop */
+  --pink: #E66D8A;          /* fill-only accent (2.42 on cream): term tag, a stack bar, syntax on plum */
   --plum: #2B1B2E;          /* ink / dark background */
   --plum-raised: #3A2A3E;   /* one step lighter than plum: window chrome on a plum surface */
   --cream: #F2E4C9;         /* light background */
@@ -35,13 +35,11 @@
 
   /* ---- Semantic aliases ---- */
   --accent: var(--terracotta);
-  --accent-2: var(--gold);
-  --success: var(--teal);
-  --danger: var(--terracotta);  /* roadblocks read in terracotta */
+  --success: var(--teal);       /* admin status: saved */
+  --danger: var(--terracotta);  /* admin delete button, failed saves */
 
   /* ---- Syntax (code blocks on plum) ---- */
   --syn-keyword: #E66D8A;
   --syn-fn: #E0A92E;
   --syn-string: #F2C9A0;
-  --syn-accent: var(--gold);
 }
