@@ -168,3 +168,73 @@ test("a real post shape renders every block type without throwing", () => {
     assert.ok(out.includes(tag), `expected ${tag} in output`);
   }
 });
+
+/* ---------- tables (GFM pipe syntax) ----------
+   Written before the parser supported them, so the expected output was
+   decided up front rather than reverse-engineered from whatever the
+   regex happened to produce. */
+
+const TABLE = [
+  "| tool | reps |",
+  "|------|------|",
+  "| SQL  | 3    |",
+  "| Python | 2 |",
+].join("\n");
+
+test("a pipe table renders with thead and tbody", () => {
+  const out = renderMarkdown(TABLE);
+  assert.match(out, /^<table>/);
+  assert.match(out, /<thead><tr><th>tool<\/th><th>reps<\/th><\/tr><\/thead>/);
+  assert.match(out, /<tbody><tr><td>SQL<\/td><td>3<\/td><\/tr><tr><td>Python<\/td><td>2<\/td><\/tr><\/tbody>/);
+});
+
+test("outer pipes are optional", () => {
+  const out = renderMarkdown("a | b\n--- | ---\n1 | 2");
+  assert.match(out, /<th>a<\/th><th>b<\/th>/);
+  assert.match(out, /<td>1<\/td><td>2<\/td>/);
+});
+
+test("a table with no body rows has no tbody", () => {
+  const out = renderMarkdown("| a | b |\n|---|---|");
+  assert.match(out, /<thead>/);
+  assert.doesNotMatch(out, /<tbody>/);
+});
+
+test("short rows are padded and long rows are trimmed to the header width", () => {
+  const out = renderMarkdown("| a | b | c |\n|---|---|---|\n| 1 |\n| 1 | 2 | 3 | 4 |");
+  assert.match(out, /<tr><td>1<\/td><td><\/td><td><\/td><\/tr>/);
+  assert.match(out, /<tr><td>1<\/td><td>2<\/td><td>3<\/td><\/tr>/);
+  assert.doesNotMatch(out, /<td>4<\/td>/);
+});
+
+test("inline markup works inside cells", () => {
+  const out = renderMarkdown("| x |\n|---|\n| **bold** and `code` and [l](https://a.com) |");
+  assert.match(out, /<td><strong>bold<\/strong> and <code>code<\/code> and <a href="https:\/\/a\.com"/);
+});
+
+test("a pipe inside inline code does not split the cell", () => {
+  const out = renderMarkdown("| expr |\n|---|\n| `a|b` |");
+  assert.match(out, /<td><code>a\|b<\/code><\/td>/);
+});
+
+test("an escaped pipe is a literal pipe, not a cell boundary", () => {
+  const out = renderMarkdown("| a |\n|---|\n| x \\| y |");
+  assert.match(out, /<td>x \| y<\/td>/);
+});
+
+test("pipes without a separator row stay a paragraph", () => {
+  const out = renderMarkdown("this | is | not a table");
+  assert.strictEqual(out, "<p>this | is | not a table</p>");
+});
+
+test("a table ends the paragraph above it and the one below starts fresh", () => {
+  const out = renderMarkdown("intro line\n| a |\n|---|\n| 1 |\n\nafter");
+  assert.match(out, /^<p>intro line<\/p>\n<table>/);
+  assert.match(out, /<\/table>\n<p>after<\/p>$/);
+});
+
+test("markup inside a table cell is still escaped", () => {
+  const out = renderMarkdown("| x |\n|---|\n| <script>alert(1)</script> |");
+  assert.doesNotMatch(out, /<script>/);
+  assert.match(out, /&lt;script&gt;/);
+});
