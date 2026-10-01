@@ -85,6 +85,33 @@
   const RE_UL = /^\s*[-*+]\s+/;
   const RE_OL = /^\s*\d+\.\s+/;
 
+  // GFM table separator: |---|:---:|  -- outer pipes optional, at least 3 dashes.
+  const RE_TABLE_SEP = /^\s*\|?\s*:?-{3,}:?\s*(\|\s*:?-{3,}:?\s*)*\|?\s*$/;
+
+  // A table starts where a line containing a pipe is followed by a separator.
+  // Without the separator, pipes are just text -- "a | b" stays a paragraph.
+  const isTableStart = (lines, i) =>
+    lines[i].includes("|") && i + 1 < lines.length && RE_TABLE_SEP.test(lines[i + 1]);
+
+  // Split one row into raw cell strings. Not a plain split("|"): a pipe inside
+  // a `code span` or written as \| belongs to the cell, not between cells.
+  const splitRow = (line) => {
+    let row = line.trim();
+    if (row.startsWith("|")) row = row.slice(1);
+    if (row.endsWith("|") && !row.endsWith("\\|")) row = row.slice(0, -1);
+    const cells = [];
+    let cur = "", inCode = false;
+    for (let k = 0; k < row.length; k++) {
+      const ch = row[k];
+      if (ch === "\\" && row[k + 1] === "|") { cur += "|"; k++; continue; }
+      if (ch === "`") inCode = !inCode;
+      if (ch === "|" && !inCode) { cells.push(cur.trim()); cur = ""; continue; }
+      cur += ch;
+    }
+    cells.push(cur.trim());
+    return cells;
+  };
+
   const isBlockStart = (line) =>
     RE_FENCE.test(line) || RE_RULE.test(line) || RE_HEAD.test(line) ||
     RE_QUOTE.test(line) || RE_UL.test(line) || RE_OL.test(line);
@@ -141,8 +168,27 @@
         continue;
       }
 
+      if (isTableStart(lines, i)) {
+        const head = splitRow(lines[i]);
+        const width = head.length;
+        i += 2;                                        // header + separator
+        const rows = [];
+        while (i < lines.length && lines[i].trim() && lines[i].includes("|")) {
+          // GFM: pad short rows, drop cells beyond the header's width.
+          const cells = splitRow(lines[i++]).slice(0, width);
+          while (cells.length < width) cells.push("");
+          rows.push(`<tr>${cells.map((c) => `<td>${inline(c)}</td>`).join("")}</tr>`);
+        }
+        out.push(
+          `<table><thead><tr>${head.map((c) => `<th>${inline(c)}</th>`).join("")}</tr></thead>` +
+          (rows.length ? `<tbody>${rows.join("")}</tbody>` : "") +
+          `</table>`
+        );
+        continue;
+      }
+
       const para = [];
-      while (i < lines.length && lines[i].trim() && !isBlockStart(lines[i])) {
+      while (i < lines.length && lines[i].trim() && !isBlockStart(lines[i]) && !isTableStart(lines, i)) {
         para.push(lines[i++].trim());
       }
       out.push(`<p>${inline(para.join(" "))}</p>`);

@@ -422,6 +422,14 @@
           <pre class="prose__pre" data-lang="sql"><code>SELECT name FROM projects;</code><button type="button" class="copy-btn" aria-label="Copy this code to the clipboard">copy</button></pre>
         </div>
         <code class="ds-code">.copy-btn inside .prose__pre · added by blog.js after render, clicks handled by one delegated listener</code>
+
+        <h3 class="ds-sub">Table — rendered from markdown pipe syntax</h3>
+        <div class="ds-demo ds-demo--stack">
+          <div class="prose__body" style="margin-top: 0;">
+            <table><thead><tr><th>tool</th><th>reps</th></tr></thead><tbody><tr><td>SQL</td><td>3</td></tr><tr><td>Python</td><td>2</td></tr></tbody></table>
+          </div>
+        </div>
+        <code class="ds-code">.prose__body table · gold header row, plum rules, wraps long cells instead of scrolling</code>
       </section>
 
       <!-- ============ FORMS ============ -->
