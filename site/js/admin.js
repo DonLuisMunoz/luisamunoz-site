@@ -126,6 +126,9 @@
         if (!res.ok) throw httpError(res);
         refresh();
       } catch (err) {
+        // The API answers 404 for an id that's already gone (another tab, a
+        // double click). That's the outcome you wanted, so say so and resync.
+        if (err && err.status === 404) { setStatus("Already deleted.", "ok"); refresh(); return; }
         setStatus(failure(err, "Delete"), "error");
       }
     }

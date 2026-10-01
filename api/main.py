@@ -191,7 +191,10 @@ def edit_project(pid: str, p: ProjectIn, authorization: str | None = Header(defa
 def delete_project(pid: str, authorization: str | None = Header(default=None)):
     require_admin(authorization)
     with db() as conn:
-        conn.execute("DELETE FROM projects WHERE id=?", (pid,))
+        cur = conn.execute("DELETE FROM projects WHERE id=?", (pid,))
+        # Same answer as PUT: an id that isn't there is a 404, not a success.
+        if cur.rowcount == 0:
+            raise HTTPException(status_code=404, detail="Not found")
     return {"ok": True}
 
 
