@@ -78,3 +78,23 @@ jobs:
 
       - name: Audit every page state
         run: node tests/a11y.check.mjs
+
+  # The API has its own job so Python tooling never leaks into the
+  # dependency-free frontend job above. uv installs the dev group
+  # (pytest, httpx) from api/pyproject.toml, pinned by api/uv.lock.
+  backend:
+    name: API tests (pytest)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: api
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: astral-sh/setup-uv@v6
+
+      # Auth, CRUD, validation, rate limiting, SQL injection, mail failure.
+      # Runs against a throwaway SQLite file and a fake token -- see
+      # api/tests/conftest.py.
+      - name: Run the API test suite
+        run: uv run --group dev pytest -q

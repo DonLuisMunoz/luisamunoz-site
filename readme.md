@@ -53,6 +53,7 @@ portfolio/
 ├── api/                       # BACKEND → Docker on dockerHost, via the EXISTING tunnel
 │   ├── main.py                # FastAPI: projects CRUD + contact + messages + health
 │   ├── pyproject.toml         # the only dependency list (uv installs straight from it)
+│   ├── tests/                 # pytest suite; throwaway DB + fake token (see conftest.py)
 │   ├── Dockerfile             # uv, not pip
 │   ├── docker-compose.yml     # works from the CLI or a Portainer repository stack
 │   └── .env.example           # copy to .env, fill secrets (never commit .env)
@@ -89,6 +90,7 @@ portfolio/
 node --test                  # unit tests for the markdown renderer — no install needed
 python3 newpost.py check     # validate the blog manifest, refresh read times, rebuild the sitemap
 node --check site/js/*.js    # nothing transpiles this code, so this is the only syntax gate
+cd api && uv run --group dev pytest   # API: auth, CRUD, rate limiting, SQL injection
 ```
 
 Accessibility needs tooling that is deliberately not a repo dependency:

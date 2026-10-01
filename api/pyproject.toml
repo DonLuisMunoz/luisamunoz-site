@@ -14,3 +14,15 @@ dependencies = [
 
 # Run it locally without creating or activating anything:
 #   uv run --project . uvicorn main:app --reload
+
+# Test-only tools. The Dockerfile installs from [project].dependencies
+# alone, so none of this reaches the production image.
+[dependency-groups]
+dev = [
+  "pytest>=8",
+  "httpx>=0.27",   # FastAPI's TestClient is built on it
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["tests"]

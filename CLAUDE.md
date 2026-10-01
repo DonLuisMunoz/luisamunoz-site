@@ -23,6 +23,7 @@ node --check site/js/<file>.js  # syntax gate — nothing transpiles this code
 python3 newpost.py check        # validate blog manifest + refresh read times + rebuild sitemap
 python3 newpost.py new "Title"  # scaffold a post
 node tests/a11y.check.mjs       # axe-core audit of every page state (see below)
+cd api && uv run --group dev pytest   # API tests: auth, CRUD, rate limit, injection
 ```
 
 The a11y check needs tooling that is deliberately **not** a repo dependency:
@@ -206,4 +207,6 @@ Good recall prompts are about *why the code is shaped this way*, never definitio
   visitor — it holds `API_BASE` and nothing secret, ever.
 - Add a build step, a framework, or a runtime dependency to `site/` without being
   asked. The absence of those is the point of the project.
-- Add a dependency to make a test pass. `node --test` is built in.
+- Add a dependency to the **frontend** to make a test pass. `node --test` is built in. The API
+  is different: its test tools (pytest, httpx) live in the `dev` dependency group in
+  `api/pyproject.toml`, which the Dockerfile never installs.
