@@ -37,9 +37,10 @@ CI (`.github/workflows/ci.yml`) runs all of the above on every push.
 
 ## How work is tracked
 
-Issues #1–#11 are the backlog, sequenced in #12. Each one is a real change to the repo attached
-to a concept in one of the lesson docs. One branch per issue, one PR, `Closes #N`, CI green
-before merge. If you change something a lesson doc describes, update the doc in the same PR.
+**Done and merged:** #1–#5, #7, #13 (PRs #20–#27). **Open:** the homelab chain #6 → #8, #10, #9
+(needs Luis at dockerHost), the #11 epic, and the second round of lesson issues #28–#31. #12 has
+the order. One branch, one PR, `Closes #N`, CI green before merge. If you change something a
+lesson doc describes, update the doc in the same PR.
 
 ## Two modes, and how to tell them apart
 
@@ -66,8 +67,10 @@ When in doubt, work mode. A missed teaching moment costs nothing; an unwanted qu
 
 ## Lesson plan
 
-Luis is learning this codebase, not just maintaining it. The lesson docs are the reference;
-issues #1–#11 and #13 are the work. This section is how to teach, and it matters more than the
+Luis is learning this codebase, not just maintaining it. The lesson docs are the reference.
+The first round of lesson issues (#1–#5, #7, #13) was **built by Claude**, at Luis's request —
+so for those concepts the lesson is now *reading the merged PR and explaining it back*, not
+building it. The second round (#28–#31) is his to build. This section is how to teach, and it matters more than the
 docs do — a session that just explains things produces someone who nods and can't rebuild it.
 
 ### Where he actually is
@@ -104,21 +107,29 @@ Evidence from working sessions, not assumption. Update this as it changes.
 - **Ship-shaped.** Every concept has an issue attached. The lesson is done when the PR merges,
   not when he can recite it.
 
-### Sequence, and what each issue is really testing
+### Sequence, and what each piece is really testing
+
+**Read and explain back** (already built — the PR description says what to look for):
+
+| PR | Concept it demonstrates |
+|----|-------------------------|
+| #21 Copy button | You can't select an element JS hasn't created yet (delegation) |
+| #22 Tables, test-first | Tests are a design tool; the 2 tests that passed first were guards |
+| #24 Dark mode | Tokens named after colours can't theme; roles can (20 of 22 files) |
+| #25 Post pages | A crawler reads the HTML it was sent; `<base>` and the `#main` trap |
+| #26 Beyond axe | Grid items don't shrink below content; axe skipped a 2.51:1 failure |
+| #27 API tests | Rate limit by visitor IP, not socket IP; import-time config shapes tests |
+
+**Build** (his):
 
 | Do | Issue | The concept it actually tests |
 |----|-------|-------------------------------|
-| 1 | #3 Copy button | You can't select an element JS hasn't created yet (delegation) |
-| 2 | #4 Tables, test-first | A parser is all edge cases; tests are a design tool, not a chore |
-| 3 | #13 Palette audit | A token nobody references is documentation, not architecture |
-| 4 | #2 Dark mode | Custom properties are live in the cascade, not compile-time substitution |
-| 5 | #1 Per-post URLs | A DOM fix works for humans and fails for crawlers |
-| 6 | #7 API tests | Parameterised queries and bearer auth, proven rather than asserted |
-| 7 | #6 Deploy | The tunnel makes an *outbound* connection — that's why no ports open |
-| 8 | #8 → #10 → #9 | CORS as a browser rule; why a secret can't ship to the client |
-| 9 | #11 v2.0 | Scope control on a change with no natural edge |
-
-#5 (manual accessibility) interleaves anywhere — it needs no code and no deploy.
+| 1 | #28 Screen reader | How much of the experience no check touches |
+| 2 | #29 Dark-mode post | Explaining palette vs roles; the whole publishing pipeline |
+| 3 | #30 JSON tags + migration | Changing a data format when real data already exists |
+| 4 | #31 Per-post share image | Generated binaries must be byte-identical, or CI's dirty-tree check fails |
+| 5 | #6 → #8 → #10 → #9 | The tunnel's outbound connection; CORS; secrets stay server-side |
+| 6 | #11 v2.0 | Scope control on a change with no natural edge |
 
 ### Recall, not re-reading
 
@@ -132,6 +143,10 @@ Good recall prompts are about *why the code is shaped this way*, never definitio
 - Why does an empty list from the API count as a failure?
 - Why did adding an `input:focus-visible` rule not restore the focus ring?
 - Why can gold be a border but never small text on cream?
+- Why did dark mode need 20 files changed when nothing was hardcoded?
+- Why does every post page need `<base href="../">`, and what did that break?
+- Why does the copy button's listener sit on `#blog-root` and not on the button?
+- Why would keying the rate limit on the socket IP lock everyone out?
 
 ### Misconceptions to watch for
 
