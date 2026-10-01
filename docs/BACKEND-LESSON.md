@@ -48,6 +48,23 @@ The goal isn't to feel like you get it. It's to verify you actually do.
 12. **The tunnel.** `cloudflared` makes an *outbound* connection to Cloudflare, which then routes
     public traffic back down it. That's why you don't open any ports.
 
+13. **Which IP is "the visitor"?** — *PR #27*. Behind the Cloudflare tunnel, every request
+    reaches the container from Cloudflare's address. A rate limit keyed on the socket IP would
+    count every visitor as one person and lock the whole site out after five messages. The
+    throttle keys on the `CF-Connecting-IP` header Cloudflare adds, and a test proves two
+    different visitors get separate limits. Infrastructure changes what "the client" means.
+
+14. **Code that runs at import time shapes how you test it** — *PR #27*. `main.py` reads
+    `ADMIN_TOKEN` and `DB_PATH` and creates the database the moment it's imported, so the
+    tests have to set the environment *before* the first `import main`. That's why
+    `tests/conftest.py` imports inside a fixture. If a module is awkward to test, the
+    awkwardness usually points at where its configuration lives.
+
+15. **Same question, same answer** — *PR #27*. `PUT` on a missing id said 404; `DELETE` on the
+    same id said 200 `{"ok": true}`. Neither crashed, so nothing looked broken — until a test
+    asked both routes the same question. Consistency between endpoints is a property you only
+    see by testing them side by side.
+
 ## Common misconceptions this code corrects
 
 - *"The frontend reads the database."* No — it calls the API, which reads the database.
@@ -56,20 +73,22 @@ The goal isn't to feel like you get it. It's to verify you actually do.
   server-side only.
 - *"PUT and POST are the same."* POST creates a new thing; PUT updates an existing one by id.
 
-## Where the work lives
+## Reading list, then your turn
 
-Every concept above has a real issue attached to it. See **#12** for order and blockers.
+**PR #27** (the API test suite) is the best single read for this lesson: each test names a
+concept above and proves it. Start with `tests/conftest.py`, then the auth tests, then the
+rate-limit pair.
 
-| Concepts | Issue |
-|----------|-------|
-| 9, 10, 11, 12 — CORS, secrets, containers, the tunnel | #6 Deploy the API to dockerHost |
-| 5, 6, 8 — validation, bearer auth, parameterised queries | #7 API test suite in CI |
-| 1, 9 — client/server split, CORS | #8 Contact form posts to the API |
-| 2, 3, 4, 11 — verbs, routes, params, volumes | #10 Versioned resume |
-| 9, 10 — why a secret can't ship to the browser | #9 Real GitHub commit streak |
+| Concepts | Read or do |
+|----------|------------|
+| 5, 6, 8, 13, 14, 15 — validation, auth, injection, visitor IP, import time | PR #27 — read |
+| 9, 10, 11, 12 — CORS, secrets, containers, the tunnel | #6 Deploy the API — do (needs the homelab) |
+| 1, 9 — client/server split, CORS | #8 Contact form posts to the API — do, after #6 |
+| 2, 3, 4, 11 — verbs, routes, params, volumes | #10 Versioned resume — do, after #6 |
+| 9, 10 — why a secret can't ship to the browser | #9 Real GitHub commit streak — do, after #6 |
 
-#6 blocks #8, #9 and #10, and needs you at the homelab terminal. #7 does not — write the tests
-before you deploy, not after.
+#6 blocks #8, #9 and #10, and needs you at the homelab terminal. The tests now run in CI, so
+you'll be deploying something that's already been checked.
 
 ## Next: run the quiz
 

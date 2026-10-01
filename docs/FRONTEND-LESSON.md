@@ -162,6 +162,52 @@ it is.
     The safe-by-default alternative when you just want words on screen is `.textContent`, which
     never parses anything (see how `data-shipped` is set).
 
+## Layer 6 — What the shipped work taught
+
+Concepts 25–30 came out of building #1–#5 and #13. Each one is something that actually went
+wrong, or nearly did, in this repo. For each, **read the PR before the concept** and find the
+moment yourself — the PR descriptions say what to look for.
+
+25. **Palette names vs role names** — *PR #24 (dark mode)*. A token called `--plum` says what a
+    colour *is*. A token called `--line` says what it is *for*. The site's tokens were all the
+    first kind, and `--plum` was secretly doing three jobs: text (34 uses), every border and
+    shadow (~70), and the dark panels (7). Light mode never noticed. Dark mode needs those three
+    jobs to have three different values — so 20 of 22 component files had to change before a
+    single dark colour could be written. The test of a token layer isn't whether nothing is
+    hardcoded; it's whether a second theme is one block of values.
+
+26. **A crawler reads the HTML it was sent, not the DOM you built** — *PR #25 (post pages)*.
+    Concept 1 with a bill attached. `blog.js` set each post's title and description at runtime,
+    and every post shared on LinkedIn still unfurled as "Writing · Luis A. Munoz", because
+    unfurlers never run JavaScript. The fix was a real HTML file per post. `curl` is how you
+    see a page the way a crawler does.
+
+27. **`<base href>` rewrites every relative URL — including `#main`** — *PR #25*. One tag let
+    each post page reuse the blog template untouched: stylesheets, scripts, the markdown fetch
+    and post image paths all resolve as if from `/blog/`. The cost: a bare `href="#main"` now
+    means `/blog/#main`, so the skip link would navigate *away*. Every powerful default has a
+    corner like that.
+
+28. **You can't attach a listener to an element that doesn't exist yet** — *PR #21 (copy
+    button)*. Code blocks are created after a fetch, so at startup there's nothing to listen to.
+    One listener on a parent that always exists, checking `e.target.closest(".copy-btn")`, is
+    **event delegation**. `theme.js` does the same thing for the toggle.
+
+29. **Write the test before the parser** — *PR #22 (tables)*. The first commit is ten tests and
+    no implementation: 8 fail, 2 pass. The two that pass are the interesting ones — they're
+    guards for behaviour that must *not* change ("a | b" with no separator stays a paragraph;
+    markup in a cell stays escaped). Deciding the output before writing regex is the difference
+    between a design and an accident.
+
+30. **Grid items don't shrink below their content by default** — *PR #26 (accessibility)*. The
+    post page was 541px wide on a 320px phone. Not long words: `.blog__body` is a grid, grid
+    items default to `min-width: auto`, so one long line in a code block stretched the column
+    even though the `<pre>` had `overflow-x: auto`. The scrollbar was on the wrong element.
+    `min-width: 0` on the grid item puts it back. This one catches professionals constantly.
+
+Also from #26: **zero axe violations is not "accessible"**. Read `docs/ACCESSIBILITY.md` — five
+real problems passed axe, and one of them was a 2.51:1 contrast failure it simply skipped.
+
 ## Common misconceptions this code corrects
 
 - *"If it's not in index.html, it's not on the page."* No — check the DOM, not the source. Half
@@ -175,6 +221,9 @@ it is.
 - *"`var` and `let` are the same."* They aren't — `var` is function-scoped and hoisted to the
   top of its function as `undefined`; `let` and `const` are block-scoped and unreachable before
   their line runs. That difference is why the conversion below had to leave one function alone.
+- *"No hardcoded hex means the tokens are fine."* Not if they're named after colours. See 25.
+- *"If the page shows the right title, Google and LinkedIn see it too."* Only if it's in the
+  HTML. See 26.
 - *"`await` makes it wait, so the page freezes."* Backwards. `await` is how the page *avoids*
   freezing: the function pauses, the browser gets on with everything else.
 
@@ -202,22 +251,23 @@ The next step this repo has *not* taken: `<script type="module">`. Real ES modul
 every file still uses. It changes load order and won't run over `file://`, so it's a real
 decision rather than a free upgrade.
 
-## Where the work lives
+## Reading list, then your turn
 
-Every concept above has a real issue attached to it. The doc is the reference; the issues are
-the job. See **#12** for the suggested order and what blocks what.
+The original lesson issues are **built and merged**. That changes how to use them: each PR is
+now reading material with a known answer. Read the description, then the diff, then try to
+explain the concept back without looking.
 
-| Layer | Concepts | Issue |
-|-------|----------|-------|
-| 1 — The document | 1, 3 | #1 Give each post its own URL and share card |
-| 2 — The cascade | 5, 6 | #2 Dark mode, driven from the token layer |
-| 3 — The DOM | 9, 10 | #3 Copy button on code blocks |
-| 4 — The network | 13, 15, 17 | #8 Contact form live · #9 Real GitHub streak |
-| 4.5 — Accessibility | 19–23 | #5 Manual accessibility pass |
-| 5 — Parsing | 24 | #4 Tables in the markdown renderer |
+| Layer | Read | Concepts |
+|-------|------|----------|
+| 1 — The document | PR #25 · post pages and share cards | 1, 3, 26, 27 |
+| 2 — The cascade | PR #24 · dark mode · PR #23 · palette audit | 5, 6, 25 |
+| 3 — The DOM | PR #21 · copy button | 9, 10, 28 |
+| 4 — The network | PR #27 · API tests (the client/server boundary from the other side) | 12–17 |
+| 4.5 — Accessibility | PR #26 · beyond axe · `docs/ACCESSIBILITY.md` | 19–23, 30 |
+| 5 — Parsing | PR #22 · tables, test-first | 24, 29 |
 
-Each is sized so you can't finish it without understanding the concept. One branch, one PR,
-`Closes #N`, CI green before merge.
+Hands-on work is in **new lesson issues** — real leftovers from this work, sized for you to do.
+See #12 for the order.
 
 ## Next: run the quiz
 

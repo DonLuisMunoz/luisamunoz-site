@@ -91,7 +91,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - uses: astral-sh/setup-uv@v6
+      - uses: astral-sh/setup-uv@v7
 
       # Auth, CRUD, validation, rate limiting, SQL injection, mail failure.
       # Runs against a throwaway SQLite file and a fake token -- see
