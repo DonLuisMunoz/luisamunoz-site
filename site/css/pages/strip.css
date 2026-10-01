@@ -6,12 +6,12 @@
 .strip {
   position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
   margin: 64px auto 0; max-width: 1320px;
-  border: 3px solid var(--plum); box-shadow: 6px 6px 0 var(--plum);
-  background: var(--paper); font-family: var(--font-mono);
+  border: 3px solid var(--line); box-shadow: 6px 6px 0 var(--line);
+  background: var(--surface); font-family: var(--font-mono);
 }
-.strip__cell { padding: 20px 22px; border-right: 3px solid var(--plum); }
+.strip__cell { padding: 20px 22px; border-right: 3px solid var(--line); }
 .strip__cell:last-child { border-right: none; }
 .strip__label { color: var(--text-faint); font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; }
-.strip__value { color: var(--plum); font-size: 17px; font-weight: 600; margin-top: 8px; }
-.t-teal { color: var(--teal); }
-.t-accent { color: var(--accent); }
+.strip__value { color: var(--text-ink); font-size: 17px; font-weight: 600; margin-top: 8px; }
+.t-teal { color: var(--text-teal); }
+.t-accent { color: var(--text-accent); }

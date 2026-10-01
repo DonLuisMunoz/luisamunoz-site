@@ -4,9 +4,9 @@
 
 /* ---------- shared neobrutalist primitives ---------- */
 .nb-block {                       /* any bordered, shadowed block */
-  border: 3px solid var(--plum);
-  box-shadow: 4px 4px 0 var(--plum);
-  background: var(--paper);
+  border: 3px solid var(--line);
+  box-shadow: 4px 4px 0 var(--line);
+  background: var(--surface);
 }
 .mono {
   font-family: var(--font-mono);
@@ -18,7 +18,7 @@
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.16em;
-  color: var(--teal);
+  color: var(--text-teal);
   text-transform: uppercase;
 }
 .section-title {
@@ -26,7 +26,7 @@
   font-weight: 700;
   font-size: 48px;
   letter-spacing: -0.03em;
-  color: var(--plum);
+  color: var(--text-ink);
   margin-top: 12px;
 }
 .section-lead {

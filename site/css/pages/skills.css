@@ -6,12 +6,12 @@
 .skills { display: grid; grid-template-columns: 1fr 1fr; gap: 26px 50px; }
 .skill__head {
   display: flex; justify-content: space-between;
-  font-family: var(--font-mono); font-size: 15px; font-weight: 600; color: var(--plum);
+  font-family: var(--font-mono); font-size: 15px; font-weight: 600; color: var(--text-ink);
   margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.04em;
 }
 .skill__level { color: var(--text-faint); }
-.skill__track { height: 18px; background: var(--paper); border: 3px solid var(--plum); overflow: hidden; }
-.skill__fill { height: 100%; border-right: 3px solid var(--plum); }
+.skill__track { height: 18px; background: var(--surface); border: 3px solid var(--line); overflow: hidden; }
+.skill__fill { height: 100%; border-right: 3px solid var(--line); }
 .fill--gold { background: var(--gold); }
 .fill--teal { background: var(--teal); }
 .fill--accent { background: var(--accent); }

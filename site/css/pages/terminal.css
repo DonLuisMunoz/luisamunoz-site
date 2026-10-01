@@ -7,14 +7,14 @@
 .term__tag {
   position: absolute; z-index: 2;
   font-family: var(--font-mono); font-size: 13px; font-weight: 600;
-  padding: 7px 14px; border: 3px solid var(--plum); box-shadow: 3px 3px 0 var(--plum);
+  padding: 7px 14px; border: 3px solid var(--line); box-shadow: 3px 3px 0 var(--line);
 }
-.term__tag--a { top: -26px; right: 14px; color: var(--plum); background: var(--pink); transform: rotate(-2deg); }
+.term__tag--a { top: -26px; right: 14px; color: var(--on-accent); background: var(--pink); transform: rotate(-2deg); }
 .term__tag--b { bottom: -22px; left: -16px; color: var(--cream); background: var(--teal); transform: rotate(2deg); }
-.term__window { background: var(--plum); border: 3px solid var(--plum); box-shadow: 8px 8px 0 var(--plum); overflow: hidden; }
+.term__window { background: var(--inverse); border: 3px solid var(--line); box-shadow: 8px 8px 0 var(--line); overflow: hidden; }
 .term__bar {
   display: flex; align-items: center; gap: 8px;
-  padding: 13px 18px; background: var(--plum-raised); border-bottom: 3px solid var(--plum);
+  padding: 13px 18px; background: var(--plum-raised); border-bottom: 3px solid var(--line);
 }
 .term__dot { width: 13px; height: 13px; border: 2px solid var(--cream); }
 .term__dot--r { background: var(--accent); }

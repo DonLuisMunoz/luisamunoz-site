@@ -7,7 +7,7 @@
 .tags--foundation .tag { font-size: 14px; padding: 8px 16px; }
 .foundation-note {
   margin-top: 32px; max-width: 660px;
-  background: var(--gold); border: 3px solid var(--plum);
-  box-shadow: 6px 6px 0 var(--plum); padding: 20px 24px;
-  font: 600 19px/1.5 var(--font-display); color: var(--plum);
+  background: var(--gold); border: 3px solid var(--line);
+  box-shadow: 6px 6px 0 var(--line); padding: 20px 24px;
+  font: 600 19px/1.5 var(--font-display); color: var(--on-accent);
 }

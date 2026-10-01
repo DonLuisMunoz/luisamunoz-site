@@ -67,8 +67,13 @@ const browser = await chromium.launch(
   process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});
 let failures = 0;
 
-for (const [label, path] of PAGES) {
-  const page = await browser.newPage();
+// Every page is audited in BOTH themes. Dark mode redefines the role tokens,
+// so a contrast pass in light proves nothing about dark.
+const THEMES = ["light", "dark"];
+
+for (const theme of THEMES) for (const [baseLabel, path] of PAGES) {
+  const label = `${baseLabel} (${theme})`;
+  const page = await browser.newPage({ colorScheme: theme });
   // The API is unreachable from CI, which is fine -- the site falls back to
   // data/projects.json, and that is the state we want audited anyway.
   await page.goto(base + path, { waitUntil: "domcontentloaded" });

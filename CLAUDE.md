@@ -147,6 +147,17 @@ Good recall prompts are about *why the code is shaped this way*, never definitio
   Several rules across those layers tie on specificity, and a tie is decided by source order —
   reordering the imports to tidy them up will silently change rendering. A new reusable component
   goes in `components/` and gets added to `/design/`; anything only this site uses goes in `pages/`.
+- **Components name ROLES, not colours.** Use `--bg`, `--surface`, `--line` (borders and
+  shadows), `--inverse` (dark panels), `--text-ink`, `--text-soft`, `--text-faint`,
+  `--text-teal`, `--text-accent`, `--on-accent` (text on gold or pink). Dark mode redefines only
+  roles, so a component written with `var(--plum)` for a border or `var(--cream)` for a
+  background will stay light in the dark theme. Palette names (`--gold`, `--teal`,
+  `--terracotta`, `--pink`) are correct only for **fills**, which keep their value in both
+  themes. Elements sitting on a dark panel (terminal, code, contact) keep palette names too.
+  `tests/a11y.check.mjs` audits every page in both themes.
+- **`js/theme.js` is the one script loaded in `<head>`.** It must apply a saved theme before
+  the first paint, or dark-mode visitors get a white flash. Everything else loads at the end of
+  `<body>`.
 - **Never write a raw hex value outside `site/css/tokens/`.** The whole palette is
   tokens, which is why fixing every contrast failure on the site was a three-line
   change. Adding `#somehex` to a component breaks that property.

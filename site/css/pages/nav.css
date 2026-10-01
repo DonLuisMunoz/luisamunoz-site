@@ -7,36 +7,36 @@
   position: sticky; top: 0; z-index: 50;
   display: flex; align-items: center; justify-content: space-between;
   padding: 16px 5vw;
-  background: var(--cream);
-  border-bottom: 3px solid var(--plum);
+  background: var(--bg);
+  border-bottom: 3px solid var(--line);
 }
 .nav__brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
 .nav__mark {
   width: 42px; height: 42px;
-  background: var(--gold); border: 3px solid var(--plum);
-  box-shadow: 3px 3px 0 var(--plum);
+  background: var(--gold); border: 3px solid var(--line);
+  box-shadow: 3px 3px 0 var(--line);
   display: flex; align-items: center; justify-content: center;
-  font-family: var(--font-mono); font-weight: 700; font-size: 19px; color: var(--plum);
+  font-family: var(--font-mono); font-weight: 700; font-size: 19px; color: var(--on-accent);
 }
 .nav__wordmark {
   font-family: var(--font-display); font-weight: 700; font-size: 18px;
-  color: var(--plum); letter-spacing: -0.01em;
+  color: var(--text-ink); letter-spacing: -0.01em;
 }
-.nav__wordmark .dot { color: var(--accent); }
+.nav__wordmark .dot { color: var(--text-accent); }
 .nav__links { display: flex; align-items: center; gap: 10px; }
 .nav__link {
   font-family: var(--font-mono); font-size: 13px; font-weight: 600;
   text-transform: uppercase; letter-spacing: 0.06em;
-  color: var(--plum); text-decoration: none;
+  color: var(--text-ink); text-decoration: none;
   padding: 9px 14px; border: 2px solid transparent;
 }
-.nav__link:hover { border: 2px solid var(--plum); background: var(--paper); }
+.nav__link:hover { border: 2px solid var(--line); background: var(--surface); }
 .nav__cta {
   font-family: var(--font-mono); font-size: 13px; font-weight: 700;
   text-transform: uppercase; letter-spacing: 0.04em;
   color: var(--text-on-dark); background: var(--teal);
-  padding: 11px 20px; border: 3px solid var(--plum);
-  box-shadow: 3px 3px 0 var(--plum); text-decoration: none; white-space: nowrap;
+  padding: 11px 20px; border: 3px solid var(--line);
+  box-shadow: 3px 3px 0 var(--line); text-decoration: none; white-space: nowrap;
 }
-.nav__cta:hover  { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--plum); }
-.nav__cta:active { transform: translate(3px,3px);  box-shadow: 0 0 0 var(--plum); }
+.nav__cta:hover  { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--line); }
+.nav__cta:active { transform: translate(3px,3px);  box-shadow: 0 0 0 var(--line); }

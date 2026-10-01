@@ -7,9 +7,9 @@
 .filters:empty { display: none; }
 .filter {
   font: 600 13px/1 var(--font-mono); text-transform: lowercase; letter-spacing: 0.04em;
-  color: var(--plum); background: var(--paper); text-decoration: none;
-  border: 3px solid var(--plum); box-shadow: 3px 3px 0 var(--plum); padding: 9px 15px;
+  color: var(--text-ink); background: var(--surface); text-decoration: none;
+  border: 3px solid var(--line); box-shadow: 3px 3px 0 var(--line); padding: 9px 15px;
 }
-.filter:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--plum); }
-.filter.is-on { background: var(--gold); }
+.filter:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--line); }
+.filter.is-on { background: var(--gold); color: var(--on-accent); }
 .tag--cat { background: var(--teal); color: var(--cream); }

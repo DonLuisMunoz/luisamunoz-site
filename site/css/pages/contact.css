@@ -3,7 +3,7 @@
    Split out of the old monolithic components.css. Values unchanged. */
 
 /* ---------- contact ---------- */
-.contact { position: relative; padding: 11vh 5vw; border-top: 3px solid var(--plum); background: var(--plum); text-align: center; }
+.contact { position: relative; padding: 11vh 5vw; border-top: 3px solid var(--line); background: var(--inverse); text-align: center; }
 .contact__inner { position: relative; max-width: 760px; margin: 0 auto; }
 .contact__kicker { font-family: var(--font-mono); font-size: 13px; font-weight: 600; letter-spacing: 0.16em; color: var(--gold); text-transform: uppercase; }
 .contact__title { font-family: var(--font-display); font-weight: 700; font-size: 58px; letter-spacing: -0.035em; color: var(--cream); margin-top: 16px; line-height: 1.04; }
@@ -16,7 +16,7 @@
 }
 .contact__btn:hover { background: var(--teal); }
 .contact__btn:active { transform: translate(2px,2px); }
-.contact__btn--gold { color: var(--plum); background: var(--gold); box-shadow: 5px 5px 0 var(--gold); }
+.contact__btn--gold { color: var(--on-accent); background: var(--gold); box-shadow: 5px 5px 0 var(--gold); }
 .contact__btn--gold:hover  { transform: translate(-2px,-2px); box-shadow: 7px 7px 0 var(--gold); background: var(--gold); }
 .contact__btn--gold:active { transform: translate(5px,5px);  box-shadow: 0 0 0 var(--gold); }
 

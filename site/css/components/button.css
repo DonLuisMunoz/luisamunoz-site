@@ -10,17 +10,17 @@
   text-transform: uppercase;
   letter-spacing: 0.03em;
   text-decoration: none;
-  border: 3px solid var(--plum);
-  box-shadow: 5px 5px 0 var(--plum);
+  border: 3px solid var(--line);
+  box-shadow: 5px 5px 0 var(--line);
   padding: 15px 28px;
   font-size: 15px;
-  color: var(--plum);
+  color: var(--text-ink);
   cursor: pointer;
 }
-.btn:hover  { transform: translate(-2px, -2px); box-shadow: 7px 7px 0 var(--plum); }
-.btn:active { transform: translate(5px, 5px);  box-shadow: 0 0 0 var(--plum); }
-.btn--gold  { background: var(--gold); }
-.btn--paper { background: var(--paper); }
-.btn--sm    { padding: 11px 20px; font-size: 14px; box-shadow: 4px 4px 0 var(--plum); }
-.btn--sm:hover  { box-shadow: 6px 6px 0 var(--plum); transform: translate(-2px,-2px); }
-.btn--sm:active { box-shadow: 0 0 0 var(--plum); transform: translate(4px,4px); }
+.btn:hover  { transform: translate(-2px, -2px); box-shadow: 7px 7px 0 var(--line); }
+.btn:active { transform: translate(5px, 5px);  box-shadow: 0 0 0 var(--line); }
+.btn--gold  { background: var(--gold); color: var(--on-accent); }   /* dark text on gold in both themes */
+.btn--paper { background: var(--surface); }
+.btn--sm    { padding: 11px 20px; font-size: 14px; box-shadow: 4px 4px 0 var(--line); }
+.btn--sm:hover  { box-shadow: 6px 6px 0 var(--line); transform: translate(-2px,-2px); }
+.btn--sm:active { box-shadow: 0 0 0 var(--line); transform: translate(4px,4px); }
