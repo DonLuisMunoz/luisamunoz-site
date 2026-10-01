@@ -109,12 +109,17 @@ alone doing nothing.
 
 ```bash
 uv run newpost.py check          # do this before every push
-git add site/content/posts/ site/assets/posts/
+git add site/content/posts/ site/assets/posts/ site/blog/ site/sitemap.xml
 git commit -m "Post: a join that returned zero rows"
 git push origin main
 ```
 
-Cloudflare builds on push. Check it live at `luisamunoz.com/blog/`.
+Cloudflare builds on push. Check it live at `luisamunoz.com/blog/<slug>/`.
+
+`check` writes a real page per post at `site/blog/<slug>/index.html` with that post's title,
+description and share-card tags baked into the HTML, so a link pasted into LinkedIn or Slack
+shows the post rather than the generic blog card. Those files are generated — commit them,
+never edit them. CI reruns `check` and fails if your commit left anything out of date.
 
 The two newest posts also appear automatically in the **Writing** section on the home page.
 That section hides itself when there are no posts, so it can never show placeholders.
@@ -137,12 +142,15 @@ It covers what a technical post actually needs:
   ```
   ````
 - `[links](https://example.com)` (external ones open in a new tab)
-- `![images](../assets/posts/<slug>/thing.png)` — relative, because the page URL is `/blog/`
+- `![images](../assets/posts/<slug>/thing.png)` — relative to `/blog/`. Post pages live one level
+  deeper but carry `<base href="../">`, so the same path works on both
 - `- bullet` lists and `1.` numbered lists
 - `> blockquotes`
 - `---` horizontal rules
 
-**Not supported:** tables, footnotes, nested lists, HTML inside markdown. Every post is
+- pipe tables (`| a | b |` with a `|---|---|` row under the header)
+
+**Not supported:** footnotes, nested lists, HTML inside markdown. Every post is
 HTML-escaped before it's parsed, so raw HTML in a post will show up as literal text
 rather than render. That's on purpose.
 

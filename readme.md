@@ -16,7 +16,8 @@ portfolio/
 │   ├── index.html            # the portfolio page (semantic, classed, no inline styles)
 │   ├── admin.html            # private panel to add/edit/delete projects (noindex)
 │   ├── blog/
-│   │   └── index.html         # /blog — post list, and single posts via ?p=<slug>
+│   │   ├── index.html         # /blog — post list; also the TEMPLATE for post pages
+│   │   └── <slug>/index.html  # GENERATED per post by newpost.py — meta baked in, don't edit
 │   ├── css/
 │   │   ├── styles.css         # the ONE entry point — import ORDER is load-bearing
 │   │   ├── tokens/            # the values (colors, type, spacing, fonts)

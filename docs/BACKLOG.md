@@ -5,18 +5,16 @@ Ideas parked for later. Newest at top.
 ## Blog at luisamunoz.com/blog (Phase 4) — BUILT 2026-08-04
 Markdown files in `site/content/posts/`, indexed by `index.json`, rendered
 client-side by `site/js/blog.js` (hand-written subset parser, no dependencies).
-`/blog/` lists posts, `/blog/?p=<slug>` shows one. Writing section on the home
+`/blog/` lists posts, `/blog/<slug>/` shows one (generated per post; `/blog/?p=<slug>` still works). Writing section on the home
 page is un-hidden and now data-driven off the same manifest, and it hides
 itself when there are no posts. How to write one: `docs/ADD-A-POST.md`.
 
 Deliberately static, not backend-served — the reasoning is in `docs/ARCHITECTURE.md`.
 
 Left open:
-- **Pretty post URLs.** `/blog/?p=slug` works on an assets-only Worker. `/blog/slug`
-  would need a Worker route or a per-post HTML file. Cosmetic, do it if the query
-  string starts bothering him when sharing links.
-- **Per-post share cards.** Every post currently inherits the site-wide `og-image.png`.
-  A post-specific OG image needs server-side rendering or one HTML file per post.
+- ~~**Pretty post URLs.**~~ and ~~**Per-post share cards.**~~ DONE in #1: `newpost.py` writes
+  `site/blog/<slug>/index.html` per post with title, description, canonical and OG tags baked
+  in. Still open: a per-post OG *image* — every post shares `og-image.png`.
 - **Compose-in-browser.** Considered and rejected 2026-08-04. The Worker serves the repo,
   so a browser editor would need the backend to commit to GitHub, which means a write token
   living on the homelab. `newpost.py` handles the bookkeeping instead and nothing runs.

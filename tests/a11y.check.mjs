@@ -53,6 +53,8 @@ const PAGES = [
   ["home", "/index.html"],
   ["blog list", "/blog/index.html"],
   ["blog post", "/blog/index.html?p=a-join-that-returned-zero-rows"],
+  // The generated page for the same post: <base href="../"> + baked meta.
+  ["post page", "/blog/a-join-that-returned-zero-rows/"],
   ["admin", "/admin.html"],
   // The gallery renders every component in every state, including states no
   // real page currently shows. Auditing it is broader coverage than the
