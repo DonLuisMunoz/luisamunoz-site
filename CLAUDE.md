@@ -192,6 +192,10 @@ Good recall prompts are about *why the code is shaped this way*, never definitio
   `API_BASE` was set.
 - **`site/sitemap.xml` is generated.** Edit `write_sitemap()` in `newpost.py`, never
   the XML. CI fails if a run of `newpost.py check` leaves the tree dirty.
+- **`site/blog/<slug>/index.html` is generated** from `site/blog/index.html` by
+  `newpost.py check`. Edit the template, never a post page. Each one carries
+  `<base href="../">` so every relative URL resolves as it does from `/blog/` — which also
+  means a bare `href="#x"` would leave the page; the generator rewrites the skip link for that.
 - **`site/404.html` uses absolute paths.** It is served for any unmatched URL at any
   depth, so `./css/...` would 404 from `/blog/nope/`.
 

@@ -221,7 +221,7 @@
         .slice(0, 2);
       if (!posts.length) return;
       list.innerHTML = posts.map((p) => (
-        `<a class="post" href="./blog/?p=${encodeURIComponent(p.slug)}">` +
+        `<a class="post" href="./blog/${encodeURIComponent(p.slug)}/">` +
           `<div class="card__meta">${esc(meta(p))}</div>` +
           `<h3 class="post__title">${esc(p.title || p.slug)}</h3>` +
           `<p class="post__body">${esc(p.summary || "")}</p>` +

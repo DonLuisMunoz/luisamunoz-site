@@ -243,7 +243,7 @@
     mount.innerHTML = posts.map((p) => {
       const chips = chipsFor(p);
       return (
-        `<a class="post" href="?p=${encodeURIComponent(p.slug)}">` +
+        `<a class="post" href="${encodeURIComponent(p.slug)}/">` +
           `<div class="card__meta">${esc(metaLine(p))}</div>` +
           `<h2 class="post__title">${esc(p.title || p.slug)}</h2>` +
           `<p class="post__body">${esc(p.summary || "")}</p>` +
@@ -328,18 +328,18 @@
     document.title = `${post.title || post.slug} · Luis A. Munoz`;
     const desc = document.querySelector('meta[name="description"]');
     if (desc && post.summary) desc.setAttribute("content", post.summary);
-    // Both views are served by the same HTML file, so the canonical that
-    // shipped with the page points at the list. Repoint it at this post, or
-    // every post would tell crawlers it is really /blog/.
+    // On /blog/?p=<slug> the HTML shipped with the LIST's canonical. Point it
+    // at the post's real page so old query-string links consolidate there.
+    // (Generated /blog/<slug>/ pages already have this baked in.)
     const canonical = document.querySelector('link[rel="canonical"]');
     if (canonical) {
       canonical.setAttribute(
-        "href", `https://luisamunoz.com/blog/?p=${encodeURIComponent(post.slug)}`);
+        "href", `https://luisamunoz.com/blog/${encodeURIComponent(post.slug)}/`);
     }
     const ogUrl = document.querySelector('meta[property="og:url"]');
     if (ogUrl) {
       ogUrl.setAttribute(
-        "content", `https://luisamunoz.com/blog/?p=${encodeURIComponent(post.slug)}`);
+        "content", `https://luisamunoz.com/blog/${encodeURIComponent(post.slug)}/`);
     }
   };
 
@@ -363,7 +363,9 @@
   mount.addEventListener("click", onCopyClick);
 
   const params = new URLSearchParams(window.location.search);
-  const slug = params.get("p");
+  // /blog/?p=<slug> (old links) or /blog/<slug>/ (generated page, which
+  // carries its slug on #blog-root because there is no query string).
+  const slug = params.get("p") || mount.dataset.slug || null;
   const cat = params.get("c");
   const listHead = document.getElementById("blog-list-head");
   const filterEl = document.getElementById("blog-filters");
