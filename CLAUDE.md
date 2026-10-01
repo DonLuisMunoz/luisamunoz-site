@@ -154,7 +154,8 @@ Good recall prompts are about *why the code is shaped this way*, never definitio
   background will stay light in the dark theme. Palette names (`--gold`, `--teal`,
   `--terracotta`, `--pink`) are correct only for **fills**, which keep their value in both
   themes. Elements sitting on a dark panel (terminal, code, contact) keep palette names too.
-  `tests/a11y.check.mjs` audits every page in both themes.
+  `tests/a11y.check.mjs` audits every page in both themes and fails any page wider than
+  320px. `docs/ACCESSIBILITY.md` lists what neither check can see.
 - **`js/theme.js` is the one script loaded in `<head>`.** It must apply a saved theme before
   the first paint, or dark-mode visitors get a white flash. Everything else loads at the end of
   `<body>`.

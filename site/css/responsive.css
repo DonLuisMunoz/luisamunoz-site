@@ -21,3 +21,11 @@
   .prose__body p, .prose__body li, .prose__body blockquote { font-size: 17px; }
   .prose__body h2 { font-size: 25px; }
 }
+
+/* Below ~480px the brand, theme toggle and "say hi" don't fit on one line.
+   Let the nav wrap instead of pushing the page sideways (WCAG 1.4.10:
+   content must reflow at 320 CSS px with no horizontal scroll). */
+@media (max-width: 480px) {
+  .nav { flex-wrap: wrap; row-gap: 12px; }
+  .nav__links { gap: 8px; }
+}
